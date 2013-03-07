@@ -10,9 +10,9 @@
 \title{Seminarium TI3700\\Robust resource constraint scheduling}
 \author{Mick van Gelderen  \and
     Mick de Lange \and
-    Bastiaan Grisel \and
+    Bastiaan Gris\`el \and
     Freek van Tienen}
-\date{}
+\date{07-03-2013}
 
 \pagestyle{empty}
 
@@ -38,14 +38,18 @@ This is the abstract of my paper.
 
 \section{Introduction}
 
-An introduction about what we are going to explain in the paper.
+%% References needed
 
-\begin{itemize}
-\item RCSP
-\item Precedence Constraint Scheduling
-\item Continuplanning
-\end{itemize}
+The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources. These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time. Scheduling focuses on optimizing a schedule to either consume the least amount of resources, or perform all tasks in minimum required time. There are several different forms of resource constrained scheduling, all dealing with a specific type of scheduling problem. One of the main subjects in resource constrained scheduling is the precedence constraint. Precedence constraints require a set of tasks to be performed in a specific order, requiring one task to be performed before the other. Continuous planning implies another difficulty in the scheduling problem, in this case the set of tasks which has to be performed is not closed. This means that during execution of the schedule, the set of tasks may change and with it the optimal solution.
 
+The matter of robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks. It  should also take in account that some jobs might be delayed or resources become unavailable due to circumstances and then still give an efficient solution to the problem. These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.  Especially in the case op precedence constraints, changes like these can cause to disrupt the entire schedule.
+
+In the following chapter we will be dealing with the theory on these matters and discus several research papers that cover the topic. There has been a substantial amount of research performed on the subject of resource constrained scheduling and also many papers have been published discussing the matter. In this paper a selection of these researches will be covered to give a good basis on the problems we will come by in practice.
+
+Then we will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory. As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject. As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
+
+
+\newpage
 
 \section{Problem theory}
 
@@ -56,7 +60,7 @@ Different aspects of the underlying theory leading to RRCS.  Per point explanati
 \begin{itemize}
 \item Lombardi
 \item Policella
-\item Some other papers about continuplanning
+\item Some other papers about continuous planning
 \end{itemize}
 
 \subsection{Conclusion}
