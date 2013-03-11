@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage{a4wide}
+\usepackage{amssymb}
 
+\newcommand{\leading}[1]{\textbf{#1}}
 
 %% if your are not using LaTeX2e use instead
 %% \documentstyle[bnaic]{article}
@@ -49,7 +51,6 @@ In the following chapter we will be dealing with the theory on these matters and
 
 Then we will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory. As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject. As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
 
-
 \newpage
 
 \section{Problem theory}
@@ -57,16 +58,23 @@ Then we will take a deeper look at the practical applications for the theory, wi
 Different aspects of the underlying theory leading to RRCS.  Per point explanation of the theory with references to relevant papers. This will be the main section of the paper.
 
 \subsection{Prerequisites}
+In this section, the general problem focussed on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
+
 \subsubsection{Activities}
-Activities and processing, start/completion times. 
+Each project consists of a finite set of activities (also called jobs). Each activity has a processing time $p_{j} \in \mathbb{N}$; the time needed to complete the activity.
+
 \subsubsection{Resources}
-Explanation of renewable and non-renewable resources.
+An activity requires a certain amount of resources to be available upon execution. For example, changing a tyre might require two workman and one car lift. In general, there are two kinds of resources: renewable and nonrenewable resources. With a nonrenewable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $k$ at any given time is $R^{\rho}_k$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $R^{v}_k$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{v}$. 
+
+Activities consume a certain amount of one or more resources. The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $r^{\rho}_{jk}$ for a renewable resource and  $r^{v}_{jk}$ for an nonrenewable resource. 
+
 \subsubsection{Contraints}
-\subsubsection{Resource Constraints}
-\subsubsection{Precedence Constraints}
-\subsubsection{Temporal Constraints}
+Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $(V, E)$ in which every activity is represented by a node and directed edges between nodes $A_i$ and $A_j$ are added if an action $A_i$ needs to be executed before $A_j$.
+
+Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$. The notation used in this paper is $d^{min}_{ij}$ and $d^{max}_{ij}$ respectively.
+
 \subsubsection{Schedule}
-time-feasable/resource-feasable schedules. Deadlines, time horizon.
+The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,. . .,T$ and corresponding time intervals $[t-1,t]$. 
 
 \subsection{Formal Definition}
 Actual definition of the problem and formal notation
