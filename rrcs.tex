@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage{a4wide}
-
+\usepackage{xcolor}
 
 %% if your are not using LaTeX2e use instead
 %% \documentstyle[bnaic]{article}
@@ -14,6 +14,8 @@
     F. van Tienen}
 
 \pagestyle{empty}
+
+\newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 
 \begin{document}
 \maketitle
@@ -127,7 +129,8 @@ and research potentials
 
 The overall conclusion.
 
-\section{TOBE REMOVED: Making References}
+
+\section{\TODO{Remove} Making References}
 
   Make references in the running text with the \verb+\cite+
   command \cite{dijkstra68}. Multiple referrences go like this
