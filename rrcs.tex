@@ -82,11 +82,26 @@ Temporal constraints can be used to specify a minimum and maximum time lag betwe
 The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,. . .,T$ and corresponding time intervals $[t-1,t]$. 
 
 \subsection{Formal Definition}
-Actual definition of the problem and formal notation
+The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
+
+Given:
+\begin{itemize}
+\item a set of activities $V$
+\item the durations of the activities $p$
+\item a set of contraints which needs to be satified $E$
+\item a set of resources which perform activities $R$
+\item the availabilities of the resources $B$
+\item the demands of an activitiy for resources $b$
+\end{itemize}
+
+\TODO{Explain what the question of the resource constraint scheduling is}
+
 
 \subsection{Problem Complexity}
 \subsubsection{Problem Classification}
-Explain NP-hardness of the problem
+RRCS belongs to the class of problems that are $NP-hard$. According to the complexity theory a problem belongs to the class $NP-hard$ if its decision version is $NP-complete$. We will use this theory to prove that RRCS belongs to the class $NP-hard$.
+
+\TODO{Define the decision variant of the RRCS problem and show through reduction that the decision variant is NP-complete.}
 \subsubsection{Time Complexity}
 \subsubsection{Space Complexity}
 
