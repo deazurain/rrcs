@@ -56,7 +56,7 @@ We will take a deeper look at the practical applications for the theory, with th
 
 \newpage
 
-\section{Problem theory}
+\section{Problem background}
 
 Different aspects of the underlying theory leading to RRCS.  Per point explanation of the theory with references to relevant papers. This will be the main section of the paper.
 
@@ -66,10 +66,10 @@ Different aspects of the underlying theory leading to RRCS.  Per point explanati
 In this section, the general problem focussed on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
 
 \subsubsection{Activities}
-Each project consists of a finite set of activities (also called jobs). Each activity has a processing time $p_{j} \in \mathbb{N}$; the time needed to complete the activity.
+Each project consists of a finite set of activities (also called jobs). Each activity has a processing time $p_{j} \in \mathbb{N}$; the time needed to complete the activity. The set of all activities is $V$.
 
 \subsubsection{Resources}
-An activity requires a certain amount of resources to be available upon execution. For example, changing a tyre might require two workman and one car lift. In general, there are two kinds of resources: renewable and nonrenewable resources. With a nonrenewable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $k$ at any given time is $R^{\rho}_k$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $R^{v}_k$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{v}$. 
+An activity requires a certain amount of resources to be available upon execution. For example, changing a tyre might require two workman and one car lift. In general, there are two kinds of resources: renewable and nonrenewable resources. With a nonrenewable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $k$ at any given time is $\mathcal{R}^{\rho}_k$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $\mathcal{R}^{v}_k$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{v}$. 
 
 Activities consume a certain amount of one or more resources. The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $r^{\rho}_{jk}$ for a renewable resource and  $r^{v}_{jk}$ for an nonrenewable resource. 
 
@@ -81,23 +81,27 @@ Temporal constraints can be used to specify a minimum and maximum time lag betwe
 \subsubsection{Schedule}
 The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,. . .,T$ and corresponding time intervals $[t-1,t]$. 
 
+\subsection{STN}
+\TODO{WTF is dit: Bastiaan}
+
 \subsection{Formal Definition}
+\TODO{Freek, naar voren halen}
 The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
 
 Given:
 \begin{itemize}
 \item a set of activities $V$
-\item the durations of the activities $p$
-\item a set of contraints which needs to be satified $E$
-\item a set of resources which perform activities $R$
+\item the durations of the activities $(p_1\ldots p_n)$
+\item a set of constraints which needs to be satisfied $E$
+\item a set of available resources $\mathcal{R}$
 \item the availabilities of the resources $B$
-\item the demands of an activitiy for resources $b$
+\item the demands for an activity $j$ of resource $k$ $(r_{11}\ldots r_{jk})$
 \end{itemize}
 
 \TODO{Explain what the question of the resource constraint scheduling is}
 
-
 \subsection{Problem Complexity}
+\TODO{Freek}
 \subsubsection{Problem Classification}
 RRCS belongs to the class of problems that are $NP-hard$. According to the complexity theory a problem belongs to the class $NP-hard$ if its decision version is $NP-complete$. We will use this theory to prove that RRCS belongs to the class $NP-hard$.
 
@@ -105,29 +109,17 @@ RRCS belongs to the class of problems that are $NP-hard$. According to the compl
 \subsubsection{Time Complexity}
 \subsubsection{Space Complexity}
 
-\subsection{Optimal Algorithm}
-Discuss the optimal algorithm and how it cannot be used and is insensitive to technological speedups.
+\section{Constraint posting}
+\TODO{Bastiaan, verdelen in subkpjes}
 
-\subsection{Problem Extension}
-The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
-\subsubsection{Multi-mode project scheduling}
-\TODO{Reference Herroelen, Reactive scheduling in the multi-mode RCPSP}
+\section{Continuous planning}
+\TODO{Mick de LangeR}
 
-\subsubsection{Stochastic activity durations}
-\subsection{Approximation Algorithms}
-
-
-\subsection{Research}
-
-\begin{itemize}
-\item Lombardi
-\item Policella
-\item Some other papers about continuous planning
-\end{itemize}
+\section{Contraint Posting in Continuous planning}
+\TODO{Mick van Gelderen}
 
 \subsection{Conclusion}
-
-Short recap of previous section. Briefly goes through the steps listed above.
+\TODO{Mick de Lange-R}
 
 \section{Problem Practice}
 This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
@@ -139,14 +131,16 @@ and research potentials
 \item Reactive scheduling, improving the robustness of schedules
 \end{itemize}
 
-\subsection{Solvable problems}
+\subsection{Solvable problems with PCP}
+\TODO{Freek}
 \begin{itemize}
-\item What are the examples from the real world?
+\item What are the examples from the real world? 
 \item What are the underlying problems of these examples?
 \item How can they be solved using the theory described above?
 \end{itemize}
 
-\subsection{Not yet solvable problems}
+\subsection{Related problems with PCP}
+\TODO{Bastiaan}
 \begin{itemize}
 \item What are the examples from the real world?
 \item Trains, trucks, maintenance scheduling, etc.
@@ -156,9 +150,7 @@ and research potentials
 \end{itemize}
 
 \section{Conclusion}
-
 The overall conclusion.
-
 
 \section{\TODO{Remove} Making References}
 
