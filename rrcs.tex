@@ -45,8 +45,8 @@ However, it may also be undesirable to introduce major changes in the baseline s
 Therefore, the continuous planning aspect of scheduling is one of the more complex issues and also a quite common phenomenon in practical situations.
 
 In this paper we will combine these to elements in the scheduling problem and study this in the light of robust resource constrained scheduling.
-Robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks.
-It  should also take in account that some jobs might be delayed or resources become unavailable due to circumstances and then still give an efficient solution to the problem.
+Robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks, it should also take in to account external changes.
+In this paper we will use the same definition of robust as in \cite{policella07} : ``{(1) the ability to absorb exogenous and/or unforeseen events without loss of consistency, and (2) the ability to keep the pace with the execution guaranteeing a prompt answer to the various events.}''
 These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.
 
 In the following chapter we will be dealing with the theory on scheduling problems and discus several relevant research papers that cover the topic.
@@ -126,30 +126,89 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 \subsubsection{Stochastic processing times}
 \TODO{Staat dit al ergens anders?}
 
-\section{Constraint posting}
+\section{Precedence constraint posting}
 \TODO{Bastiaan, verdelen in subkpjes}
 
-\section{Continuous planning} \TODO{Mick de LangeR}
+\section{Continuous planning} \TODO{Mick de Lange}
+
+In this chapter continuous planning will be discussed.
+Continuous planning is a much seen obstacle in practical scheduling problems.
+Flexibility and robustness of a schedule are key to continuous planning, as problems or changes may occur during execution.
+Several different aspects and approaches of continuous planning will be viewed in the light of the scheduling problem and related to flexibility and robustness.
 
 The subject of continuous planning is somewhat neglected in classical scheduling problems and research.
-With continuous scheduling one needs to taken in to account that the set of tasks is not complete or closed when a schedule is requested.
-Therefore continuous planning requires more flexibility in the solution and multiple options of editing the solution.
+With continuous planning one needs to take into account that the set of tasks is not complete or closed when a schedule is requested, also changes may occur due to unexpected shortage of resources.
+Therefore continuous planning requires flexibility and robustness in the solution and options of editing the solution.
+In continuous planning efforts are made to provide that flexibility, whilst compromising on the optimal character of the schedule.
 
-\subsection{AI planning}
-\cite{smith00}
+Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in an optimal schedule.
+This makes these solutions quite effective on more complex closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
+In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
 \cite{laborie03}
 
-\subsection{Maintenance scheduling}
-Maintenance scheduling is very near to AI planning and the given continuous planning.
+\subsection{Automated planning}
 
-\subsection{Repairing schedules}
+A classical approach to scheduling a continuously growing set of tasks is to simply plan ahead until a set horizon.
+After this horizon, the next set of tasks is planned.
+This way batch after batch of tasks is scheduled, resulting in a schedule, which is most likely to be suboptimal.
+The result does not allow for changes in the already planned parts and therefore possibly misses more efficient solutions and lacks adaptivity.
 \cite{chien00}
+
+In several different fields we see the search for better optimization of continuous planning solutions.
+In the field of robotics, like robotic space exploration, automated planning is the main scheduling approach.
+This form of AI planning focuses on realization of strategies and short-term task selection.
+With this planning form autonomous robots select the tasks with only a short foresight.
+In this field of AI efforts are being made to optimize the schedules, with the use of several parts of the resource constraint scheduling domain.
+\cite{smith00}
+
+Because of the growing complexity in the tasks, such as overlap, time constraints en resource constraints, automated planning proves to be less than optimal.
+Automated planning does not have the capabilities to take all these extra constraint in to consideration.
+However, the solution is not to simply use resource constraint scheduling, for this does not currently give the same speed en flexibility as automated planning.
+The main reason for this is that tasks need to be selected "on-the-go", thus decisions need to be made in a short timespan.
+The time it takes to calculate an optimal solution would be of such length, that the set of current tasks might deviate from the selected tasks in the schedule.
+
+\subsection{Iterative repair}
+Iterative repair is the process of repeatedly repairing the schedule when required.
+This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
+The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
+
+The iterative process works as follows.
+Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
+Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
+The plan is repaired with regard to the least amount of delay in the execution process.
+The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
+\cite{chien00}
+
+In fact iterative repair is a solution which extends the current scheduling problems, by adding repairing algorithms.
+This way the original non-flexible schedule can be used in a more flexible manner, but it is has not become more flexible.
+In other words, iterative repair provides a method of making planning more flexible, although not really making a flexible schedule.
+Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
+
+\subsection{Partial order schedules}
+Partial order schedules are solutions which take the flexibility a step further.
+In partial order schedules, as defined in \cite{policella07}, each activity retains a set of feasible start times.
+In this manner a set of possible schedules is available, rather than just one solution.
+In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
+Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
+However, the partial order schedule already contains several options for an easy fix of the schedule.
+Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
+
+There is a possibility of the changes being significant enough to force a complete rescheduling, which obviously takes more time than the quick repair.
+On the other hand one must note the results in the quick scheduling do not provide an optimal solution.
+This scheduling solution is build as to not stress the system with complex scheduling problems, but the narrower options prevent it from giving an optimal solution.\\
+
+\TODO{ subsection?}
+
+Continuous planning poses a special problem in the scheduling domain.
+Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
+There is always a trade-of between optimal solutions and processing speed.
+Often the pressure to provide a quick solution overrules the optimum option.
 
 \section{Contraint Posting in Continuous planning}
 \TODO{Mick van Gelderen}
 
 \subsection{Conclusion}
-\TODO{Mick de Lange-R}
+\TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
 
 \section{Problem Practice}
 This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
