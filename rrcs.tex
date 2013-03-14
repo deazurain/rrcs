@@ -10,7 +10,7 @@
 
 %% begin document with title, author and affiliations
 
-\title{Robust resource constraint scheduling}
+\title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -25,36 +25,38 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
-This is the abstract of my paper.
+\TODO{abstract als laatste schrijven}
 \end{abstract}
 
 
 \section{Introduction}
 
-%% References needed
+The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
+These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time.
+Scheduling focuses on optimizing a schedule to either consume the least amount of resources, or perform all tasks in minimum required time.  \cite{brucker99}
+There are several different forms of resource constrained scheduling, all dealing with a specific type of scheduling problem.
 
-The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources. These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time. Scheduling focuses on optimizing a schedule to either consume the least amount of resources, or perform all tasks in minimum required time. There are several different forms of resource constrained scheduling, all dealing with a specific type of scheduling problem.
+The main aspects that will be covered in this paper are precedence constraint posting and continuous planning.
+Precedence constraints require a set of tasks to be performed in a specific order, requiring one task to be performed before the other.
+Also, temporal constraints have a part in this scheduling problem, but this will not be the focus in this paper.
+Continuous planning is a form of scheduling where the scheduling process is not completed, the process continuous while schedule is being executed.
+In this case the set of tasks to be performed is not closed, meaning that during execution of the schedule the set of tasks may change and with it the optimal solution.
+However, it may also be undesirable to introduce major changes in the baseline schedule.
+Therefore, the continuous planning aspect of scheduling is one of the more complex issues and also a quite common phenomenon in practical situations.
 
-The main aspects that will be covered in this paper are the precedence constraint and temporal constraint. Precedence constraints require a set of tasks to be performed in a specific order, requiring one task to be performed before the other. Temporal constraints pose a constraint on start and finishing time of one or several tasks, requiring tasks to be performed within a specific time interval. \TODO{Ik dacht dat temporal constraints een generalisatie van precedence constraints waren; ze bepalen ook de volgorde van activities maar dan met een min en max tussentijd} Continuous planning implies another difficulty in the scheduling problem and will also be a subject of this paper. In this case the set of tasks to be performed is not closed, meaning that during execution of the schedule the set of tasks may change and with it the optimal solution. However, it may also be undesirable to introduce major changes in the baseline schedule.
+In this paper we will combine these to elements in the scheduling problem and study this in the light of robust resource constrained scheduling.
+Robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks.
+It  should also take in account that some jobs might be delayed or resources become unavailable due to circumstances and then still give an efficient solution to the problem.
+These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.
 
-The matter of robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks. It  should also take in account that some jobs might be delayed or resources become unavailable due to circumstances and then still give an efficient solution to the problem. These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.
+In the following chapter we will be dealing with the theory on scheduling problems and discus several relevant research papers that cover the topic.
+After which the two main aspects, precedence constraint posting and continuous planning, will be discussed further and then combined and linked to practical problems.
+We will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory.
+As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject.
+As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
 
-In the following chapter we will be dealing with the theory on these matters and discus several research papers that cover the topic. There has been a substantial amount of research performed on the subject of resource constrained scheduling and also many papers have been published discussing the matter. In this paper a selection of these researches will be covered to give a good basis on the problems that can be found in practice.
+This paper is intended to link the practical applications of the scheduling problem to several aspects of the theory, thereby addressing the incompleteness of the problem theory and discover what aspects need further research.
 
-We will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory. As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject. As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
-
-\TODO{Michel gaf de 12e aan dat de inleiding nog niet helemaal lekker liep. Het is niet heel duidelijk waar het verhaal naartoe gaat}
 
 \newpage
 
@@ -84,12 +86,14 @@ Temporal constraints can be used to specify a minimum and maximum time lag betwe
 The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,. . .,T$ and corresponding time intervals $[t-1,t]$. 
 
 \subsection{STN}
-\TODO{WTF is dit: Bastiaan}
-Mick: Ik gok Simple Temporal Networks
+\TODO{Wat is dit: Bastiaan.
+Mick G: Ik gok Simple Temporal Networks}
 
 \subsection{Formal Definition}
 \TODO{Freek, naar voren halen}
 The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
+
+\cite{brucker99}
 
 Given:
 \begin{itemize}
@@ -108,13 +112,9 @@ Given:
 \subsubsection{Problem Classification}
 RRCS belongs to the class of problems that are $NP-hard$. According to the complexity theory a problem belongs to the class $NP-hard$ if its decision version is $NP-complete$. We will use this theory to prove that RRCS belongs to the class $NP-hard$.
 
-\TODO{Define the decision variant of the RRCS problem and show through reduction that the decision variant is NP-complete.}
+\TODO{Volgens mij kunnen we hier volstaan met een verwijzing naar een paper waar dit reeds gedaan is. Volgens mij kunnen de subkopjes dan ook weg.}
 \subsubsection{Time Complexity}
 \subsubsection{Space Complexity}
-
-\subsection{Optimal Algorithm}
-Discuss the optimal algorithm and how it cannot be used and is insensitive to technological speedups.
-\TODO{Moest dit nou wel of niet?}
 
 \subsection{Problem Extension}
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
@@ -129,8 +129,21 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 \section{Constraint posting}
 \TODO{Bastiaan, verdelen in subkpjes}
 
-\section{Continuous planning}
-\TODO{Mick de LangeR}
+\section{Continuous planning} \TODO{Mick de LangeR}
+
+The subject of continuous planning is somewhat neglected in classical scheduling problems and research.
+With continuous scheduling one needs to taken in to account that the set of tasks is not complete or closed when a schedule is requested.
+Therefore continuous planning requires more flexibility in the solution and multiple options of editing the solution.
+
+\subsection{AI planning}
+\cite{smith00}
+\cite{laborie03}
+
+\subsection{Maintenance scheduling}
+Maintenance scheduling is very near to AI planning and the given continuous planning.
+
+\subsection{Repairing schedules}
+\cite{chien00}
 
 \section{Contraint Posting in Continuous planning}
 \TODO{Mick van Gelderen}
@@ -167,14 +180,7 @@ and research potentials
 \end{itemize}
 
 \section{Conclusion}
-The overall conclusion.
-
-\section{\TODO{Remove} Making References}
-
-  Make references in the running text with the \verb+\cite+
-  command \cite{dijkstra68}. Multiple referrences go like this
-  \cite{charniak85,steels98}.
-
+\TODO{The overall conclusion.}
 
 \bibliographystyle{plain}
 \bibliography{references}
