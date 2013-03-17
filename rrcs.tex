@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{a4wide}
 \usepackage{amssymb}
+\usepackage{amsmath}
 
 \newcommand{\leading}[1]{\textbf{#1}}
 \usepackage{xcolor}
@@ -85,10 +86,6 @@ Temporal constraints can be used to specify a minimum and maximum time lag betwe
 \subsubsection{Schedule}
 The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,. . .,T$ and corresponding time intervals $[t-1,t]$. 
 
-\subsection{STN}
-\TODO{Wat is dit: Bastiaan.
-Mick G: Ik gok Simple Temporal Networks}
-
 \subsection{Formal Definition}
 \TODO{Freek, naar voren halen}
 The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
@@ -126,8 +123,54 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 \subsubsection{Stochastic processing times}
 \TODO{Staat dit al ergens anders?}
 
+
 \section{Precedence constraint posting}
-\TODO{Bastiaan, verdelen in subkpjes}
+Flexible because no set start times but added constraints.
+
+\subsection{Introduction}
+In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
+
+\subsection{Problem Extension}
+Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
+
+\section{Schedule construction}
+A RCSP can be broken down into two parts.  The other part of the problem concerns the usage of resources by the activities. 
+
+The general idea of finding a feasible schedule is an iterative approach that schedules the activities according to some scheduling policy (for example an earliest start policy: start every activity as soon as possible) and then checks if the resource constraints are met. 
+
+\subsection{Time Layer}
+Firstly the temporal aspect, dealing with activity durations, constraints between pairs of activities, due dates, release time and other time-related constrains. These relations can be represented as a graph $G={V,E}$, in which each vertex represents an activity and an edge connecting two activities represents a temporal constraint between them.
+
+\subsubsection{Simple Temporal Networks with Uncertainty}
+A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point with a value within its time window in such a way that the relations are satisfied. 
+
+There are two types of relations:
+\begin{itemize}
+\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ must be within the range of $[d_{ij},D_{ij}]$.
+\item $t_i \xrightarrow{[d_{ij}:D_{ij}]} t_j$ called a \emph{contingent constraint}, meaning that 
+\end{itemize}
+
+
+
+\subsection{Resource Layer}
+\subsubsection{Resource Contenitent and Minimum Conflict Sets}
+
+
+Time Layer
+-Precedence relations
+
+Resource Layer
+-Resource constraints are met
+-Minimal Conflict Set
+	-Definition
+-Detecting MCS
+	-Execution policy (earliest start policy)
+	-STN
+	
+
+
+
+
 
 \section{Continuous planning} \TODO{Mick de Lange}
 
