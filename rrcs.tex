@@ -175,7 +175,7 @@ The iterative solution also needs to be fast, for it should be run multiple time
 
 The iterative process works as follows.
 Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
-Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
+Repairs are made to the plan, preventing conflicts and searching for more optimal solution. \TODO{How are these repairs realised?}
 The plan is repaired with regard to the least amount of delay in the execution process.
 The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
 \cite{chien00}
@@ -196,7 +196,7 @@ Therefore the time consumed in the recalculating of the schedule is reduced trem
 
 There is a possibility of the changes being significant enough to force a complete rescheduling, which obviously takes more time than the quick repair.
 On the other hand one must note the results in the quick scheduling do not provide an optimal solution.
-This scheduling solution is build as to not stress the system with complex scheduling problems, but the narrower options prevent it from giving an optimal solution.\\
+This scheduling solution is build as to not stress the system with complex scheduling problems, but the narrower options prevent it from giving an optimal solution. \TODO{Weird sentence} \\
 
 \TODO{ subsection?}
 
@@ -205,8 +205,13 @@ Although continuous planning seems obvious and the presence is ubiquitous in pra
 There is always a trade-of between optimal solutions and processing speed.
 Often the pressure to provide a quick solution overrules the optimum option.
 
-\section{Contraint Posting in Continuous planning}
+\subsection{Precedence Contraint Posting in Continuous planning}
 \TODO{Mick van Gelderen}
+Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without comprimising the resource constraints. We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning. 
+
+\subsubsection{A Precedence Constraint Posting method}
+
+\subsubsection{Extending PCP to continuous planning}
 
 \subsection{Conclusion}
 \TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
