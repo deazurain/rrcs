@@ -137,7 +137,7 @@ Flexibility and robustness of a schedule are key to continuous planning, as prob
 Several different aspects and approaches of continuous planning will be viewed in the light of the scheduling problem and related to flexibility and robustness.
 
 The subject of continuous planning is somewhat neglected in classical scheduling problems and research.
-With continuous planning one needs to take into account that the set of tasks is not complete or closed when a schedule is requested, also changes may occur due to unexpected shortage of resources.
+With continuous planning one needs to take into account that the set of tasks is not complete or closed when a schedule is requested, also changes may occur due to unexpected shortage of resources. \TODO{Is this the only reason?}
 Therefore continuous planning requires flexibility and robustness in the solution and options of editing the solution.
 In continuous planning efforts are made to provide that flexibility, whilst compromising on the optimal character of the schedule.
 
@@ -161,8 +161,9 @@ With this planning form autonomous robots select the tasks with only a short for
 In this field of AI efforts are being made to optimize the schedules, with the use of several parts of the resource constraint scheduling domain.
 \cite{smith00}
 
-Because of the growing complexity in the tasks, such as overlap, time constraints en resource constraints, automated planning proves to be less than optimal.
-Automated planning does not have the capabilities to take all these extra constraint in to consideration.
+Because of the growing complexity in the tasks, such as overlap, time constraints en resource constraints, automated planning proves to be less than optimal. \TODO{Where does this growth in complexity come from, what is overlap, does the model become more complex? Can't the tasks be simulated using the basic activity, precedence/temporal constraint and (renewable) resource model?}
+
+Automated planning does not have the capabilities to take all these extra \TODO{all these, overexaggerated} constraints into consideration.
 However, the solution is not to simply use resource constraint scheduling, for this does not currently give the same speed en flexibility as automated planning.
 The main reason for this is that tasks need to be selected "on-the-go", thus decisions need to be made in a short timespan.
 The time it takes to calculate an optimal solution would be of such length, that the set of current tasks might deviate from the selected tasks in the schedule.
