@@ -143,23 +143,21 @@ $S$ & a schedule consisting of strart times for the activities $S = (Start(v_1) 
 \hline
 \end{tabular}
 
-
-
-
 \section{Schedule construction using PCP}
-A RCSP can be broken down into two parts.  The other part of the problem concerns the usage of resources by the activities. 
-
+\TODO{Introduction to two aspects of the problem (time and resource)}
 The general idea of finding a feasible schedule is an iterative approach that schedules the activities according to some scheduling policy (for example an earliest start policy: start every activity as soon as possible) and then checks if the resource constraints are met. 
 
+\subsection{Problem Extension}
+Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. 
+
 \subsection{Time Layer}
-Firstly the temporal aspect, dealing with activity durations, constraints between pairs of activities, due dates, release time and other time-related constrains. These relations can be represented as a graph $G={V,E}$, in which each vertex represents an activity and an edge connecting two activities represents a temporal constraint between them.
+Firstly the temporal aspect, dealing with activity durations, constraints between pairs of activities, due dates, release time and other time-related constrains are regarded. These relations can be represented as a graph $G=(V,E)$, in which each vertex represents an activity and an edge connecting two activities represents a temporal constraint between them.
 
 \subsubsection{Relations Temporal Constraints}
-In the models used to simulate the problem at hand, it is convenient to express arbitrary constraints as temporal constraints. A precedence constraint 
-
+In the models used to simulate the problem at hand, it is convenient to express all constraints as temporal constraints. A precedence constraint can be modeled as a temporal constraint with a minimum lag of $0$, and a maximum lag of $\infty$.
 
 \subsubsection{Simple Temporal Networks with Uncertainty}
-A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point $t_i$ with a value within its time window in such a way that the relations are satisfied. In an STN with uncertainty (STNU), the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
+A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point $t_i$ with a value within its time window in such a way that the relations are satisfied. In an STN with uncertainty (STNU), the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied. 
 
 There are two types of relations:
 \begin{enumerate}
@@ -179,41 +177,18 @@ The temporal aspect of the problem can be modeled using \emph{time points}, \emp
 
 As defined above, each activity is represented by two time points. The contingent constraint connecting the two time points represents the duration of the activity. The exact processing time of the activity is not yet known at this stage, only a worst-case and a best-case processing time are given. These best-case and worst-case processing times are used respectively as lower and upper bounds for the contingent constraint. The schedule needs to be generated in such a way that for each possible value for all of the contingent constraints (all possible combinations of processing times), the free constraints are met.
 
-Using a technique called \emph{constraint propagation} [paper Policella], it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, since the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point.
-
-\section{Schedule construction using PCP}
-\subsection{Time Layer}
-\subsubsection{Relations as Temporal Constraints}
-\subsubsection{Simple Temporal Network}
-Input to second layer
+Using a technique called \emph{constraint propagation} [paper Policella], it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, because the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point.
 
 \subsection{Resource Layer}
 \subsubsection{Resource leveling}
 \subsubsection{Minimum Conflict Sets}
 
 \subsection{Precedence Constraint Posting}
-\subsubsection{Scheduling Policy}
-\subsubsection{Partial Ordering Schedules}
-
-Time Layer
--Precedence relations
-Resource Layer
--Resource constraints are met
--Minimal Conflict Set
-	-Definition
--Detecting MCS
-	-Execution policy (earliest start policy)
-	-STN
-
-\subsection{Precedence constraint posting}
-Flexible because no set start times but added constraints.
-
+\TODO{Explain how the two layers can be brought together}
 \subsubsection{Introduction}
 In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
-
-\subsubsection{Problem Extension}
-Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
-
+\subsubsection{Scheduling Policy}
+\subsubsection{Partial Ordering Schedules}
 
 \section{Problem Practice}
 This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
