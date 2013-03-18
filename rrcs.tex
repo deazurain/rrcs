@@ -264,12 +264,12 @@ Partial order scheduling uses repairs, just as the iterative repair schedules th
 However, the partial order schedule already contains several options for an easy fix of the schedule.
 Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
 
-There is a possibility of the changes being significant enough to force a complete rescheduling, which obviously takes more time than the quick repair.
-On the other hand one must note the results in the quick scheduling do not provide an optimal solution.
-This scheduling solution is build as to not stress the system with complex scheduling problems, but the narrower options prevent it from giving an optimal solution. \TODO{Weird sentence} \\
+There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
+The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
+In addition to this problem, the quick repairs do not represent an optimal schedule.
+Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution. 
 
-\TODO{ subsection?}
-
+\subsection{conclusion} \TODO{Verplaatsen?}
 Continuous planning poses a special problem in the scheduling domain.
 Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
 There is always a trade-of between optimal solutions and processing speed.
