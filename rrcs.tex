@@ -29,7 +29,6 @@
 \TODO{abstract als laatste schrijven}
 \end{abstract}
 
-
 \section{Introduction}
 
 The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
@@ -112,11 +111,11 @@ The time and space complexity of the RCS problem depends on the used algorithms 
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
 
 \subsubsection{Multi-mode project scheduling}
-Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. 
+Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. The approach to scheduling that is discussed in this paper does not account for multi-mode activities. Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
 \TODO{Reference Herroelen, Reactive scheduling in the multi-mode RCPSP}
 
 \subsubsection{Stochastic processing times}
-\TODO{Staat dit al ergens anders?}
+Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown by \TODO{reference europe journal 43pag paper} covering several important problems introduced by using a stochastic distribution for activity processing times. 
 
 \subsection{Summary}
 \leading{Basic notation overview} \\
@@ -149,22 +148,33 @@ The general idea of finding a feasible schedule is an iterative approach that sc
 \subsection{Time Layer}
 Firstly the temporal aspect, dealing with activity durations, constraints between pairs of activities, due dates, release time and other time-related constrains. These relations can be represented as a graph $G={V,E}$, in which each vertex represents an activity and an edge connecting two activities represents a temporal constraint between them.
 
+\subsubsection{Conversion to Temporal Constraints}
+
 \subsubsection{Simple Temporal Networks with Uncertainty}
 A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point with a value within its time window in such a way that the relations are satisfied. 
 
 There are two types of relations:
-\begin{itemize}
-\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ must be within the range of $[d_{ij},D_{ij}]$.
-\item $t_i \xrightarrow{[d_{ij}:D_{ij}]} t_j$ called a \emph{contingent constraint}, meaning that 
-\end{itemize}
+\begin{enumerate}
+\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ is allowed to be scheduled within the range of $[d_{ij},D_{ij}]$.
+\item $t_i \xrightarrow{[d_{ij}:D_{ij}]} t_j$ called a \emph{contingent constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ lies within the range $[d_{ij},D_{ij}]$. Unlike free constraints, its exact value is not determined by the scheduler but is controlled by Nature, it is only known that the value lies within the interval $[d_{ij},D_{ij}]$. The result is that the schedule must be able to deal with all the possible values of $\delta \in [d_{ij},D_{ij}]$.
+\end{enumerate}
+
+\section{Schedule construction using PCP}
+\subsection{Time Layer}
+\subsubsection{Relations as Temporal Constraints}
+\subsubsection{Simple Temporal Network}
+Input to second layer
 
 \subsection{Resource Layer}
-\subsubsection{Resource Contenitent and Minimum Conflict Sets}
+\subsubsection{Resource leveling}
+\subsubsection{Minimum Conflict Sets}
 
+\subsection{Precedence Constraint Posting}
+\subsubsection{Scheduling Policy}
+\subsubsection{Partial Ordering Schedules}
 
 Time Layer
 -Precedence relations
-
 Resource Layer
 -Resource constraints are met
 -Minimal Conflict Set
@@ -172,7 +182,6 @@ Resource Layer
 -Detecting MCS
 	-Execution policy (earliest start policy)
 	-STN
-	
 
 \subsection{Precedence constraint posting}
 Flexible because no set start times but added constraints.
@@ -260,7 +269,7 @@ The iterative solution also needs to be fast, for it should be run multiple time
 
 The iterative process works as follows.
 Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
-Repairs are made to the plan, preventing conflicts and searching for more optimal solution. \TODO{How are these repairs realised?}
+Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
 The plan is repaired with regard to the least amount of delay in the execution process.
 The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
 \cite{chien00}
@@ -279,34 +288,28 @@ Partial order scheduling uses repairs, just as the iterative repair schedules th
 However, the partial order schedule already contains several options for an easy fix of the schedule.
 Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
 
-There is a possibility of the changes being significant enough to force a complete rescheduling, which obviously takes more time than the quick repair.
-On the other hand one must note the results in the quick scheduling do not provide an optimal solution.
-This scheduling solution is build as to not stress the system with complex scheduling problems, but the narrower options prevent it from giving an optimal solution. \TODO{Weird sentence} \\
+There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
+The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
+In addition to this problem, the quick repairs do not represent an optimal schedule.
+Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution. 
 
-\TODO{ subsection?}
 
+\subsection{Precedence Contraint Posting in Continuous planning}
+\TODO{Mick van Gelderen}
+Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without comprimising the resource constraints. We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning. 
+
+The PCP approach to scheduling is suitable for continuous planning. A lot of the methods for PCP create a POS in the form of Simple Temporal Network. This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded. An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
+
+If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it. Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule. In that case a new POS has to be created from the remaining project graph. 
+
+A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
+
+\section{Conclusion}
+\TODO{The overall conclusion. Huidige tekst verplaatst uit continuous}
 Continuous planning poses a special problem in the scheduling domain.
 Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
 There is always a trade-of between optimal solutions and processing speed.
 Often the pressure to provide a quick solution overrules the optimum option.
-
-\subsection{Precedence Contraint Posting in Continuous planning}
-\TODO{Mick van Gelderen}
-Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without comprimising the resource constraints. We will describe how PCP can be extended to deal with continuous planning. 
-
-The PCP approach to scheduling is suitable for continuous planning. A lot of the methods for PCP create a POS in the form of Simple Temporal Network. This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded. An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time. 
-
-If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it. Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule. In that case a new POS has to be created from the remaining project graph. 
-
-A complete recalculation will not be nessecary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
-
-\subsection{Conclusion}
-\TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
-
-
-
-\section{Conclusion}
-\TODO{The overall conclusion.}
 
 \bibliographystyle{plain}
 \bibliography{references}
