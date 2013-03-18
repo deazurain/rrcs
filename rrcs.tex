@@ -124,16 +124,9 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 \TODO{Staat dit al ergens anders?}
 
 
-\section{Precedence constraint posting}
-Flexible because no set start times but added constraints.
 
-\subsection{Introduction}
-In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
 
-\subsection{Problem Extension}
-Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
-
-\section{Schedule construction}
+\section{Schedule construction using PCP}
 A RCSP can be broken down into two parts.  The other part of the problem concerns the usage of resources by the activities. 
 
 The general idea of finding a feasible schedule is an iterative approach that schedules the activities according to some scheduling policy (for example an earliest start policy: start every activity as soon as possible) and then checks if the resource constraints are met. 
@@ -149,8 +142,6 @@ There are two types of relations:
 \item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ must be within the range of $[d_{ij},D_{ij}]$.
 \item $t_i \xrightarrow{[d_{ij}:D_{ij}]} t_j$ called a \emph{contingent constraint}, meaning that 
 \end{itemize}
-
-
 
 \subsection{Resource Layer}
 \subsubsection{Resource Contenitent and Minimum Conflict Sets}
@@ -168,8 +159,43 @@ Resource Layer
 	-STN
 	
 
+\subsection{Precedence constraint posting}
+Flexible because no set start times but added constraints.
+
+\subsubsection{Introduction}
+In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
+
+\subsubsection{Problem Extension}
+Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
 
 
+\section{Problem Practice}
+This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
+
+\begin{itemize}
+\item Project scheduling under uncertainty: Survey
+and research potentials
+\item A Comparison of Heuristic and Optimum Solutions
+\item Reactive scheduling, improving the robustness of schedules
+\end{itemize}
+
+\subsection{Solvable problems with PCP}
+\TODO{Freek}
+\begin{itemize}
+\item What are the examples from the real world? 
+\item What are the underlying problems of these examples?
+\item How can they be solved using the theory described above?
+\end{itemize}
+
+\subsection{Related problems with PCP}
+\TODO{Bastiaan}
+\begin{itemize}
+\item What are the examples from the real world?
+\item Trains, trucks, maintenance scheduling, etc.
+\item Airport planning / different factors: maintenance / tanking / bagage / boarding
+\item What are the underlying problems of these examples?
+\item How does the above theory needs to be augmented in order to be able to solve the problems?
+\end{itemize}
 
 
 \section{Continuous planning} \TODO{Mick de Lange}
@@ -262,33 +288,7 @@ A complete recalculation will not be nessecary as frequent as with other techniq
 \subsection{Conclusion}
 \TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
 
-\section{Problem Practice}
-This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
 
-\begin{itemize}
-\item Project scheduling under uncertainty: Survey
-and research potentials
-\item A Comparison of Heuristic and Optimum Solutions
-\item Reactive scheduling, improving the robustness of schedules
-\end{itemize}
-
-\subsection{Solvable problems with PCP}
-\TODO{Freek}
-\begin{itemize}
-\item What are the examples from the real world? 
-\item What are the underlying problems of these examples?
-\item How can they be solved using the theory described above?
-\end{itemize}
-
-\subsection{Related problems with PCP}
-\TODO{Bastiaan}
-\begin{itemize}
-\item What are the examples from the real world?
-\item Trains, trucks, maintenance scheduling, etc.
-\item Airport planning / different factors: maintenance / tanking / bagage / boarding
-\item What are the underlying problems of these examples?
-\item How does the above theory needs to be augmented in order to be able to solve the problems?
-\end{itemize}
 
 \section{Conclusion}
 \TODO{The overall conclusion.}
