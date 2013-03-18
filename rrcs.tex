@@ -87,7 +87,7 @@ $S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of re
 In this section, the general problem focussed on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
 
 \subsubsection{Activities}
-Each project consists of a finite set of activities(also called jobs) denoted as $V_i$. Each activity $V_i$ has a duration(processing time) $Dur(V_i) \in \mathbb{N}$; the time needed to complete the activity. The set of all activities is $V = (v_i \ldots v_n)$, where $n$ is the number of real activities, which has a unique dummy beginning activity $V_0$ and a unique dummy terminating activity $V_{n+1}$.
+Each project consists of a finite set of activities(also called jobs) denoted as $V_i$. Each activity $V_i$ has a duration(processing time) $Dur(V_i) \in \mathbb{N}$; the time needed to complete the activity. The set of all activities is $V = (v_i \ldots v_n)$, where $n$ is the number of real activities, which has a unique dummy beginning activity $V_0$ and a unique dummy terminating activity $V_{n+1}$. The starting and end times of an activity, when represented in a schedule, are denoted by $Start(v_j)$ and $Stop(v_j)$ for each activity $v_j$.
 
 \subsubsection{Resources}
 An activity requires a certain amount of resources to be available upon execution. For example, changing a tyre might require two workman and one car lift. In general, there are two kinds of resources: renewable and consumable(also named nonrenewable) resources. With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $\mathcal{R}_k$ at any given time is $Av(\mathcal{R}^{\rho}_k)$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $Av(\mathcal{R}^{V}_k)$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{V}$. 
@@ -95,12 +95,14 @@ An activity requires a certain amount of resources to be available upon executio
 Activities consume a certain amount of one or more resources. The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, \mathcal{R}^{\rho}_k)$ for a renewable resource and   $Usage(v_j, \mathcal{R}^V_k)$ for an nonrenewable resource. 
 
 \subsubsection{Contraints}
-Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$.
+Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$. This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
 
-Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$. The notation used in this paper is $d^{min}_{ij}$ and $d^{max}_{ij}$ respectively.
+Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$. The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
 
 \subsubsection{Schedule}
 The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$. 
+
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (Start(v_1) \ldots Start(v_n))$. There are two types of schedules, time-feasible schedules that fullfills all time constraints denoted as $S_T$ and resource-feasible schedules that fullfills all the resource constraints denoted by $S_R$. The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by ($S = S_R \cap S_T$).
 
 \subsection{Problem Complexity}
 The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the complexity theory a problem belongs to the class \emph{NP-hard} if its decision version is \emph{NP-complete}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \\
@@ -121,19 +123,21 @@ Often times it will be hard to estimate processing times for activities in pract
 \leading{Basic notation overview} \\
 \begin{tabular}{l l}
 \hline
-$T$ & horizon time \\
-$t$ & index of a time period \\
-$V$ & set of activities \\
+$T$ & time horizon \\
+$t$ & index of a time period in the time horizon $T = (t_1 \ldots t_n)$\\
+$V$ & set of activities $V = (v_1 \ldots v_n)$ \\
 $n$ & number of real activities \\
 $E$ & set of constraints \\
 $\mathcal{R}^{\rho}$ & consumable resources \\
 $\mathcal{R}^V$ & renewable resources \\
-$Dur(V_i)$ & the durability of activity $V_i$ \\
+$Dur(v_i)$ & the durability of activity $v_i$ \\
 $Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
 $Usage(v_j, \mathcal{R}_k)$ & the per periode usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
 $Start(v_i)$ & the start time of activity $v_i$ \\
 $Stop(v_i)$ & the start time of activity $v_i$ \\
-$S$ & a schedule consisting of strart times for the activities $(Start(v_1) \ldots Start(v_n))$ \\
+$MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
+$MaxLag(v_i, v_j)$ & the maximum time lag between activity $v_i$ and $v_k$ \\
+$S$ & a schedule consisting of strart times for the activities $S = (Start(v_1) \ldots Start(v_n))$ \\
 \hline
 \end{tabular}
 
