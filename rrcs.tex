@@ -31,6 +31,8 @@
 \TODO{abstract als laatste schrijven}
 \end{abstract}
 
+\newpage
+
 \section{Introduction}
 
 The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
@@ -58,7 +60,6 @@ As one might expect, several issues occur in day-to-day applications of scheduli
 As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
 
 This paper is intended to link the practical applications of the scheduling problem to several aspects of the theory, thereby addressing the incompleteness of the problem theory and discover what aspects need further research.
-
 
 \newpage
 
@@ -146,8 +147,7 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 \hline
 \end{tabular}
 
-
-
+\newpage
 
 \section{Schedule construction using PCP}
 A RCSP can be broken down into two parts.  The other part of the problem concerns the usage of resources by the activities. 
@@ -184,6 +184,8 @@ As defined above, each activity is represented by two time points. The contingen
 
 Using a technique called \emph{constraint propagation} [paper Policella], it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, since the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point.
 
+\newpage
+
 \section{Schedule construction using PCP}
 \subsection{Time Layer}
 \subsubsection{Relations as Temporal Constraints}
@@ -217,6 +219,7 @@ In the classical RCPS problem described in the previous section, the input param
 \subsubsection{Problem Extension}
 Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
 
+\newpage
 
 \section{Problem Practice}
 Many practical problems are related to the resource constraint scheduling problem.
@@ -229,12 +232,12 @@ To find the difficulties which are not shown in the simplification, we will firs
 Maintenance scheduling is one of the main examples in resource constraint scheduling.
 The maintenance of for example trucks and trains needs to be planned to minimize the time required for the vehicles to be out of service.
 Also a limited amount of maintenance stations is available, which require uncertain times to finish specific jobs.
-\TODO{maintenance}
+\TODO{maintenance scheduling verder toelichten}
 
 \subsection{Airport planning}
 Airport planning is an example of another complex practical example of the scheduling problem.
 Because there are many different factors involved, all represented by different resources and constraints.
-\TODO{airport}
+\TODO{airport scheduling verder toelichten}
 
 \subsection{Difficulties}
 \TODO{difficulties noemen, werken naar continuous solution}
@@ -249,6 +252,7 @@ Because there are many different factors involved, all represented by different 
 %What are the underlying problems of these examples?
 %How does the above theory needs to be augmented in order to be able to solve the problems?
 
+\newpage
 
 \section{Continuous planning}
 
@@ -332,12 +336,16 @@ If for example a project manager notices that a certain activity takes longer th
 
 A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
 
+\newpage
+
 \section{Conclusion}
 \TODO{The overall conclusion. Huidige tekst verplaatst uit continuous}
 Continuous planning poses a special problem in the scheduling domain.
 Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
 There is always a trade-of between optimal solutions and processing speed.
 Often the pressure to provide a quick solution overrules the optimum option.
+
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{references}
