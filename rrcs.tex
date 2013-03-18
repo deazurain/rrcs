@@ -68,10 +68,7 @@ Different aspects of the underlying theory leading to RRCS.  Per point explanati
 \TODO{Describe what notation conventions we will adopt. I suggest using the notation from P. Brucker et al, Eauropean Journal of Operational Research 112 (1999). }
 
 \subsection{Formal Definition}
-\TODO{Freek, naar voren halen}
-The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
-
-\cite{brucker99}
+The general definition for the resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$: \cite{brucker99}
 
 Given:
 \begin{itemize}
@@ -84,7 +81,7 @@ Given:
 \item the per period usage for an activity $V_j$ of resource $R_k$ are denoted by $(r_{11}\ldots r_{jk})$, such that it represents the amount of resource $R_k$ used per time period of executing activity $V_j$
 \end{itemize}
 
-Find the optimal schedule where each activity gets executed with the available resources and all the constraints between the activities are satisfied. Where $S_j$ denotes the start time of activity $V_j$ and $C_j$ denotes the completion time of activity $V_j$. $S = (S_1 \ldots S_n)$ is a schedule and $C = (C_1 \ldots C_n)$ is a vector of completion times for the activities $v = (V_1 \ldots V_n)$.
+Find the optimal schedule where each activity gets executed with the available resources and all the constraints between the activities are satisfied. Where $S_j$ denotes the start time of activity $V_j$ and $C_j$ denotes the completion time of activity $V_j$. $S = (S_1 \ldots S_n)$ is a schedule and $C = (C_1 \ldots C_n)$ is a vector of completion times for the activities $v = (V_1 \ldots V_n)$. \\
 $S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of resource-feasible schedules. Thereby the conjunction of the sets $S_R$ and $S_T$ will give you the set of feasible schedules($S = S_R \cap S_T$)
 
 \subsection{Prerequisites}
