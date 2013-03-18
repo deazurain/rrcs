@@ -111,7 +111,7 @@ The general idea of resource scheduling is to minimize the project execution tim
 The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (Start(v_1) \ldots Start(v_n))$. There are two types of schedules, time-feasible schedules that fullfills all time constraints denoted as $S_T$ and resource-feasible schedules that fullfills all the resource constraints denoted by $S_R$. The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$. We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
 
 \subsection{Problem Complexity}
-The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the complexity theory a problem belongs to the class \emph{NP-hard} if its decision version is \emph{NP-complete}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \\
+The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision \TODO{schrijf je dit woord zo?} version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is én in NP zit, ik vind deze redenatie een beetje achterstevoren}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \TODO{Ik zou dit stuk vervangen door een alinea die zegt in welke paper het bewijs gegeven is voor $RCPSP \in NP-Complete$ en een intuitief bewijsje geven voor waarom dat zo is}\\
 The time and space complexity of the RCS problem depends on the used algorithms and approaches used to solve the problem. There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
 \TODO{Explain the time and space compelxity between the two different approaches and add reference to the prove}
 
@@ -125,24 +125,25 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems introduced by using a stochastic distribution for activity processing times. 
 
 \subsection{Summary}
-\leading{Basic notation overview} \\
+\leading{Notation overview} \\
 \begin{tabular}{l l}
 \hline
 $T$ & time horizon \\
-$t$ & index of a time period in the time horizon $T = (t_1 \ldots t_n)$\\
+$t$ \TODO{$t_i$?} &  index of a time period in the time horizon $T = (t_1 \ldots t_n)$\\
 $V$ & set of activities $V = (v_1 \ldots v_n)$ \\
-$n$ & number of real activities \\
+$n$ & number of original activities \\
 $E$ & set of constraints \\
 $\mathcal{R}^{\rho}$ & consumable resources \\
 $\mathcal{R}^V$ & renewable resources \\
-$Dur(v_i)$ & the duration of activity $v_i$ \\
+$Dur(v_i)$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
 $Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
 $Usage(v_j, \mathcal{R}_k)$ & the per periode usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
 $Start(v_i)$ & the start time of activity $v_i$ \\
 $Stop(v_i)$ & the start time of activity $v_i$ \\
 $MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
 $MaxLag(v_i, v_j)$ & the maximum time lag between activity $v_i$ and $v_k$ \\
-$S$ & a schedule consisting of strart times for the activities $S = (Start(v_1) \ldots Start(v_n))$ \\
+$S$ & a schedule consisting of st
+art times for the activities $S = (Start(v_1) \ldots Start(v_n))$ \\
 $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))$ \\
 \hline
 \end{tabular}
@@ -162,7 +163,7 @@ In the models used to simulate the problem at hand, it is convenient to express 
 
 
 \subsubsection{Simple Temporal Networks with Uncertainty}
-A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point $t_i$ with a value within its time window in such a way that the relations are satisfied. In an STN with uncertainty (STNU), the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
+A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP. An STN consists of a set $T$ \TODO{Conflict met time horizon T} of so-called \emph{time points} with associated time windows. Relations between each pair of time points can be specified. The goal of an STN is to provide each time point $t_i$ with a value within its time window in such a way that the relations \TODO{"the" relations?} are satisfied. In an STN with uncertainty (STNU), the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
 
 There are two types of relations:
 \begin{enumerate}
@@ -174,7 +175,7 @@ There are two types of relations:
 The temporal aspect of the problem can be modeled using \emph{time points}, \emph{free constraints} and \emph{contingent constraints} so as to form an STN in the following way:
 \begin{enumerate}
 \item For each activity $v_i$, introduce two time points $s_i$ and $e_i$;
-\item Add a contingent constraint $s_i \xrightarrow{[d_{ij}:D_{ij}]} e_i$ for each activity;
+\item Add a contingent constraint $s_i \xrightarrow{[d_{ij}:D_{ij}]} e_i$ for each activity; \TODO{Zitten de $i$ en de $j$ hier wel goed?}
 \item Add a free constraint $s_i \xrightarrow{[d_{ij},D_{ij}]} e_i$ for each temporal constraint in the problem definition.
 \end{enumerate}
 
