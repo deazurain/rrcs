@@ -96,7 +96,7 @@ An activity requires a certain amount of resources to be available upon executio
 Activities consume a certain amount of one or more resources. The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, \mathcal{R}^{\rho}_k)$ for a renewable resource and   $Usage(v_j, \mathcal{R}^V_k)$ for an nonrenewable resource. 
 
 \subsubsection{Contraints}
-Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $(V, E)$ in which every activity is represented by a node and directed edges between nodes $A_i$ and $A_j$ are added if an action $A_i$ needs to be executed before $A_j$.
+Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$.
 
 Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$. The notation used in this paper is $d^{min}_{ij}$ and $d^{max}_{ij}$ respectively.
 
@@ -121,6 +121,7 @@ Multi-mode project scheduling is an extension to the original PS problem. In sho
 \subsection{Summary}
 \leading{Basic notation overview} \\
 \begin{tabular}{l l}
+\hline
 $T$ & horizon time \\
 $t$ & index of a time period \\
 $V$ & set of activities \\
@@ -129,8 +130,12 @@ $E$ & set of constraints \\
 $\mathcal{R}^{\rho}$ & consumable resources \\
 $\mathcal{R}^V$ & renewable resources \\
 $Dur(V_i)$ & the durability of activity $V_i$ \\
-$Av(R_i)$ & the availability of resource $R_i$ \\
-$Usage(V_j, R_k)$ & the per periode usage for activity $V_j$ of resource $R_k$
+$Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
+$Usage(v_j, \mathcal{R}_k)$ & the per periode usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
+$Start(v_i)$ & the start time of activity $v_i$ \\
+$Stop(v_i)$ & the start time of activity $v_i$ \\
+$S$ & a schedule consisting of strart times for the activities $(Start(v_1) \ldots Start(v_n))$ \\
+\hline
 \end{tabular}
 
 
