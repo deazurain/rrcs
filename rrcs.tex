@@ -66,6 +66,26 @@ Different aspects of the underlying theory leading to RRCS.  Per point explanati
 
 \TODO{Describe what notation conventions we will adopt. I suggest using the notation from P. Brucker et al, Eauropean Journal of Operational Research 112 (1999). }
 
+\subsection{Formal Definition}
+\TODO{Freek, naar voren halen}
+The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
+
+\cite{brucker99}
+
+Given:
+\begin{itemize}
+\item a horizon T that denotes the total time horizon for the problem
+\item a set of activities(jobs) $V = V_1 \ldots V_n$, with a unique dummy beginning activity $V_0$ and a unique dummy terminating activity $V_{n+1}$
+\item the durations, processing time of the activities $p_1\ldots p_n$
+\item a set of constraints which needs to be satisfied $E$, such that $(V_i,V_j) \in E$ means that $V_i$ precedes activity $V_j$. We asume that the grpah doesn't conain a cycle, otherwise the precedence relations are inconsistent.
+\item a set of available resources $\mathcal{R}$, splitted in renewable resources $\mathcal{R}^P$ and nonrenewable resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
+\item the availabilities of the resources $B$, so that $B_k$ denotes the availability of resource $R_k$
+\item the per period usage for an activity $V_j$ of resource $R_k$ are denoted by $(r_{11}\ldots r_{jk})$, such that it represents the amount of resource $R_k$ used per time period of executing activity $V_j$
+\end{itemize}
+
+Find the optimal schedule where each activity gets executed with the available resources and all the constraints between the activities are satisfied. Where $S_j$ denotes the start time of activity $V_j$ and $C_j$ denotes the completion time of activity $V_j$. $S = (S_1 \ldots S_n)$ is a schedule and $C = (C_1 \ldots C_n)$ is a vector of completion times for the activities $v = (V_1 \ldots V_n)$.
+$S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of resource-feasible schedules. Thereby the conjunction of the sets $S_R$ and $S_T$ will give you the set of feasible schedules($S = S_R \cap S_T$)
+
 \subsection{Prerequisites}
 In this section, the general problem focussed on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
 
@@ -89,32 +109,15 @@ The general idea of resource scheduling is to minimize the project execution tim
 \TODO{Wat is dit: Bastiaan.
 Mick G: Ik gok Simple Temporal Networks}
 
-\subsection{Formal Definition}
-\TODO{Freek, naar voren halen}
-The general definition for the robust resource constraint scheduling problem is defined by a tuple $(V, p, E,R,B, b)$:\\
-
-\cite{brucker99}
-
-Given:
-\begin{itemize}
-\item a set of activities $V$
-\item the durations of the activities $(p_1\ldots p_n)$
-\item a set of constraints which needs to be satisfied $E$
-\item a set of available resources $\mathcal{R}$
-\item the availabilities of the resources $B$
-\item the demands for an activity $j$ of resource $k$ $(r_{11}\ldots r_{jk})$
-\end{itemize}
-
-\TODO{Explain what the question of the resource constraint scheduling is}
-
 \subsection{Problem Complexity}
 \TODO{Freek}
 \subsubsection{Problem Classification}
-RRCS belongs to the class of problems that are $NP-hard$. According to the complexity theory a problem belongs to the class $NP-hard$ if its decision version is $NP-complete$. We will use this theory to prove that RRCS belongs to the class $NP-hard$.
+RCS problem belongs to the class of problems that are $NP-hard$. According to the complexity theory a problem belongs to the class $NP-hard$ if its decision version is $NP-complete$. That the decision version of the RCS problem belongs to the class $NP-complete$ is proven and thereby is proven that the RCS problem belongs to the class $NP-hard$.
 
 \TODO{Volgens mij kunnen we hier volstaan met een verwijzing naar een paper waar dit reeds gedaan is. Volgens mij kunnen de subkopjes dan ook weg.}
-\subsubsection{Time Complexity}
-\subsubsection{Space Complexity}
+\subsubsection{Time and Space Complexity}
+The time and space complexity of the RCS problem depends on the used algorithms used to solve the problem. There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
+Exact algorithms are mainly based on dynamic programming and the decomposition of the underlying network. 
 
 \subsection{Problem Extension}
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
