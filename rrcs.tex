@@ -2,9 +2,10 @@
 \usepackage{a4wide}
 \usepackage{amssymb}
 \usepackage{amsmath}
-
+\usepackage[numbers]{natbib}
 \newcommand{\leading}[1]{\textbf{#1}}
 \usepackage{xcolor}
+\usepackage{hyperref}
 
 %% if your are not using LaTeX2e use instead
 %% \documentstyle[bnaic]{article}
@@ -20,8 +21,8 @@
 \pagestyle{empty}
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{\baselineskip}
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{\baselineskip}
 
 \begin{document}
 \maketitle
@@ -30,6 +31,8 @@
 \begin{abstract}
 \TODO{abstract als laatste schrijven}
 \end{abstract}
+
+\newpage
 
 \section{Introduction}
 
@@ -59,17 +62,18 @@ As is not unusual for mathematical or logical models of real-life problems, ther
 
 This paper is intended to link the practical applications of the scheduling problem to several aspects of the theory, thereby addressing the incompleteness of the problem theory and discover what aspects need further research.
 
-
 \newpage
 
 \section{Problem background}
+
+\TODO{Make a more readable story}
 
 Different aspects of the underlying theory leading to RRCS.  Per point explanation of the theory with references to relevant papers. This will be the main section of the paper.
 
 \TODO{Describe what notation conventions we will adopt. I suggest using the notation from P. Brucker et al, Eauropean Journal of Operational Research 112 (1999). }
 
 \subsection{Formal Definition}
-The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, E, R)$: \cite{brucker99}
+The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, E, \mathcal{R})$: \cite{brucker99}
 
 Given:
 \begin{itemize}
@@ -109,17 +113,16 @@ The RCS problem schedule solution is denoted by a schedule that consists of a ve
 \subsection{Problem Complexity}
 The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the complexity theory a problem belongs to the class \emph{NP-hard} if its decision version is \emph{NP-complete}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \\
 The time and space complexity of the RCS problem depends on the used algorithms and approaches used to solve the problem. There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
-\TODO{Explain the time and space compelxity between the two different approaches}
+\TODO{Explain the time and space compelxity between the two different approaches and add reference to the prove}
 
 \subsection{Problem Extension}
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
 
 \subsubsection{Multi-mode project scheduling}
-Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. The approach to scheduling that is discussed in this paper does not account for multi-mode activities. Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
-\TODO{Reference Herroelen, Reactive scheduling in the multi-mode RCPSP}
+Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. See \citet{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities. Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
 
 \subsubsection{Stochastic processing times}
-Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown by \TODO{reference europe journal 43pag paper} covering several important problems introduced by using a stochastic distribution for activity processing times. 
+Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems introduced by using a stochastic distribution for activity processing times. 
 
 \subsection{Summary}
 \leading{Basic notation overview} \\
@@ -132,7 +135,7 @@ $n$ & number of real activities \\
 $E$ & set of constraints \\
 $\mathcal{R}^{\rho}$ & consumable resources \\
 $\mathcal{R}^V$ & renewable resources \\
-$Dur(v_i)$ & the durability of activity $v_i$ \\
+$Dur(v_i)$ & the duration of activity $v_i$ \\
 $Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
 $Usage(v_j, \mathcal{R}_k)$ & the per periode usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
 $Start(v_i)$ & the start time of activity $v_i$ \\
@@ -140,8 +143,11 @@ $Stop(v_i)$ & the start time of activity $v_i$ \\
 $MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
 $MaxLag(v_i, v_j)$ & the maximum time lag between activity $v_i$ and $v_k$ \\
 $S$ & a schedule consisting of strart times for the activities $S = (Start(v_1) \ldots Start(v_n))$ \\
+$C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))$ \\
 \hline
 \end{tabular}
+
+\newpage
 
 \section{Schedule construction using PCP}
 \TODO{Introduction to two aspects of the problem (time and resource)}
@@ -179,6 +185,7 @@ As defined above, each activity is represented by two time points. The contingen
 
 Using a technique called \emph{constraint propagation} [paper Policella], it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, because the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point.
 
+
 \subsection{Resource Layer}
 \subsubsection{Resource leveling}
 \subsubsection{Minimum Conflict Sets}
@@ -187,39 +194,49 @@ Using a technique called \emph{constraint propagation} [paper Policella], it is 
 \TODO{Explain how the two layers can be brought together}
 \subsubsection{Introduction}
 In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
+<<<<<<< HEAD
 \subsubsection{Scheduling Policy}
 \subsubsection{Partial Ordering Schedules}
 
+\subsubsection{Problem Extension}
+Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
+
+\newpage
+
 \section{Problem Practice}
-This section will discuss how the practice problems can be dealt with using the theory described in the previous section. First, the problems that can be solved using this theory are discussed. After that, the problems which cannot be solved directly using the theory are explained.\\
+Many practical problems are related to the resource constraint scheduling problem.
+Different problems require different approaches, with varying levels of complexity.
+In almost all cases the theory of the scheduling problem and the practical application are not completely similar.
+The theory often represents a simplified specification of the actual problems.
+To find the difficulties which are not shown in the simplification, we will first explore some examples.
 
-\begin{itemize}
-\item Project scheduling under uncertainty: Survey
-and research potentials
-\item A Comparison of Heuristic and Optimum Solutions
-\item Reactive scheduling, improving the robustness of schedules
-\end{itemize}
+\subsection{Maintenance Scheduling}
+Maintenance scheduling is one of the main examples in resource constraint scheduling.
+The maintenance of for example trucks and trains needs to be planned to minimize the time required for the vehicles to be out of service.
+Also a limited amount of maintenance stations is available, which require uncertain times to finish specific jobs.
+\TODO{maintenance scheduling verder toelichten}
 
-\subsection{Solvable problems with PCP}
-\TODO{Freek}
-\begin{itemize}
-\item What are the examples from the real world? 
-\item What are the underlying problems of these examples?
-\item How can they be solved using the theory described above?
-\end{itemize}
+\subsection{Airport planning}
+Airport planning is an example of another complex practical example of the scheduling problem.
+Because there are many different factors involved, all represented by different resources and constraints.
+\TODO{airport scheduling verder toelichten}
 
-\subsection{Related problems with PCP}
-\TODO{Bastiaan}
-\begin{itemize}
-\item What are the examples from the real world?
-\item Trains, trucks, maintenance scheduling, etc.
-\item Airport planning / different factors: maintenance / tanking / bagage / boarding
-\item What are the underlying problems of these examples?
-\item How does the above theory needs to be augmented in order to be able to solve the problems?
-\end{itemize}
+\subsection{Difficulties}
+\TODO{difficulties noemen, werken naar continuous solution}
 
 
-\section{Continuous planning} \TODO{Mick de Lange}
+%What are the examples from the real world? 
+%What are the underlying problems of these examples?
+%How can they be solved using the theory described above?
+%What are the examples from the real world?
+%Trains, trucks, maintenance scheduling, etc.
+%Airport planning / different factors: maintenance / tanking / bagage / boarding
+%What are the underlying problems of these examples?
+%How does the above theory needs to be augmented in order to be able to solve the problems?
+
+\newpage
+
+\section{Continuous planning}
 
 In this chapter continuous planning will be discussed.
 Continuous planning is a much seen obstacle in practical scheduling problems.
@@ -301,6 +318,8 @@ If for example a project manager notices that a certain activity takes longer th
 
 A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
 
+\newpage
+
 \section{Conclusion}
 \TODO{The overall conclusion. Huidige tekst verplaatst uit continuous}
 Continuous planning poses a special problem in the scheduling domain.
@@ -308,7 +327,8 @@ Although continuous planning seems obvious and the presence is ubiquitous in pra
 There is always a trade-of between optimal solutions and processing speed.
 Often the pressure to provide a quick solution overrules the optimum option.
 
-\bibliographystyle{plain}
+\newpage
+\bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
