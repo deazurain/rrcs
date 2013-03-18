@@ -29,7 +29,6 @@
 \TODO{abstract als laatste schrijven}
 \end{abstract}
 
-
 \section{Introduction}
 
 The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
@@ -269,29 +268,24 @@ The partial order schedules are quicker to repair, but require more time initial
 In addition to this problem, the quick repairs do not represent an optimal schedule.
 Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution. 
 
-\subsection{conclusion} \TODO{Verplaatsen?}
-Continuous planning poses a special problem in the scheduling domain.
-Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
-There is always a trade-of between optimal solutions and processing speed.
-Often the pressure to provide a quick solution overrules the optimum option.
 
 \subsection{Precedence Contraint Posting in Continuous planning}
 \TODO{Mick van Gelderen}
-Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without comprimising the resource constraints. We will describe how PCP can be extended to deal with continuous planning. 
+Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints. We will describe how PCP can be extended to deal with continuous planning. 
 
 The PCP approach to scheduling is suitable for continuous planning. A lot of the methods for PCP create a POS in the form of Simple Temporal Network. This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded. An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time. 
 
 If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it. Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule. In that case a new POS has to be created from the remaining project graph. 
 
-A complete recalculation will not be nessecary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
-
-\subsection{Conclusion}
-\TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
-
-
+A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
 
 \section{Conclusion}
 \TODO{The overall conclusion.}
+\TODO{Verplaatst uit continuous}
+Continuous planning poses a special problem in the scheduling domain.
+Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
+There is always a trade-of between optimal solutions and processing speed.
+Often the pressure to provide a quick solution overrules the optimum option.
 
 \bibliographystyle{plain}
 \bibliography{references}
