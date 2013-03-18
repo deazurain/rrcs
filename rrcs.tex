@@ -280,15 +280,9 @@ Therefore partial order schedules are a better and more flexible manner of conti
 \TODO{Mick van Gelderen}
 Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without comprimising the resource constraints. We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning. 
 
-The PCP approach to scheduling is suitable for continuous planning. A lot of the methods for PCP create a POS in the form of Simple Temporal Network. This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded. An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time. 
->>>>>>> d8f18ddf3b22fd3de122f1f021817fb4f19d63ac
+The PCP approach to scheduling is suitable for continuous planning. A lot of the methods for PCP create a POS in the form of Simple Temporal Network. This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded. An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
 
-\subsubsection{A Precedence Constraint Posting method}
-
-\subsubsection{Extending PCP to continuous planning}
-
-\subsection{Conclusion}
-\TODO{Mick de Lange: dit zal ik maandag doen, nadat bovenstaand stuk door Mick van Gelderen is geschreven.}
+If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it. Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule. In that case a new POS has to be created from the remaining project graph. 
 
 A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities. 
 
