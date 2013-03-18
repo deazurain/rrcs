@@ -2,7 +2,7 @@
 \usepackage{a4wide}
 \usepackage{amssymb}
 \usepackage{amsmath}
-
+\usepackage[numbers]{natbib}
 \newcommand{\leading}[1]{\textbf{#1}}
 \usepackage{xcolor}
 
@@ -116,11 +116,10 @@ Exact algorithms are mainly based on dynamic programming and the decomposition o
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
 
 \subsubsection{Multi-mode project scheduling}
-Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. The approach to scheduling that is discussed in this paper does not account for multi-mode activities. Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
-\TODO{Reference Herroelen, Reactive scheduling in the multi-mode RCPSP}
+Multi-mode project scheduling is an extension to the original PS problem. In short it takes multiple ways to perform and activity into account. The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity. See \citet{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities. Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
 
 \subsubsection{Stochastic processing times}
-Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown by \TODO{reference europe journal 43pag paper} covering several important problems introduced by using a stochastic distribution for activity processing times. 
+Often times it will be hard to estimate processing times for activities in practice. There is a big chance that the actual processing time will be  different from the estimate. In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems introduced by using a stochastic distribution for activity processing times. 
 
 \section{Schedule construction using PCP}
 A RCSP can be broken down into two parts.  The other part of the problem concerns the usage of resources by the activities. 
@@ -152,7 +151,7 @@ Input to second layer
 \subsubsection{Minimum Conflict Sets}
 
 \subsection{Precedence Constraint Posting}
-\subsubsecion{Scheduling Policy}
+\subsubsection{Scheduling Policy}
 \subsubsection{Partial Ordering Schedules}
 
 Time Layer
@@ -299,7 +298,7 @@ Although continuous planning seems obvious and the presence is ubiquitous in pra
 There is always a trade-of between optimal solutions and processing speed.
 Often the pressure to provide a quick solution overrules the optimum option.
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
