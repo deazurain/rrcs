@@ -65,7 +65,7 @@ This paper is intended to link the practical applications of the scheduling prob
 
 Different aspects of the underlying theory leading to RRCS.  Per point explanation of the theory with references to relevant papers. This will be the main section of the paper.
 
-\TODO{Describe what notation conventions we will adopt. I suggest using the notation from P. Brucker et al, Eauropean Journal of Operational Research 112 (1999). }
+\TODO{Describe what notation conventions we will adopt. I suggest using the notation from P. Brucker et al, European Journal of Operational Research 112 (1999). }
 
 \subsection{Formal Definition}
 The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, E, \mathcal{R})$: \cite{brucker99}
@@ -75,8 +75,8 @@ Given:
 \item a horizon T that denotes the total time horizon for the problem
 \item a set of activities(jobs) $V = v_1 \ldots v_n$, with a unique dummy beginning activity $v_0$ and a unique dummy terminating activity $v_{n+1}$
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k)$ denotes the duration of activity $v_k$
-\item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i$ precedes activity $v_j$. We asume that the grpah doesn't conain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $\mathcal{R}$, splitted in consumable(renewable) resources $\mathcal{R}^{\rho}$ and nonrenewable resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
+\item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i$ precedes activity $v_j$. We assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
+\item a set of available resources $\mathcal{R}$, split in consumable \TODO{consumable = non-renewable (MickL)} (renewable) resources $\mathcal{R}^{\rho}$ and nonrenewable resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
 \item the availabilities of the resources $Av(\mathcal{R}_i)$, so that $Av(\mathcal{R}_k)$ denotes the availability of resource $\mathcal{R}_k$
 \item the per period usage for an activity $v_j$ of resource $\mathcal{R}_k$ are denoted by $Usage(v_j, \mathcal{R}_k)$, such that it represents the amount of resource $\mathcal{R}_k$ used per time period of executing activity $v_j$
 \end{itemize}
@@ -85,30 +85,30 @@ Find the optimal schedule where each activity gets executed with the available r
 $S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of resource-feasible schedules. Thereby the conjunction of the sets $S_R$ and $S_T$ will give you the set of feasible schedules($S = S_R \cap S_T$)
 
 \subsection{Prerequisites}
-In this section, the general problem focussed on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
+In this section, the general problem focused on in this paper is explained. Projects composed of activities, resources and constraints are introduced and a unifying notation is presented. First, some terminology is discussed followed by a problem definition.
 
 \subsubsection{Activities}
 Each project consists of a finite set of activities(also called jobs) denoted as $V_i$. Each activity $V_i$ has a duration(processing time) $Dur(V_i) \in \mathbb{N}$; the time needed to complete the activity. The set of all activities is $V = (v_i \ldots v_n)$, where $n$ is the number of real activities, which has a unique dummy beginning activity $V_0$ and a unique dummy terminating activity $V_{n+1}$. The starting and end times of an activity, when represented in a schedule, are denoted by $Start(v_j)$ and $Stop(v_j)$ for each activity $v_j$.
 
 \subsubsection{Resources}
-An activity requires a certain amount of resources to be available upon execution. For example, changing a tyre might require two workman and one car lift. In general, there are two kinds of resources: renewable and consumable(also named nonrenewable) resources. With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $\mathcal{R}_k$ at any given time is $Av(\mathcal{R}^{\rho}_k)$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $Av(\mathcal{R}^{V}_k)$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{V}$. 
+An activity requires a certain amount of resources to be available upon execution. For example, changing a tire might require two workmen and one car lift. In general, there are two kinds of resources: renewable and consumable (also named nonrenewable) resources. With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available. This contrasts with renewable resources, which do not deplete when used. For renewable resources, the amount of units available of resource $\mathcal{R}_k$ at any given time is $Av(\mathcal{R}^{\rho}_k)$ (for example the number of machines in a shop). The total amount of units available for a nonrenewable resource $k$ is noted by $Av(\mathcal{R}^{V}_k)$. The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{V}$. 
 
 Activities consume a certain amount of one or more resources. The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, \mathcal{R}^{\rho}_k)$ for a renewable resource and   $Usage(v_j, \mathcal{R}^V_k)$ for an nonrenewable resource. 
 
-\subsubsection{Contraints}
+\subsubsection{Constraints}
 Apart from activities that consume resources, additional constraints can be added. Two of these are precedence constraints and temporal constrains. Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted). Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$. This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
 
 Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$. The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
 
 \subsubsection{Schedule}
-The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$. The genereated schedule may not exeed the Time Horizon $T$, when the project itself has an deadline.
+The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above. The project itself can also have a deadline, the total amount of time units before the project needs to be completed. A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$. The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
 
-The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (Start(v_1) \ldots Start(v_n))$. There are two types of schedules, time-feasible schedules that fullfills all time constraints denoted as $S_T$ and resource-feasible schedules that fullfills all the resource constraints denoted by $S_R$. The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$. We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (Start(v_1) \ldots Start(v_n))$. There are two types of schedules, time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$. The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$. We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
 
 \subsection{Problem Complexity}
-The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision \TODO{schrijf je dit woord zo?} version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is én in NP zit, ik vind deze redenatie een beetje achterstevoren}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \TODO{Ik zou dit stuk vervangen door een alinea die zegt in welke paper het bewijs gegeven is voor $RCPSP \in NP-Complete$ en een intuitief bewijsje geven voor waarom dat zo is}\\
+The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision \TODO{schrijf je dit woord zo? (MickL: ja)} version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is én in NP zit, ik vind deze redenatie een beetje achterstevoren}. That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. \TODO{Ik zou dit stuk vervangen door een alinea die zegt in welke paper het bewijs gegeven is voor $RCPSP \in NP-Complete$ en een intuitief bewijsje geven voor waarom dat zo is}\\
 The time and space complexity of the RCS problem depends on the used algorithms and approaches used to solve the problem. There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
-\TODO{Explain the time and space compelxity between the two different approaches and add reference to the prove}
+\TODO{Explain the time and space complexity between the two different approaches and add reference to the prove}
 
 \subsection{Problem Extension}
 The basic PS problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
@@ -131,7 +131,7 @@ $\mathcal{R}^{\rho}$ & consumable resources \\
 $\mathcal{R}^V$ & renewable resources \\
 $Dur(v_i)$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
 $Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
-$Usage(v_j, \mathcal{R}_k)$ & the per periode usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
+$Usage(v_j, \mathcal{R}_k)$ & the per period usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
 $Start(v_i)$ & the start time of activity $v_i$ \\
 $Stop(v_i)$ & the start time of activity $v_i$ \\
 $MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
@@ -303,7 +303,7 @@ In addition to this problem, the quick repairs do not represent an optimal sched
 Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution. 
 
 
-\subsection{Precedence Contraint Posting in Continuous planning}
+\subsection{Precedence Constraint Posting in Continuous planning}
 \TODO{Mick van Gelderen}
 Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints. We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning. 
 
