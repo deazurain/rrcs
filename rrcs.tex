@@ -11,6 +11,7 @@
     R.M. de Lange \and
     B. Gris\`el \and
     F. van Tienen}
+\date{}
 
 \pagestyle{empty}
 
@@ -311,8 +312,8 @@ Resource constraint scheduling algorithms focus on solving a given set of tasks,
 This makes these solutions quite effective on more complex closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
 In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
 \cite{laborie03}
+
 \subsection{Schedule repair}
-\TODO{Output is hetzelfde als input}
 Iterative repair is the process of repeatedly repairing the schedule when required.
 This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
 The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
@@ -330,6 +331,7 @@ In other words, iterative repair provides a method of making planning more flexi
 Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
 
 \subsection{Partial order schedules}
+\TODO{Output is hetzelfde als input}
 Partial order schedules are solutions which take the flexibility a step further.
 In partial order schedules, as defined in \cite{policella07}, each activity retains a set of feasible start times.
 In this manner a set of possible schedules is available, rather than just one solution.
