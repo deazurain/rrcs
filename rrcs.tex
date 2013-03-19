@@ -167,7 +167,7 @@ There are two types of relations:
 \end{enumerate}
 
 \subsubsection{Reduction to Temporal Constraints}
-The temporal aspect of the problem can be modeled using \emph{time points}, \emph{free constraints} and \emph{contingent constraints} so as to form an STN in the following way:
+The temporal aspect of the problem can be modeled using \emph{time points}, \emph{free constraints} and \emph{contingent constraints} so as to form an STN \TODO{STNU?, de Uncertainty komt van die contigent constraints toch?} in the following way:
 \begin{enumerate}
 \item For each activity $v_i$, introduce two time points $s_i$ and $e_i$;
 \item Add a contingent constraint $s_i \xrightarrow{[d_{ij}:D_{ij}]} e_i$ for each activity; \TODO{Zitten de $i$ en de $j$ hier wel goed?}
@@ -178,7 +178,7 @@ The temporal aspect of the problem can be modeled using \emph{time points}, \emp
 
 As defined above, each activity is represented by two time points. The contingent constraint connecting the two time points represents the duration of the activity. The exact processing time of the activity is not yet known at this stage, only a worst-case and a best-case processing time are given. These best-case and worst-case processing times are used respectively as lower and upper bounds for the contingent constraint. The schedule needs to be generated in such a way that for each possible value for all of the contingent constraints (all possible combinations of processing times), the free constraints are met.
 
-Using a technique called \emph{constraint propagation} [paper Policella], it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, because the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point.
+Using a technique called \emph{constraint propagation} \cite{policella07}, it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have. It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time. Note that the resulting STNU represents a set of schedules rather then one schedule in particular, because the exact execution times are not known yet. Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$. One could, for example, take the lower bound of each time point and use that as the value for each time point. \TODO{... to create an actual schedule instance?}
 
 
 \subsection{Resource Layer}
@@ -188,22 +188,23 @@ Using a technique called \emph{constraint propagation} [paper Policella], it is 
 \subsection{Precedence Constraint Posting}
 \TODO{Explain how the two layers can be brought together}
 \subsubsection{Introduction}
-In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
+In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule. The solution of this problem is a fixed schedule which can then be employed in practice. However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems. For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given. A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired. Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values. \TODO{Complex, long, this/that sentence :p}
 
 \subsubsection{Scheduling Policy}
-\subsubsection{Partial Ordering Schedules}
+\subsubsection{Partial Ordering Schedules \TODO{Order?}}
 
 \subsubsection{Problem Extension}
 Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time. Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules. This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. The graph needs to be constructed in such a way that 
-
+\TODO{I don't think this paragraph is in line with the current document structure}
 \newpage
 
 \section{Problem Practice}
 Many practical problems are related to the resource constraint scheduling problem.
 Different problems require different approaches, with varying levels of complexity.
-In almost all cases the theory of the scheduling problem and the practical application are not completely similar.
+In almost all cases the theory of the scheduling problem and the practical application are not completely similar. \TODO{Examples/proof? "Almost ALL cases"}
 The theory often represents a simplified specification of the actual problems.
 To find the difficulties which are not shown in the simplification, we will first explore some examples.
+\TODO{Rewrite into more coherent sentences?}
 
 \subsection{Maintenance Scheduling}
 Maintenance scheduling is one of the main examples in resource constraint scheduling.
