@@ -63,7 +63,7 @@ This paper is intended to link the practical applications of the scheduling prob
 \section{Problem background}
 \TODO{Freek}
 
-\TODO{MickL}
+\TODO{MickG}
 
 \TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
 
@@ -290,11 +290,15 @@ The graph needs to be constructed in such a way that
 
 \newpage
 
-\section{Continuous planning}
+\section{Continuous scheduling}
 \TODO{MickL}
 
-\TODO{rewrite, remove planning, continuous scheduling, use examples}
+In many practical environments of the scheduling problem there is another factor to take into account, continuity.
+In practice the set of resources and tasks is not closed, but tasks are added during the process.
+Also, problems could arise which delay task execution or possibly disable resources.
+\\
 
+\TODO{rewrite, remove planning, continuous scheduling, use examples}\\
 In this chapter continuous planning will be discussed.
 Continuous planning is a much seen obstacle in practical scheduling problems.
 Flexibility and robustness of a schedule are key to continuous planning, as problems or changes may occur during execution.
@@ -310,31 +314,7 @@ Resource constraint scheduling algorithms focus on solving a given set of tasks,
 This makes these solutions quite effective on more complex closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
 In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
 \cite{laborie03}
-
-\subsection{Automated planning}
-\TODO{REMOVE}
-
-A classical approach to scheduling a continuously growing set of tasks is to simply plan ahead until a set horizon.
-After this horizon, the next set of tasks is planned.
-This way batch after batch of tasks is scheduled, resulting in a schedule, which is most likely to be suboptimal.
-The result does not allow for changes in the already planned parts and therefore possibly misses more efficient solutions and lacks adaptivity.
-\cite{chien00}
-
-In several different fields we see the search for better optimization of continuous planning solutions.
-In the field of robotics, like robotic space exploration, automated planning is the main scheduling approach.
-This form of AI planning focuses on realization of strategies and short-term task selection.
-With this planning form autonomous robots select the tasks with only a short foresight.
-In this field of AI efforts are being made to optimize the schedules, with the use of several parts of the resource constraint scheduling domain.
-\cite{smith00}
-
-The complexity of the tasks to be selected by the robots are becoming more complex, because an increasing set of variables needs to be taken in to account.
-Due to these extra variables the planning problem resembles the more complex resource constraint scheduling problem.
-Automated planning does not have the capabilities to take these extra constraints into consideration.
-However, the solution is not to simply use resource constraint scheduling, for this does not currently give the same speed en flexibility as automated planning.
-The main reason for this is that tasks need to be selected "on-the-go", thus decisions need to be made in a short timespan.
-The time it takes to calculate an optimal solution would be of such length, that the set of current tasks might deviate from the selected tasks in the schedule.
-
-\subsection{Iterative repair}
+\subsection{Schedule repair}
 \TODO{Output is hetzelfde als input}
 Iterative repair is the process of repeatedly repairing the schedule when required.
 This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
@@ -366,27 +346,25 @@ The partial order schedules are quicker to repair, but require more time initial
 In addition to this problem, the quick repairs do not represent an optimal schedule.
 Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
 
-
-
 \subsection{Precedence Constraint Posting in Continuous planning}
 \TODO{MickG}
 
 \TODO{REMOVE / MERGE with previous chapter}
-Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
-We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
-
-
-The PCP approach to scheduling is suitable for continuous planning.
-A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
-This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
-An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
-
-If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
-Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
-In that case a new POS has to be created from the remaining project graph.
-
-
-A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
+%Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
+%We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
+%
+%
+%The PCP approach to scheduling is suitable for continuous planning.
+%A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
+%This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
+%An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
+%
+%If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
+%Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
+%In that case a new POS has to be created from the remaining project graph.
+%
+%
+%A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
 
 
 \newpage
