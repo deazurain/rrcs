@@ -30,6 +30,7 @@
 \newpage
 
 \section{Introduction}
+\TODO{rewrite introduction after draft finished, explain structure, chapters etc.}
 
 The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
 These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time.
@@ -60,8 +61,13 @@ This paper is intended to link the practical applications of the scheduling prob
 \newpage
 
 \section{Problem background}
+\TODO{Freek}
 
-\TODO{Make a more readable story}
+\TODO{MickL}
+
+\TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
+
+\TODO{define 'optimal'}
 
 Different aspects of the underlying theory leading to RRCS.
  Per point explanation of the theory with references to relevant papers.
@@ -126,9 +132,11 @@ This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
 
 Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
 The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
+\TODO{use math func. Latex}
 
 \subsubsection{Schedule}
-The general idea of resource scheduling is to minimize the project execution time without over-utilising the resources or violate project constraints like the constraints discussed above.
+\TODO{what is time horizon?, define RCS, two types of scheduling?, don't use completion times}
+The general idea of resource scheduling is to minimize the project execution time without over-utilizing the resources or violate project constraints like the constraints discussed above.
 The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
 The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
@@ -147,7 +155,8 @@ The time and space complexity of the RCS problem depends on the used algorithms 
 There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
 \TODO{Explain the time and space complexity between the two different approaches and add reference to the prove}
 
-\subsection{Problem Extension}\TODO{Waarom extension, wat is het nut van deze paragraaf, als jet doet, bespreek het dan goed}
+\subsection{Problem Extension}
+\TODO{Waarom extension, wat is het nut van deze paragraaf, als jet doet, bespreek het dan goed}
 The basic PS \TODO{Wtf PS?} problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
 
 \subsubsection{Multi-mode project scheduling}
@@ -164,6 +173,7 @@ There is a big chance that the actual processing time will be  different from th
 In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems \TODO{Welke problemen, welke resultaten, het zegt niks wat er stat}introduced by using a stochastic distribution for activity processing times.
 
 \subsection{Summary}
+\TODO{REMOVE / MOVE to 2.1}
 \begin{tabular}{l l}
 \hline
 $T$ & time horizon \\
@@ -189,6 +199,8 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 \newpage
 
 \section{Schedule construction using PCP}
+\TODO{Bastiaan}
+
 \TODO{Structuur: Waarom PCP? Er is een probleem => NP-compleet. Dus vorm van benadering. Oberveer het volgende: als we ons puur beperken tot het tijdsaspect danr educeert het naar STN probleem wat op te lossen is in poly-time. Kunnen we het probleem niet splitsen zodat we resource deel apart nemenv antijdsdeel? We kijken naar resourceprofiel en voegen constraints toe. We beginnen met STN verhaal en daarna bespreken we hoe we constraints moeten toevoege. Twee methoden: Conflict Free en ESTA verhaal. Conflict Free is feasable voor alle starttimes en ESTA alleen voor 1 starttime. Chaining => ESTA oplossing ombouwen tot een POS. }  
 
 There are different ways to construct a schedule based on the problem definition. 
@@ -272,44 +284,13 @@ Whereas the classical solution of the RCPS problem was given in the form of one 
 This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far.
 The graph needs to be constructed in such a way that 
 \TODO{I don't think this paragraph is in line with the current document structure}
-\newpage
-
-\section{Problem Practice}
-Many practical problems are related to the resource constraint scheduling problem.
-Different problems require different approaches, with varying levels of complexity.
-In almost all cases the theory of the scheduling problem and the practical application are not completely similar.
-\TODO{Examples/proof? "Almost ALL cases"}
-The theory often represents a simplified specification of the actual problems.
-To find the difficulties which are not shown in the simplification, we will first explore some examples.
-\TODO{Rewrite into more coherent sentences?}
-
-\subsection{Maintenance Scheduling}
-Maintenance scheduling is one of the main examples in resource constraint scheduling.
-The maintenance of for example trucks and trains needs to be planned to minimize the time required for the vehicles to be out of service.
-Also a limited amount of maintenance stations is available, which require uncertain times to finish specific jobs.
-\TODO{maintenance scheduling verder toelichten}
-
-\subsection{Airport planning}
-Airport planning is an example of another complex practical example of the scheduling problem.
-Because there are many different factors involved, all represented by different resources and constraints.
-\TODO{airport scheduling verder toelichten}
-
-\subsection{Difficulties}
-\TODO{difficulties noemen, werken naar continuous solution}
-
-
-%What are the examples from the real world? 
-%What are the underlying problems of these examples?
-%How can they be solved using the theory described above?
-%What are the examples from the real world?
-%Trains, trucks, maintenance scheduling, etc.
-%Airport planning / different factors: maintenance / tanking / bagage / boarding
-%What are the underlying problems of these examples?
-%How does the above theory needs to be augmented in order to be able to solve the problems?
 
 \newpage
 
 \section{Continuous planning}
+\TODO{MickL}
+
+\TODO{rewrite, remove planning, continuous scheduling, use examples}
 
 In this chapter continuous planning will be discussed.
 Continuous planning is a much seen obstacle in practical scheduling problems.
@@ -328,6 +309,7 @@ In current continuous planning, the solution is more flexible and adaptive, but 
 \cite{laborie03}
 
 \subsection{Automated planning}
+\TODO{REMOVE}
 
 A classical approach to scheduling a continuously growing set of tasks is to simply plan ahead until a set horizon.
 After this horizon, the next set of tasks is planned.
@@ -384,7 +366,9 @@ Therefore partial order schedules are a better and more flexible manner of conti
 
 
 \subsection{Precedence Constraint Posting in Continuous planning}
-\TODO{Mick van Gelderen}
+\TODO{MickG}
+
+\TODO{REMOVE / MERGE with previous chapter}
 Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
 We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
 
