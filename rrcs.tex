@@ -103,10 +103,10 @@ Projects composed of activities, resources and constraints are introduced and a 
 First, some terminology is discussed followed by a problem definition.
 
 \subsubsection{Activities}
-Each project consists of a finite set of activities(also called jobs) denoted as $V_i$.
-Each activity $V_i$ has a duration(processing time) $Dur(V_i) \in \mathbb{N}$; the time needed to complete the activity.
-The set of all activities is $V = (v_i \ldots v_n)$, where $n$ is the number of real activities, which has a unique dummy beginning activity $V_0$ and a unique dummy terminating activity $V_{n+1}$.
-The starting and end times of an activity, when represented in a schedule, are denoted by $Start(v_j)$ and $Stop(v_j)$ for each activity $v_j$.
+Each project consists of a finite set of activities(also called jobs) denoted as $V = v_1 \ldots v_n$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
+Each activity $v_i \in V$ has a duration(processing time) $Dur(v_i) \in \mathbb{N}$, the time needed to complete the activity, and a starting time $Start(v_i) \in \mathbb{N}$, the time at which the activity should be executed. The duration $Dur(v_i)$ and the starting time $Start(v_i)$ are both denoted as a time period in the time horizon $T$.
+
+We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
 
 \subsubsection{Resources}
 An activity requires a certain amount of resources to be available upon execution.
