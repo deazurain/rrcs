@@ -11,6 +11,7 @@
     R.M. de Lange \and
     B. Gris\`el \and
     F. van Tienen}
+\date{}
 
 \pagestyle{empty}
 
@@ -82,20 +83,18 @@ The general definition for the resource constraint scheduling problem is defined
 Given:
 \begin{itemize}
 \item a horizon $T$ that denotes the total time horizon for the problem, where $T \in \mathbb{N}$
-\item a set of activities(jobs) $V = v_1 \ldots v_n$, where $v_j \in V$ is an identifier for an activity
+\item a set of activities(jobs) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
 \item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $forall_{1 \leq j \leq n}(w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k) \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
-\item a set of available resources $R$ where each element is an identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ but with a possible overlap of doubly constrained resources
+\item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
+\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ but with a possible overlap of doubly constrained resources ($r_j \in R^{\rho} \wedge r_j \in R^V$)
 \item the availabilities of the resources $Av(R_i, t)$, so that $Av(R_k, t) \in \mathbb{N}$ denotes the availability of resource $R_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
-\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period of executing activity $v_j \in V$
+\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
 \end{itemize}
 
-Find the optimal schedule where each activity gets executed with the available resources and all the constraints between the activities are satisfied where $Start(v_j) \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
-$S = (Start(v_1) \ldots Start(v_n))$ is a schedule for the activities $V = (v_1 \ldots v_n)$.
-\\
-$S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of resource-feasible schedules.
-Thereby the conjunction of the sets $S_R$ and $S_T$ will give you the set of feasible schedules($S = S_R \cap S_T$)
+Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $Start(v_j) \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
+$S = (Start(v_1) \ldots Start(v_n))$ is a feasible schedule for the activities $V = (v_1 \ldots v_n)$.
 
 \subsection{Prerequisites}
 In this section, the general problem focused on in this paper is explained.
@@ -320,31 +319,7 @@ This makes these solutions quite effective on more complex closed sets of tasks,
 In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
 \cite{laborie03}
 
-\subsection{Automated planning}
-\TODO{REMOVE}
-
-A classical approach to scheduling a continuously growing set of tasks is to simply plan ahead until a set horizon.
-After this horizon, the next set of tasks is planned.
-This way batch after batch of tasks is scheduled, resulting in a schedule, which is most likely to be suboptimal.
-The result does not allow for changes in the already planned parts and therefore possibly misses more efficient solutions and lacks adaptivity.
-\cite{chien00}
-
-In several different fields we see the search for better optimization of continuous planning solutions.
-In the field of robotics, like robotic space exploration, automated planning is the main scheduling approach.
-This form of AI planning focuses on realization of strategies and short-term task selection.
-With this planning form autonomous robots select the tasks with only a short foresight.
-In this field of AI efforts are being made to optimize the schedules, with the use of several parts of the resource constraint scheduling domain.
-\cite{smith00}
-
-The complexity of the tasks to be selected by the robots are becoming more complex, because an increasing set of variables needs to be taken in to account.
-Due to these extra variables the planning problem resembles the more complex resource constraint scheduling problem.
-Automated planning does not have the capabilities to take these extra constraints into consideration.
-However, the solution is not to simply use resource constraint scheduling, for this does not currently give the same speed en flexibility as automated planning.
-The main reason for this is that tasks need to be selected "on-the-go", thus decisions need to be made in a short timespan.
-The time it takes to calculate an optimal solution would be of such length, that the set of current tasks might deviate from the selected tasks in the schedule.
-
-\subsection{Iterative repair}
-\TODO{Output is hetzelfde als input}
+\subsection{Schedule repair}
 Iterative repair is the process of repeatedly repairing the schedule when required.
 This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
 The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
@@ -362,6 +337,7 @@ In other words, iterative repair provides a method of making planning more flexi
 Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
 
 \subsection{Partial order schedules}
+\TODO{Output is hetzelfde als input}
 Partial order schedules are solutions which take the flexibility a step further.
 In partial order schedules, as defined in \cite{policella07}, each activity retains a set of feasible start times.
 In this manner a set of possible schedules is available, rather than just one solution.
@@ -374,8 +350,6 @@ There is a possibility of the changes being significant enough to force a comple
 The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
 In addition to this problem, the quick repairs do not represent an optimal schedule.
 Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
-
-
 
 \subsection{Precedence Constraint Posting in Continuous planning}
 \TODO{MickG}
