@@ -77,7 +77,7 @@ This will be the main section of the paper.
 I suggest using the notation from P. Brucker et al, European Journal of Operational Research 112 (1999). }
 
 \subsection{Formal Definition}
-The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, E, \mathcal{R})$: \cite{brucker99}
+The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, E, R)$: \cite{brucker99}
 
 Given:
 \begin{itemize}
@@ -86,14 +86,14 @@ Given:
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k)$ denotes the duration of activity $v_k$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i$ precedes activity $v_j$.
 We assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $\mathcal{R}$, split in renewable resources $\mathcal{R}^{\rho}$ and  consumable (nonrenewable) resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
-\item the availabilities of the resources $Av(\mathcal{R}_i)$, so that $Av(\mathcal{R}_k)$ denotes the availability of resource $\mathcal{R}_k$
-\item the per period usage for an activity $v_j$ of resource $\mathcal{R}_k$ are denoted by $Usage(v_j, \mathcal{R}_k)$, such that it represents the amount of resource $\mathcal{R}_k$ used per time period of executing activity $v_j$
+\item a set of available resources $R$, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ but with a possible overlap of doubly constrained resources
+\item the availabilities of the resources $Av(R_i)$, so that $Av(R_k)$ denotes the availability of resource $R_k$
+\item the per period usage for an activity $v_j$ of resource $R_k$ are denoted by $Usage(v_j, R_k)$, such that it represents the amount of resource $R_k$ used per time period of executing activity $v_j$
 \end{itemize}
 
 Find the optimal schedule where each activity gets executed with the available resources and all the constraints between the activities are satisfied.
 Where $Start(v_j)$ denotes the start time of activity $v_j$ and $Stop(v_j)$ denotes the completion time of activity $v_j$.
-$S = (Start(v_1) \ldots Start(v_n))$ is a schedule and $C = (Stop(v_1) \ldots Stop(v_n))$ is a vector of completion times for the activities $V = (v_1 \ldots v_n)$.
+$S = (Start(v_1) \ldots Start(v_n))$ is a schedule for the activities $V = (v_1 \ldots v_n)$.
 \\
 $S_T$ defines the set if time-feasible schedules and $S_R$ defines the set of resource-feasible schedules.
 Thereby the conjunction of the sets $S_R$ and $S_T$ will give you the set of feasible schedules($S = S_R \cap S_T$)
@@ -115,12 +115,12 @@ For example, changing a tire might require two workmen and one car lift.
 In general, there are two kinds of resources: renewable and consumable (also named nonrenewable) resources.
 With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available.
 This contrasts with renewable resources, which do not deplete when used.
-For renewable resources, the amount of units available of resource $\mathcal{R}_k$ at any given time is $Av(\mathcal{R}^{\rho}_k)$ (for example the number of machines in a shop).
-The total amount of units available for a nonrenewable resource $k$ is noted by $Av(\mathcal{R}^{V}_k)$.
-The set of all renewable resources within a project is indicated with $\mathcal{R}^{\rho}$ and the set of renewable resources is indicated by $\mathcal{R}^{V}$. 
+For renewable resources, the amount of units available of resource $R_k$ at any given time is $Av(R^{\rho}_k)$ (for example the number of machines in a shop).
+The total amount of units available for a nonrenewable resource $k$ is noted by $Av(R^{V}_k)$.
+The set of all renewable resources within a project is indicated with $R^{\rho}$ and the set of renewable resources is indicated by $R^{V}$. 
 
 Activities consume a certain amount of one or more resources.
-The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, \mathcal{R}^{\rho}_k)$ for a renewable resource and   $Usage(v_j, \mathcal{R}^V_k)$ for an nonrenewable resource.
+The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, R^{\rho}_k)$ for a renewable resource and   $Usage(v_j, R^V_k)$ for an nonrenewable resource.
 
 
 \subsubsection{Constraints}
@@ -184,11 +184,11 @@ $t$ \TODO{$t_i$?} &  index of a time period in the time horizon $T = (t_1 \ldots
 $V$ & set of activities $V = (v_1 \ldots v_n)$ \\
 $n$ & number of original activities \\
 $E$ & set of constraints \\
-$\mathcal{R}^{\rho}$ & consumable resources \\
-$\mathcal{R}^V$ & renewable resources \\
+$R^{\rho}$ & consumable resources \\
+$R^V$ & renewable resources \\
 $Dur(v_i)$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
-$Av(\mathcal{R}_i)$ & the availability of resource $\mathcal{R}_i$ \\
-$Usage(v_j, \mathcal{R}_k)$ & the per period usage for activity $v_j$ of resource $\mathcal{R}_k$ \\
+$Av(R_i)$ & the availability of resource $R_i$ \\
+$Usage(v_j, R_k)$ & the per period usage for activity $v_j$ of resource $R_k$ \\
 $Start(v_i)$ & the start time of activity $v_i$ \\
 $Stop(v_i)$ & the start time of activity $v_i$ \\
 $MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
