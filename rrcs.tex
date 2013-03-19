@@ -173,7 +173,7 @@ Research into multi-mode scheduling with PCP for continuous planning has not bee
 \subsubsection{Stochastic processing times}
 Often times it will be hard to estimate processing times for activities in practice.
 There is a big chance that the actual processing time will be  different from the estimate.
-In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems \TODO{Welke problemen, welke resultaten, het zegt niks wat er stat}introduced by using a stochastic distribution for activity processing times.
+In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems \TODO{Welke problemen, welke resultaten, het zegt niks wat er staat} introduced by using a stochastic distribution for activity processing times.
 
 \subsection{Summary}
 \TODO{REMOVE / MOVE to 2.1}
@@ -204,11 +204,12 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 \section{Schedule construction using PCP}
 \TODO{Bastiaan}
 
-\TODO{Structuur: Waarom PCP? Er is een probleem => NP-compleet. Dus vorm van benadering. Oberveer het volgende: als we ons puur beperken tot het tijdsaspect danr educeert het naar STN probleem wat op te lossen is in poly-time. Kunnen we het probleem niet splitsen zodat we resource deel apart nemenv antijdsdeel? We kijken naar resourceprofiel en voegen constraints toe. We beginnen met STN verhaal en daarna bespreken we hoe we constraints moeten toevoege. Twee methoden: Conflict Free en ESTA verhaal. Conflict Free is feasable voor alle starttimes en ESTA alleen voor 1 starttime. Chaining => ESTA oplossing ombouwen tot een POS. }  
+\TODO{Structuur: Waarom PCP? Er is een probleem => NP-compleet. Dus vorm van benadering. Oberveer het volgende: als we ons puur beperken tot het tijdsaspect danr educeert het naar STN probleem wat op te lossen is in poly-time. Kunnen we het probleem niet splitsen zodat we resource deel apart nemenv antijdsdeel? We kijken naar resourceprofiel en voegen constraints toe. We beginnen met STN verhaal en daarna bespreken we hoe we constraints moeten toevoege. Twee methoden: Conflict Free en ESTA verhaal. Conflict Free is feasable voor alle starttimes en ESTA alleen voor 1 starttime. Chaining => ESTA oplossing ombouwen tot een POS.}
 
-There are different ways to construct a schedule based on the problem definition. 
+Since the RCPS problem belongs to the class of \emph{NP-complete} problems, no algorithm capable of constructing an optimal solution in $O(n^k)$ is known (unless of course, $P=NP$). In order to devise a solution using polynomial time, an approximation algorithm needs the be used. In this section, the approach of Precedence Constraint Posting (PCP) will be discussed.
 
-The general idea of finding a feasible schedule is an iterative approach that schedules the activities according to some scheduling policy (for example an earliest start policy: start every activity as soon as possible) and then checks if the resource constraints are met. If not, additional constraints are added to the original problem so that resources are not over-utilized.
+\subsection{Introduction}
+When regarding the RCPS problem, the problem has got both a time-related as well as a resource-related aspect. The time-related aspect focusses on scheduling the activities with respect to the given constraints. As discussed below, this time-aspect of the problem can be reduced to a \emph{Simple Temporal Problem} (STP) which can be solved in $O(n^3)$ time. The result of this STP is a schedule or a set of schedules for which needs to be verified if the resource constraints are met. If there are any resource violations, \emph{Precedence Constraint Posting} will offer a method of adding constraints to the STP in such a way that forces the resource requirements to be met.
 
 \subsection{Problem Extension}
 Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time.
