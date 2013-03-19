@@ -76,7 +76,7 @@ Given:
 \item a set of activities(jobs) $V = v_1 \ldots v_n$, with a unique dummy beginning activity $v_0$ and a unique dummy terminating activity $v_{n+1}$
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k)$ denotes the duration of activity $v_k$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i$ precedes activity $v_j$. We assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $\mathcal{R}$, split in consumable \TODO{consumable = non-renewable (MickL)} (renewable) resources $\mathcal{R}^{\rho}$ and nonrenewable resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
+\item a set of available resources $\mathcal{R}$, split in renewable resources $\mathcal{R}^{\rho}$ and  consumable (nonrenewable) resources $\mathcal{R}^V$ but with a possible overlap of doubly constrained resources
 \item the availabilities of the resources $Av(\mathcal{R}_i)$, so that $Av(\mathcal{R}_k)$ denotes the availability of resource $\mathcal{R}_k$
 \item the per period usage for an activity $v_j$ of resource $\mathcal{R}_k$ are denoted by $Usage(v_j, \mathcal{R}_k)$, such that it represents the amount of resource $\mathcal{R}_k$ used per time period of executing activity $v_j$
 \end{itemize}
