@@ -63,7 +63,7 @@ This paper is intended to link the practical applications of the scheduling prob
 \section{Problem background}
 \TODO{Freek}
 
-\TODO{MickG}
+\TODO{MickL}
 
 \TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
 
@@ -86,7 +86,6 @@ Given:
 \item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $forall_{1 \leq j \leq n}(w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k) \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
-\item a graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
 \item a set of available resources $R$ where each element is an identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ but with a possible overlap of doubly constrained resources
 \item the availabilities of the resources $Av(R_i, t)$, so that $Av(R_k, t) \in \mathbb{N}$ denotes the availability of resource $R_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
 \item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period of executing activity $v_j \in V$
@@ -115,12 +114,12 @@ For example, changing a tire might require two workmen and one car lift.
 In general, there are two kinds of resources: renewable and consumable (also named nonrenewable) resources.
 With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available.
 This contrasts with renewable resources, which do not deplete when used.
-For renewable resources, the amount of units available of resource $r_k \in R$ at any given time is $Av(r^{\rho}_k) \in \mathbb{N}$ (for example the number of machines in a shop).
-The total amount of units available for a consumable resource $r_k \in R$ is denoted by $Av(R^{V}_k) \in \mathbb{N}$.
+For renewable resources, the amount of units available of resource $R_k$ at any given time is $Av(R^{\rho}_k)$ (for example the number of machines in a shop).
+The total amount of units available for a nonrenewable resource $k$ is noted by $Av(R^{V}_k)$.
 The set of all renewable resources within a project is indicated with $R^{\rho}$ and the set of renewable resources is indicated by $R^{V}$. 
 
 Activities consume a certain amount of one or more resources.
-The amount that an activity $v_j \in V$ consumes of a resource $r_k \in R$ during a unit of time is denoted by $Usage(v_j, R^{\rho}_k) \in \mathbb{N}$ for a renewable resource and   $Usage(v_j, R^V_k) \in \mathbb{N}$ for an nonrenewable resource.
+The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, R^{\rho}_k)$ for a renewable resource and   $Usage(v_j, R^V_k)$ for an nonrenewable resource.
 
 
 \subsubsection{Constraints}
@@ -209,36 +208,45 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 Since the RCPS problem belongs to the class of \emph{NP-complete} problems, no algorithm capable of constructing an optimal solution in $O(n^k)$ is known (unless of course, $P=NP$). In order to devise a solution using polynomial time, an approximation algorithm needs the be used. In this section, the approach of Precedence Constraint Posting (PCP) will be discussed.
 
 \subsection{Introduction}
-When regarding the RCPS problem, the problem has got both a time-related as well as a resource-related aspect. The time-related aspect focusses on scheduling the activities with respect to the given constraints. As discussed below, this time-aspect of the problem can be reduced to a \emph{Simple Temporal Problem} (STP) which can be solved in $O(n^3)$ time. The result of this STP is a schedule or a set of schedules for which needs to be verified if the resource constraints are met. If there are any resource violations, \emph{Precedence Constraint Posting} will offer a method of adding constraints to the STP in such a way that forces the resource requirements to be met.
+When regarding the RCPS problem, the problem has got both a time-related as well as a resource-related aspect. 
+The time-related aspect focusses on scheduling the activities with respect to the given temporal constraints. 
+As will be discussed below, this time-aspect of the problem can be reduced to a \emph{Simple Temporal Problem} (STP) \TODO{Refer to paper} which can be solved in $O(n^3)$ time. 
+The result of this STP is a schedule or a set of schedules for which needs to be verified if the resource constraints are met. 
+If there are any resource violations, \emph{Precedence Constraint Posting} (PCP) will offer a method of adding constraints to the STP in such a way that forces the resource requirements to be met in the generated schedule. 
 
-\subsection{Problem Extension}
-Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time.
-Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules.
-This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far. 
+The two aspects of this problem are regarded as two different layers, the \emph{Time Layer} and the \emph{Resource Layer}.
+The Time Layer will first be discussed along with the reduction to the aforementioned STP. 
+This STP will then be used to explain the relevance of the Resource Layer.
 
 \subsection{Time Layer}
-Firstly the temporal aspect, dealing with activity durations, constraints between pairs of activities, due dates, release time and other time-related constrains are regarded.
-These relations can be represented as a graph $G=(V,E)$, in which each vertex represents an activity and an edge connecting two activities represents a temporal constraint between them.
+The temporal aspect of the problems deals with activity durations and precedence constraints.
+These relations can be represented as a graph $G=(V,E)$ as defined in section \TODO{Reference near definition}. 
+This so-called \emph{precedence graph} can be reduced to a \emph{Simple Temporal Network} (STN), which forms the basis for our STP.
+
+\subsubsection{Simple Temporal Networks}
+An STN is used to represent the temporal aspect of the RCSP and forms the basis for the STP.
+An STN consists of a set $P$ of so-called \emph{time points} with associated time windows.
+Relations between each pair of time points can be specified.
+In an STN with uncertainty, the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
+
+Relations between time points can be added in the following way:
+\begin{itemize}
+\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ is allowed to be scheduled within the range of $[d_{ij},D_{ij}]$.
+\end{itemize}
+
+\subsubsection{Reduction to STN}
+\begin{enumerate}
+\item Let S be an empty graph
+\item For each activity $v_i \in V$, add two nodes (time points) $s_i$ and $e_i$ to S
+\item Connect each pair of points $s_i$ and $e_i$ with a free constraint with bounds $[Dur(v_i), Dur(v_i)]$
+\item For each precedence constraint $(v_i, v_j) \in E$, add a free constraint with bounds $[0, \infty]$
+\end{enumerate}
+
+The constraint introduced in step $3$ forces the duration of the activity to be exactly $Dur(v_i)$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: a precedence constraint.
 
 \subsubsection{Relations Temporal Constraints}
 In the models used to simulate the problem at hand, it is convenient to express all constraints as temporal constraints.
 A precedence constraint can be modeled as a temporal constraint with a minimum lag of $0$, and a maximum lag of $\infty$.
-
-\subsubsection{Simple Temporal Networks with Uncertainty}
-\TODO{Gewonen STN in plaats van STNU, geen variabele tijdsduur}
-A Simple Temporal Network (STN) is used to represent the temporal aspect of the RCSP.
-An STN consists of a set $T$ \TODO{Conflict met time horizon T} of so-called \emph{time points} with associated time windows.
-Relations between each pair of time points can be specified.
-The goal of an STN is to provide each time point $t_i$ with a value within its time window in such a way that the relations \TODO{"the" relations?} are satisfied.
-In an STN with uncertainty (STNU), the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
-
-There are two types of relations:
-\begin{enumerate}
-\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ is allowed to be scheduled within the range of $[d_{ij},D_{ij}]$.
-\item $t_i \xrightarrow{[d_{ij}:D_{ij}]} t_j$ called a \emph{contingent constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ lies within the range $[d_{ij},D_{ij}]$.
-Unlike free constraints, its exact value is not determined by the scheduler but is controlled by Nature, it is only known that the value lies within the interval $[d_{ij},D_{ij}]$.
-The result is that the schedule must be able to deal with all the possible values of $\delta \in [d_{ij},D_{ij}]$.
-\end{enumerate}
 
 \subsubsection{Reduction to Temporal Constraints}
 The temporal aspect of the problem can be modeled using \emph{time points}, \emph{free constraints} and \emph{contingent constraints} so as to form an STN \TODO{STNU?, de Uncertainty komt van die contigent constraints toch?} in the following way:
@@ -291,15 +299,11 @@ The graph needs to be constructed in such a way that
 
 \newpage
 
-\section{Continuous scheduling}
+\section{Continuous planning}
 \TODO{MickL}
 
-In many practical environments of the scheduling problem there is another factor to take into account, continuity.
-In practice the set of resources and tasks is not closed, but tasks are added during the process.
-Also, problems could arise which delay task execution or possibly disable resources.
-\\
+\TODO{rewrite, remove planning, continuous scheduling, use examples}
 
-\TODO{rewrite, remove planning, continuous scheduling, use examples}\\
 In this chapter continuous planning will be discussed.
 Continuous planning is a much seen obstacle in practical scheduling problems.
 Flexibility and robustness of a schedule are key to continuous planning, as problems or changes may occur during execution.
@@ -315,7 +319,31 @@ Resource constraint scheduling algorithms focus on solving a given set of tasks,
 This makes these solutions quite effective on more complex closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
 In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
 \cite{laborie03}
-\subsection{Schedule repair}
+
+\subsection{Automated planning}
+\TODO{REMOVE}
+
+A classical approach to scheduling a continuously growing set of tasks is to simply plan ahead until a set horizon.
+After this horizon, the next set of tasks is planned.
+This way batch after batch of tasks is scheduled, resulting in a schedule, which is most likely to be suboptimal.
+The result does not allow for changes in the already planned parts and therefore possibly misses more efficient solutions and lacks adaptivity.
+\cite{chien00}
+
+In several different fields we see the search for better optimization of continuous planning solutions.
+In the field of robotics, like robotic space exploration, automated planning is the main scheduling approach.
+This form of AI planning focuses on realization of strategies and short-term task selection.
+With this planning form autonomous robots select the tasks with only a short foresight.
+In this field of AI efforts are being made to optimize the schedules, with the use of several parts of the resource constraint scheduling domain.
+\cite{smith00}
+
+The complexity of the tasks to be selected by the robots are becoming more complex, because an increasing set of variables needs to be taken in to account.
+Due to these extra variables the planning problem resembles the more complex resource constraint scheduling problem.
+Automated planning does not have the capabilities to take these extra constraints into consideration.
+However, the solution is not to simply use resource constraint scheduling, for this does not currently give the same speed en flexibility as automated planning.
+The main reason for this is that tasks need to be selected "on-the-go", thus decisions need to be made in a short timespan.
+The time it takes to calculate an optimal solution would be of such length, that the set of current tasks might deviate from the selected tasks in the schedule.
+
+\subsection{Iterative repair}
 \TODO{Output is hetzelfde als input}
 Iterative repair is the process of repeatedly repairing the schedule when required.
 This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
@@ -347,25 +375,27 @@ The partial order schedules are quicker to repair, but require more time initial
 In addition to this problem, the quick repairs do not represent an optimal schedule.
 Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
 
+
+
 \subsection{Precedence Constraint Posting in Continuous planning}
 \TODO{MickG}
 
 \TODO{REMOVE / MERGE with previous chapter}
-%Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
-%We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
-%
-%
-%The PCP approach to scheduling is suitable for continuous planning.
-%A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
-%This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
-%An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
-%
-%If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
-%Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
-%In that case a new POS has to be created from the remaining project graph.
-%
-%
-%A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
+Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
+We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
+
+
+The PCP approach to scheduling is suitable for continuous planning.
+A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
+This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
+An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
+
+If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
+Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
+In that case a new POS has to be created from the remaining project graph.
+
+
+A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
 
 
 \newpage
