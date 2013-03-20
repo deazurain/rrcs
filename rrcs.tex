@@ -84,8 +84,6 @@ This paper is intended to link the practical applications of the scheduling prob
 \section{Problem background}
 \TODO{Freek}
 
-\TODO{MickL}
-
 \TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
 
 \TODO{define 'optimal'}
@@ -321,7 +319,7 @@ The graph needs to be constructed in such a way that
 
 \TODO{rewrite, remove planning, continuous scheduling, use examples}
 
-Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in a most efficient schedule.
+Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in a feasible schedule.
 This makes these solutions quite effective on more complex, closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
 In many practical environments of the scheduling problem there is another factor to take into account: continuity.
 In these applications the set of resources and tasks is not closed, but tasks are added during the process.
@@ -335,34 +333,33 @@ The partial order schedule contains several feasible schedules, enabling it to a
 Finally we will take a look at how these repairs can be used to create a flexible and robust schedule, that can handle the addition of new tasks during the process.
 
 \subsection{Schedule repair}
-One solution to continuous changes to the problem set is schedule repair.
-This reactive solution tries to repair the schedule as soon as problems or conflicts are detected.
-Using this type of repair requires the processing of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the execution to be restarted with the new schedule.
+One solution to handle continuous changes to the problem set is schedule repair.
+This reactive solution reschedules the solution as soon as problems or conflicts are detected.
+Using this type of repair requires the execution of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the execution to be restarted with the new schedule.
 Pausing and repairing a schedule is a very time consuming solution, especially in environments where many changes may occur.
 To maximize effectiveness, the repair needs to be fast and allow the execution to continue with the minimum delay.
-Different solutions exist, which mostly favor either a quick repair with less accuracy or a slower complete repair.
+Different solutions exist, which mostly favor either a quick repair with less accuracy or a slower, but more complete rescheduling.
 \cite{policella07}
 
 Schedule repair gives the robustness to build a schedule although there are unknown factors in the environment, but requires the execution to be paused and repaired when problems occur.
 
 \subsection{Flexible schedules}
 Another solution is a more proactive approach, using flexible schedules.
-Flexible schedules are schedules which retain flexibility and can cope with some changes without the need for rescheduling.
-These solutions often present a form of redundancy, in time and/or resources.
-This redundancy represents multiple schedules within one schedule.
-Therefore allowing to select the execution which most resembles the actual environment.
-In flexible scheduling it is required to know all types of changes that may occur in advance.
-This requirement poses a big strain on the planning on forehand.
+Flexible schedules are schedules which retain flexibility and can cope with several changes without the need for rescheduling.
+These solutions present a form of redundancy, in time and/or resources.
+This redundancy represents multiple feasible schedules within one solution.
+Therefore allowing the process to select the execution which most resembles the actual environment.
+For flexible schedules it is required to know all sorts of changes that may occur in advance, in order to construct the correct flexible schedule.
+This requirement poses a big strain on the scheduling on forehand.
 If an unexpected change should occur, the schedule might not be capable of handling that change.
 In this case rescheduling is necessary.
 
 Flexible scheduling provide a way to use the original flexible schedule and adopt it to the environment, but can only cope with known changes and problems.
 
 \subsection{Partial order schedules}
-\TODO{Proactive, output is hetzelfde als input}
-Partial order schedules are solutions which take the flexibility a step further.
+Partial order schedules, or POS, are flexible schedules which take the flexibility a step further.
 In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
-In this manner a set of possible schedules is available, rather than just one solution.
+They are represented by a temporal network, this network represents the different feasible schedules.
 In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
 Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
 However, the partial order schedule already contains several options for an easy fix of the schedule.
@@ -375,8 +372,6 @@ Therefore partial order schedules are a better and more flexible manner of conti
 
 \subsection{Precedence constraint posting in partial order schedules}
 \TODO{see policella07 chapt 5}
-
-\TODO{MickG}
 
 \TODO{REMOVE / MERGE with previous chapter}
 Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
