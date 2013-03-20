@@ -40,39 +40,48 @@
 \newpage
 
 \section{Scope and purpose}
-\TODO{MickL: rewrite introduction after draft finished, explain structure, chapters etc.}\\
+%We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. 
+Scheduling is a common problem in many day-to-day applications, but represents one of the more complex problems to solve.
+Scheduling is the process of creating a feasible schedule with regard to a deadline, a given set of tasks and the available resources.
+In many applications several complicating factors may arise.
+Scheduling can deal with some of these complicating factors using constraints.
+For instance, a limited number of resources, uncertain length of task execution and deadlines.
+These factors represent the more simple constraints.
+More complicating factors are those that can be found in practical applications, like: break-down of resources, delays or uncertain number of tasks.
+Especially in dynamic environments, which is the type of environment many practical applications need to deal with.
+In this paper we will explore the resource constraint scheduling problem and explain how the theory can be used to cope with these more complicating factors in a dynamic environment.
 
-\TODO{Ik vond "Scope and purpose" wel een mooie alternatieve titel voor dit stuk
-In het kort begrijp ik het volgende van wat we doen: 
-We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
-Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
-Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is. Dan maken we de transitie naar continuous planning en waarom het nodig is. Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.} \\
+%Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
+The purpose of this paper is to inform fellow students on the topic of resource constraint scheduling in dynamic applications.
+The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
+Although some prerequisite knowledge is presumed to be common to the reader, most in-depth information aims to be complete and clear.
 
-The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
-These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time.
-Scheduling focuses on optimizing a schedule to either consume the least amount of resources, or perform all tasks in minimum required time.  \cite{brucker99}
-There are several different forms of resource constrained scheduling, all dealing with a specific type of scheduling problem.
+%Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. 
+First we will define the resource constraint scheduling problem and give a formal definition on the topic.
+Resource constraint scheduling is a form of scheduling that deals with a number of constraints.
+The scheduling process needs to take these constraints into account to make a feasible schedule.
+Constraints can for example be precedence constraints, in this case the set of tasks requires tasks to be performed in a specific order.
 
-The main aspects that will be covered in this paper are precedence constraint posting and continuous planning.
-Precedence constraints require a set of tasks to be performed in a specific order, requiring one task to be performed before the other.
-Also, temporal constraints have a part in this scheduling problem, but this will not be the focus in this paper.
-Continuous planning is a form of scheduling where the scheduling process is not completed, the process continuous while schedule is being executed.
-In this case the set of tasks to be performed is not closed, meaning that during execution of the schedule the set of tasks may change and with it the optimal solution.
-However, it may also be undesirable to introduce major changes in the baseline schedule.
-Therefore, the continuous planning aspect of scheduling is one of the more complex issues and also a quite common phenomenon in practical situations.
+%Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
+We will then explain simple temporal networks and give the formal definition.
+Simple temporal networks are a reduction of the scheduling problem into a graph representing all tasks and constraints.
+Temporal networks are a simple and flexible way to represent schedules.
+for example precedence constraints can be represented by an edge from one task to the other, forcing the process to execute one before the other.
 
-In this paper we will combine these to elements in the scheduling problem and study this in the light of robust resource constrained scheduling.
-Robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks, it should also take in to account external changes.
-In this paper we will use the same definition of robust as in \cite{policella07} : ``{(1) the ability to absorb exogenous and/or unforeseen events without loss of consistency, and (2) the ability to keep the pace with the execution guaranteeing a prompt answer to the various events.}''
-These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.
+%Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is.
+Precedence constraint posting and partial order schedules will be explained then.
+Precedence constraint posting is a way of posting new precedence constraints to an existing temporal network.
+This method utilizes the flexibility of such networks and allows the schedule to take new precedence constraints into account.
 
-In the following chapter we will be dealing with the theory on scheduling problems and discus several relevant research papers that cover the topic.
-After which the two main aspects, precedence constraint posting and continuous planning, will be discussed further and then combined and linked to practical problems.
-We will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory.
-As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject.
-As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
+%Dan maken we de transitie naar continuous planning en waarom het nodig is.
+Then the obstacles due to the continuity of the dynamic environment will be discussed.
+Explaining why the factors involved in the continuous nature of a real-life application impose more complications in scheduling.
+Some methods to improve flexibility of schedules will be discussed, to provide with a solution to these extra complications.
 
-This paper is intended to link the practical applications of the scheduling problem to several aspects of the theory, thereby addressing the incompleteness of the problem theory and discover what aspects need further research.
+%Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.
+The resource constraint scheduling, partial order schedule and precedence constraint posting subjects will be combined to show that a flexible and robust schedule can be created using these theories.
+
+\TODO{Voelt nog incompleet, ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
 
 \newpage
 
