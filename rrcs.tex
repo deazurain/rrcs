@@ -18,14 +18,12 @@
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 
-\newcommand{\renres}[0]{\mathscr{R}^\rho} %renewable resource
-\newcommand{\conres}[0]{\mathscr{R}^\nu} %consumable resource
-% heb er een aantal uitgeprobeerd, deze komt het dichts bij al is ie te slanted
-% naar mijn smaak. 
-%$\mathbb{R}^\nu$
-%$\mathbb{R}^v$
-%$\mathscr{R}^\upsilon$
-%$\mathcal{R}^\nu$
+\newcommand{\renres}[0]{R^\rho} %renewable resource
+\newcommand{\conres}[0]{R^\nu} %consumable resource
+\newcommand{\av}[1]{\textit{Av}(#1)} %availability
+\newcommand{\dur}[1]{\textit{Dur}(#1)} %durability
+\newcommand{\usage}[1]{\textit{Usage}(#1)} %usage
+\newcommand{\start}[1]{\textit{Start}(#1)} %start time
 
 %\setlength{\parindent}{0pt}
 %\setlength{\parskip}{\baselineskip}
@@ -107,16 +105,16 @@ Given:
 \item a horizon $T$ that denotes the total time horizon for the problem, where $T \in \mathbb{N}$
 \item a set of activities(jobs) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
 \item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $\forall v_j \in V (w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
-\item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k) \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
+\item the durations, processing time of the activities $\dur{v_i}$, so that $\dur{v_k} \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
 \item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ \TODO{I believe this was notated as $R^\nu$} but with a possible overlap of doubly constrained resources ($r_j \in \renres \cap \conres$) \TODO{Dit lijkt me niet zo handig, stel $r_1$ is zo'n dubbele, wat is $Cap(r_1)$ dan?}
-\item the availabilities of the resources $Av(R_i, t)$, so that $Av(R_k, t) \in \mathbb{N}$ denotes the availability of resource $R_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$ \TODO{Net was het toch kleine $r_i$?}
-\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$ \TODO{Weird}
+\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $\renres$ and  consumable (nonrenewable) resources $\conres$ but with a possible overlap of doubly constrained resources ($r_j \in \renres \cap \conres$) \TODO{Dit lijkt me niet zo handig, stel $r_1$ is zo'n dubbele, wat is $Cap(r_1)$ dan?}
+\item the availabilities of the resources $\av{r_i, t}$, so that $\av{r_k, t} \in \mathbb{N}$ denotes the availability of resource $r_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
+\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$ \TODO{Weird}
 \end{itemize}
 
-Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $Start(v_j) \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
-$S = (Start(v_1) \ldots Start(v_n))$ is a feasible schedule for the activities $V = (v_1 \ldots v_n)$.
+Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $\start{_j} \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
+$S = (\start{v_1} \ldots \start{v_n})$ is a feasible schedule for the activities $V = (v_1 \ldots v_n)$.
 
 \subsection{Prerequisites}
 In this section, the general problem focused on in this paper is explained.
@@ -125,7 +123,7 @@ First, some terminology is discussed followed by a problem definition.
 
 \subsubsection{Activities}
 Each project consists of a finite set of activities(also called jobs) denoted as $V = v_1 \ldots v_n$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
-Each activity $v_i \in V$ has a duration(processing time) $Dur(v_i) \in \mathbb{N}$, the time needed to complete the activity, and a starting time $Start(v_i) \in \mathbb{N}$, the time at which the activity should be executed. The duration $Dur(v_i)$ and the starting time $Start(v_i)$ are both denoted as a time period in the time horizon $T$.
+Each activity $v_i \in V$ has a duration(processing time) $\dur{v_i} \in \mathbb{N}$, the time needed to complete the activity, and a starting time $\start{v_i} \in \mathbb{N}$, the time at which the activity should be executed. The duration $\dur{v_i}$ and the starting time $\start{v_i}$ are both denoted as a time period in the time horizon $T$.
 
 We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
 
@@ -135,12 +133,12 @@ For example, changing a tire might require two workmen and one car lift.
 In general, there are two kinds of resources: renewable and consumable (also named nonrenewable) resources.
 With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available.
 This contrasts with renewable resources, which do not deplete when used.
-For renewable resources, the amount of units available of resource $R_k$ at any given time is $Av(R^{\rho}_k)$ (for example the number of machines in a shop).
-The total amount of units available for a nonrenewable resource $k$ is noted by $Av(R^{V}_k)$.
-The set of all renewable resources within a project is indicated with $R^{\rho}$ and the set of renewable resources is indicated by $R^{V}$. 
+For renewable resources, the amount of units available of resource $r_k$ at any given time is $\av{\renres_k, t}$ (for example the number of machines in a shop).
+The total amount of units available for a nonrenewable resource $k$ is noted by $\av{\conres_k, t}$.
+The set of all renewable resources within a project is indicated with $\renres$ and the set of renewable resources is indicated by $\conres$. 
 
 Activities consume a certain amount of one or more resources.
-The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $Usage(v_j, R^{\rho}_k)$ for a renewable resource and   $Usage(v_j, R^V_k)$ for an nonrenewable resource.
+The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $\usage{v_j, \renres_k}$ for a renewable resource and   $\usage{v_j, \conres_k}$ for an nonrenewable resource.
 
 
 \subsubsection{Constraints}
@@ -161,7 +159,7 @@ The project itself can also have a deadline, the total amount of time units befo
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
 The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
 
-The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (Start(v_1) \ldots Start(v_n))$.
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
 There are two types of schedules, time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$.
 The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$.
 We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
@@ -204,17 +202,14 @@ $t$ \TODO{$t_i$?} &  index of a time period in the time horizon $T = (t_1 \ldots
 $V$ & set of activities $V = (v_1 \ldots v_n)$ \\
 $n$ & number of original activities \\
 $E$ & set of constraints \\
-$R^{\rho}$ & consumable resources \\
-$R^V$ & renewable resources \\
-$Dur(v_i)$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
-$Av(R_i)$ & the availability of resource $R_i$ \\
-$Usage(v_j, R_k)$ & the per period usage for activity $v_j$ of resource $R_k$ \\
-$Start(v_i)$ & the start time of activity $v_i$ \\
-$Stop(v_i)$ & the start time of activity $v_i$ \\
-$MinLag(v_i, v_j)$ & the minimum time lag between activity $v_i$ and $v_k$ \\
-$MaxLag(v_i, v_j)$ & the maximum time lag between activity $v_i$ and $v_k$ \\
+$\renres$ & consumable resources \\
+$\conres$ & renewable resources \\
+$\dur{v_i}$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
+$\av{r_i}$ & the availability of resource $r_i$ \\
+$\usage{v_j, r_k}$ & the per period usage for activity $v_j$ of resource $r_k$ \\
+$\start{v_i}$ & the start time of activity $v_i$ \\
 $S$ & a schedule consisting of st
-art times for the activities $S = (Start(v_1) \ldots Start(v_n))$ \\
+art times for the activities $S = (\start{v_1}) \ldots \start{v_n})$ \\
 $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))$ \\
 \hline
 \end{tabular}
@@ -259,11 +254,11 @@ Relations between time points can be added in the following way:
 \begin{enumerate}
 \item Let S be an empty graph
 \item For each activity $v_i \in V$, add two nodes (time points) $s_i$ and $e_i$ to S
-\item Connect each pair of points $s_i$ and $e_i$ with a free constraint with bounds $[Dur(v_i), Dur(v_i)]$
+\item Connect each pair of points $s_i$ and $e_i$ with a free constraint with bounds $[\dur{v_i}, \dur{v_i}]$
 \item For each precedence constraint $(v_i, v_j) \in E$, add a free constraint with bounds $[0, \infty]$
 \end{enumerate}
 
-The constraint introduced in step $3$ forces the duration of the activity to be exactly $Dur(v_i)$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: a precedence constraint.
+The constraint introduced in step $3$ forces the duration of the activity to be exactly $\dur{v_i}$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: a precedence constraint.
 
 \subsubsection{Relations Temporal Constraints}
 In the models used to simulate the problem at hand, it is convenient to express all constraints as temporal constraints.
