@@ -333,51 +333,37 @@ This requires the schedule to be changed or updated while processing the tasks i
 
 We will first discuss schedule repair solutions, which take into account that some changes or problems may occur during schedule execution.
 These repair solutions provide a way to repair a schedule when certain small changes occur, for example due to delays in the process.
-Then we will review partial order schedules, which are an example of a solution which is flexible and easy to repair.
-Precedence constraint posting can be used to deliver partial order schedules.
+Then we will review partial order schedules, an example of a solution which provides flexibility and an enables easier repairs.
+\TODO{}Precedence constraint posting can be used to deliver partial order schedules.
 Finally we will take a look at how these repairs can be used to create a flexible and robust schedule, that can handle the addition of new tasks during the process.
 
-\subsection{Schedule repair} \cite{policella07}
-A solution to continuous changes to the problem set is schedule repair.
-This reactive solution tries to repair conflicts as soon as they are detected.
-Repairs can be performed in two different ways, either by rescheduling the entire problem or by using  smarter method in which the original schedule already contains several solutions.
-Using the first type of repair requires the processing of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the process to be restarted with the new schedule.
-This solutions is quite time consuming and requires a long waiting period for the process to continue.
-As one might expect, this is not the most efficient solution, especially in environments where many changes or problems may occur.
+\subsection{Schedule repair}
+One solution to continuous changes to the problem set is schedule repair.
+This reactive solution tries to repair the schedule as soon as problems or conflicts are detected.
 
-
-%Iterative repair is the process of repeatedly repairing the schedule when required.
-%This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
-%The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
-%
-%The iterative process works as follows.
-%Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
-%Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
-%The plan is repaired with regard to the least amount of delay in the execution process.
-%The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
-%
-%In fact iterative repair is a solution which extends the current scheduling problems, by adding repairing algorithms.
-%This way the original non-flexible schedule can be used in a more flexible manner, but it is has not become more flexible.
-%In other words, iterative repair provides a method of making planning more flexible, although not really making a flexible schedule.
-%Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
+Using this type of repair requires the processing of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the execution to be restarted with the new schedule.
+Pausing and repairing a schedule is a very time consuming solution, especially in environments where many changes may occur.
+To maximize effectiveness, the repair needs to be fast and allow the execution to continue with the minimum delay.
+Different solutions exist, which mostly favor either a quick repair with less accuracy or a slower complete repair.
+\cite{policella07}
 
 \subsection{Partial order schedules}
-\TODO{Output is hetzelfde als input}
-%Partial order schedules are solutions which take the flexibility a step further.
-%In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
-%In this manner a set of possible schedules is available, rather than just one solution.
-%In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
-%Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
-%However, the partial order schedule already contains several options for an easy fix of the schedule.
-%Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
-%
-%There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
-%The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
-%In addition to this problem, the quick repairs do not represent an optimal schedule.
-%Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
+\TODO{Proactive, output is hetzelfde als input}
+Partial order schedules are solutions which take the flexibility a step further.
+In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
+In this manner a set of possible schedules is available, rather than just one solution.
+In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
+Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
+However, the partial order schedule already contains several options for an easy fix of the schedule.
+Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
+
+There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
+The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
+In addition to this problem, the quick repairs do not represent an optimal schedule.
+Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
 
 \subsection{Precedence constraint posting in partial order schedules}
-\TODO{write like policella chapt 5}
+\TODO{see policella07 chapt 5}
 
 \TODO{MickG}
 
