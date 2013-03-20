@@ -355,50 +355,27 @@ Flexible scheduling provide a way to use the original flexible schedule and adop
 \subsection{Partial order schedules}
 Partial order schedules are flexible schedules which take the flexibility a step further.
 In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
-They are represented by a temporal network, this network represents the different feasible schedules.
-In all flexible schedules there is a possibility that the changes that occur are too large to just adapt the schedule and rescheduling is required.
-The main advantage of partial order schedules is the fact that the original schedule can be used as input for the rescheduling algorithm.
+They are represented by a temporal network, this network represents the different feasible schedules, similar to other flexible schedules.
+In all flexible schedules there is a possibility that the changes that occur are too large to adapt the schedule and rescheduling is required.
+This is where the main advantage of partial partial order schedules is, the original schedule can be used as input for the rescheduling algorithm.
+By reusing the previous costly time can be preserved in building a new schedule.
 
-The rescheduler outputs a new improved temporal network and bases the recalculation of the schedule on the input, which is itself a temporal network.
-Partial order schedules make the complete rescheduling less intensive, because the original schedule is reused.
-This property makes partial order schedules not only flexible and robust, but also quick to repair when changes occur.
+The rescheduling algorithm uses a temporal network as input, which is similar to the output itself generates.
+Because the original schedule is modified and reused, partial order schedules make the complete rescheduling less intensive.
+This property makes partial order schedules not only flexible and robust, but also quick to repair when bigger changes occur.
 Therefore partial order scheduling is especially suitable for applications in a dynamic environment.
 
 \subsection{Precedence constraint posting in partial order schedules}
 Precedence constraint posting, as discussed in the previous chapter, is a technique for finding feasible schedules by adding new precedence constraints to a temporal network.
-This posting of new precedence constraint can be used to update the temporal network of a partial order schedule.
-This allows the project manager to add new tasks to th schedule, which.
-This updated temporal network can than provide the rescheduler with a basis to make a new feasible schedule.
-
-\TODO{MickL: uitbreiden}
-
-%\TODO{REMOVE / MERGE with previous chapter}
-%
-%Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
-%We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
-%
-%
-%The PCP approach to scheduling is suitable for continuous planning.
-%A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
-%This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
-%An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
-%
-%If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
-%Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
-%In that case a new POS has to be created from the remaining project graph.
-%
-%A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
+This posting of new precedence constraints can be used to update the temporal network of a partial order schedule.
+In this manner several large adjustments can be posted to a schedule, which can then be easily rescheduled.
+Precedence constraint posting in combination with partial order schedules give a very robust and flexible solution to the scheduling of tasks in a dynamic environment.
 
 
 \newpage
 
 \section{Conclusion}
-\TODO{The overall conclusion.
-Huidige tekst verplaatst uit continuous}
-Continuous planning poses a special problem in the scheduling domain.
-Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
-There is always a trade-of between optimal solutions and processing speed.
-Often the pressure to provide a quick solution overrules the optimum option.
+\TODO{The overall conclusion.}
 
 \newpage
 \bibliographystyle{plainnat}
