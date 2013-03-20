@@ -5,6 +5,7 @@
 \usepackage[numbers]{natbib}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{mathrsfs}
 
 \title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
 \author{M. van Gelderen  \and
@@ -16,6 +17,15 @@
 \pagestyle{empty}
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+
+\newcommand{\renres}[0]{\mathscr{R}^\rho} %renewable resource
+\newcommand{\conres}[0]{\mathscr{R}^\nu} %consumable resource
+% heb er een aantal uitgeprobeerd, deze komt het dichts bij al is ie te slanted
+% naar mijn smaak. 
+%$\mathbb{R}^\nu$
+%$\mathbb{R}^v$
+%$\mathscr{R}^\upsilon$
+%$\mathcal{R}^\nu$
 
 %\setlength{\parindent}{0pt}
 %\setlength{\parskip}{\baselineskip}
@@ -32,6 +42,17 @@
 
 \section{Introduction}
 \TODO{rewrite introduction after draft finished, explain structure, chapters etc.}
+
+\TODO{Ik vond "Scope and purpose" wel een mooie alternatieve titel voor dit stuk}
+In het kort begrijp ik het volgende van wat we doen: 
+
+We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
+
+Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
+
+Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is. Dan maken we de transitie naar continuous planning en waarom het nodig is. Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren. 
+
+
 
 The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
 These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time.
@@ -77,6 +98,7 @@ This will be the main section of the paper.
 \TODO{Describe what notation conventions we will adopt.
 I suggest using the notation from P. Brucker et al, European Journal of Operational Research 112 (1999). }
 
+Sched
 \subsection{Formal Definition}
 The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, W, E, R)$: \cite{brucker99}
 
@@ -84,13 +106,13 @@ Given:
 \begin{itemize}
 \item a horizon $T$ that denotes the total time horizon for the problem, where $T \in \mathbb{N}$
 \item a set of activities(jobs) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
-\item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $forall_{1 \leq j \leq n}(w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
+\item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $\forall v_j \in V (w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
 \item the durations, processing time of the activities $Dur(v_i)$, so that $Dur(v_k) \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
 \item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ but with a possible overlap of doubly constrained resources ($r_j \in R^{\rho} \wedge r_j \in R^V$)
-\item the availabilities of the resources $Av(R_i, t)$, so that $Av(R_k, t) \in \mathbb{N}$ denotes the availability of resource $R_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
-\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
+\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $R^{\rho}$ and  consumable (nonrenewable) resources $R^V$ \TODO{I believe this was notated as $R^\nu$} but with a possible overlap of doubly constrained resources ($r_j \in \renres \cap \conres$) \TODO{Dit lijkt me niet zo handig, stel $r_1$ is zo'n dubbele, wat is $Cap(r_1)$ dan?}
+\item the availabilities of the resources $Av(R_i, t)$, so that $Av(R_k, t) \in \mathbb{N}$ denotes the availability of resource $R_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$ \TODO{Net was het toch kleine $r_i$?}
+\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $Usage(v_j, r_k) \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$ \TODO{Weird}
 \end{itemize}
 
 Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $Start(v_j) \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
@@ -146,7 +168,7 @@ We also define the completion times for the activities in $V$, this is denoted b
 
 \subsection{Problem Complexity}
 \TODO{Reductie naar bestaand NP-compleet probleem. Dit is de reden van het paper.}
-The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision \TODO{schrijf je dit woord zo? (MickL: ja)} version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is en in NP zit, ik vind deze redenatie een beetje achterstevoren}. 
+The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is en in NP zit, ik vind deze redenatie een beetje achterstevoren}. 
 That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. 
 \TODO{Ik zou dit stuk vervangen door een alinea die zegt in welke paper het bewijs gegeven is voor $RCPSP \in NP-Complete$ en een intuitief bewijsje geven voor waarom dat zo is}\\
 The time and space complexity of the RCS problem depends on the used algorithms and approaches used to solve the problem \TODO{Is inherent aan het problem. Het gaat om de EXACTE opplossing die NP-compleet is en bepaalde ruimte gebruikt}. 
