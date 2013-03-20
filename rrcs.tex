@@ -40,8 +40,8 @@
 
 \newpage
 
-\section{Introduction}
-\TODO{rewrite introduction after draft finished, explain structure, chapters etc.}
+\section{Scope and purpose}
+\TODO{rewrite introduction after draft finished, explain structure, chapters etc.}\\
 
 \TODO{Ik vond "Scope and purpose" wel een mooie alternatieve titel voor dit stuk}
 In het kort begrijp ik het volgende van wat we doen: 
@@ -50,7 +50,7 @@ We bekijken precedence constraint posting als methode voor het genereren van een
 
 Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
 
-Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is. Dan maken we de transitie naar continuous planning en waarom het nodig is. Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren. 
+Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is. Dan maken we de transitie naar continuous planning en waarom het nodig is. Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren. \\
 
 
 
@@ -320,77 +320,83 @@ The graph needs to be constructed in such a way that
 
 \newpage
 
-\section{Continuous planning}
+\section{Continuous scheduling}
 \TODO{MickL}
 
 \TODO{rewrite, remove planning, continuous scheduling, use examples}
 
-In many practical environments of the scheduling problem there is another factor to take into account, continuity.
+Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in a most efficient schedule.
+This makes these solutions quite effective on more complex, closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
+In many practical environments of the scheduling problem there is another factor to take into account: continuity.
 In these applications the set of resources and tasks is not closed, but tasks are added during the process.
-We will discuss schedule repair solutions,  which take into account that some changes or problems can occur during schedule execution.\\
+This requires the schedule to be changed or updated while processing the tasks in the schedule.
 
-\TODO{hier verder:}\\
-With continuous planning one needs to take into account that the set of tasks is not complete or closed when a schedule is requested.
-Changes may occur for example due to unexpected shortage of resources, delays or newly added tasks.
-Therefore continuous planning requires flexibility and robustness in the solution and options of editing the solution.
-In continuous planning efforts are made to provide that flexibility, whilst compromising on the optimal character of the schedule.
+We will first discuss schedule repair solutions, which take into account that some changes or problems may occur during schedule execution.
+These repair solutions provide a way to repair a schedule when certain small changes occur, for example due to delays in the process.
+Then we will review partial order schedules, which are an example of a solution which is flexible and easy to repair.
+Precedence constraint posting can be used to deliver partial order schedules.
+Finally we will take a look at how these repairs can be used to create a flexible and robust schedule, that can handle the addition of new tasks during the process.
 
-Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in an optimal schedule.
-This makes these solutions quite effective on more complex closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
-In current continuous planning, the solution is more flexible and adaptive, but does not necessarily represent an optimal solution with regards to extra constraints or complications.
-\cite{laborie03}
+\subsection{Schedule repair} \cite{policella07}
+A solution to continuous changes to the problem set is schedule repair.
+This reactive solution tries to repair conflicts as soon as they are detected.
+Repairs can be performed in two different ways, either by rescheduling the entire problem or by using  smarter method in which the original schedule already contains several solutions.
+Using the first type of repair requires the processing of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the process to be restarted with the new schedule.
+This solutions is quite time consuming and requires a long waiting period for the process to continue.
+As one might expect, this is not the most efficient solution, especially in environments where many changes or problems may occur.
 
-\subsection{Schedule repair}
-Iterative repair is the process of repeatedly repairing the schedule when required.
-This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
-The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
 
-The iterative process works as follows.
-Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
-Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
-The plan is repaired with regard to the least amount of delay in the execution process.
-The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
-\cite{chien00}
-
-In fact iterative repair is a solution which extends the current scheduling problems, by adding repairing algorithms.
-This way the original non-flexible schedule can be used in a more flexible manner, but it is has not become more flexible.
-In other words, iterative repair provides a method of making planning more flexible, although not really making a flexible schedule.
-Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
+%Iterative repair is the process of repeatedly repairing the schedule when required.
+%This requires that there is a schedule at first, which then can be mended on several occasions to account for the changes in the problem set.
+%The iterative solution also needs to be fast, for it should be run multiple times during the execution process, all the while not slowing the process down.
+%
+%The iterative process works as follows.
+%Once a change to either the state or goals of the current plan are detected, the iterative solution should identify conflicts and predict the effects of the changes to the plan.
+%Repairs are made to the plan, preventing conflicts and searching for more optimal solution.
+%The plan is repaired with regard to the least amount of delay in the execution process.
+%The portion of the old plan, which was not yet executed might have changed completely due to a new task with higher priority or possibly a better order to perform the new set of jobs in.
+%
+%In fact iterative repair is a solution which extends the current scheduling problems, by adding repairing algorithms.
+%This way the original non-flexible schedule can be used in a more flexible manner, but it is has not become more flexible.
+%In other words, iterative repair provides a method of making planning more flexible, although not really making a flexible schedule.
+%Iterative repair is a solution which can be very labor intensive, because of the repeated analyzing and rebuilding of the schedule.
 
 \subsection{Partial order schedules}
 \TODO{Output is hetzelfde als input}
-Partial order schedules are solutions which take the flexibility a step further.
-In partial order schedules, as defined in \cite{policella07}, each activity retains a set of feasible start times.
-In this manner a set of possible schedules is available, rather than just one solution.
-In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
-Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
-However, the partial order schedule already contains several options for an easy fix of the schedule.
-Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
+%Partial order schedules are solutions which take the flexibility a step further.
+%In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
+%In this manner a set of possible schedules is available, rather than just one solution.
+%In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
+%Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
+%However, the partial order schedule already contains several options for an easy fix of the schedule.
+%Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
+%
+%There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
+%The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
+%In addition to this problem, the quick repairs do not represent an optimal schedule.
+%Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
 
-There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
-The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
-In addition to this problem, the quick repairs do not represent an optimal schedule.
-Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
+\subsection{Precedence constraint posting in partial order schedules}
+\TODO{write like policella chapt 5}
 
-\subsection{Precedence Constraint Posting in Continuous planning}
 \TODO{MickG}
 
 \TODO{REMOVE / MERGE with previous chapter}
-Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
-We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
-
-
-The PCP approach to scheduling is suitable for continuous planning.
-A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
-This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
-An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
-
-If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
-Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
-In that case a new POS has to be created from the remaining project graph.
-
-
-A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
+%Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
+%We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
+%
+%
+%The PCP approach to scheduling is suitable for continuous planning.
+%A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
+%This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
+%An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
+%
+%If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
+%Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
+%In that case a new POS has to be created from the remaining project graph.
+%
+%
+%A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
 
 
 \newpage
