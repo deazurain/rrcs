@@ -23,6 +23,7 @@
 
 \newcommand{\renres}[0]{R^\rho} %renewable resource
 \newcommand{\conres}[0]{R^\nu} %consumable resource
+\newcommand{\res}[0]{R} % all resources
 \newcommand{\av}[1]{\textit{Av}(#1)} %availability
 \newcommand{\dur}[1]{\textit{Dur}(#1)} %durability
 \newcommand{\usage}[1]{\textit{Usage}(#1)} %usage
@@ -91,14 +92,105 @@ The last section will combine the resource constraint scheduling, partial order 
 \newpage
 
 \section{Problem background}
-Before we start we need to explain a bit more about what the RCS problem is and how we define it.
-In this section we will start with the formal definition of our RCS problem, where our unifying representation is presented.
-Then we will try to explain the problem in some more depth by explaining a bit more about our prerequisites that are used in the formal definition.
-As last we will try to explain the problem complexity of the RCSP and how this is proven.
+In this section we will explain and define what the resource constrained scheduling problem is as well as what a simple temporal network is. 
+The RCPSP is introduced in section \ref{text:RCPSP} along with an example of such a problem to grasp the concept of the project scheduling problem. 
+A formal definition of RCPSP is given afterwards including a table with the notation used in this paper. 
+We introduce STNs in section \ref{text:STN}. STN theory is used by the precedence constraint posting approach. The section concludes with a formal definition of an STN. 
 
+\subsection{Resource constrained project scheduling problem}
+\label{text:RCPSP}
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
+An activity is sometimes called a job, task or event in other work. 
+The activities are part of the input of a RCPSP and have a specified duration. 
+There are multiple types of constraints for activities of which one is precedence constraints. 
+Certain activities can only be executed after another activity has been completed. 
+Take for example the painting of a fence. 
+The activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
+Another type of constraint is concerned with resources. 
+Lets say there are two people working on a house painting project and there is only one painting brush available. 
+The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
 
-\subsection{Formal Definition}
-The general definition for the resource constraint scheduling problem (RCSP) is defined in the following definition\cite{brucker99}.
+In some practical applications it is useful to have a deadline for the entire schedule. 
+If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a feasible schedule. 
+In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met. 
+The house painting project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activies. 
+
+A project is scheduled on a so called time horizon. This time horizon defines the periods over which the activities can be scheduled. Lets say that the house painting manager expresses the duration of activities in hours. It might make sense to schedule the activities on whole hours. 
+
+The RCSP belongs to the class of \emph{NP-complete} problems as is proven in \TODO{Reference a paper where this is proven}. This means that increases processing power do not notably speed up the generation of solutions to the problem. The only way to achieve speed ups is to devise intelligent algorithms. 
+
+There are a number of extensions to the RCPSP such as multi-mode activities and stochastic activity durations. Multi-mode scheduling allows activities to have multiple modes of execution which have different durations and resource requirements. The stochastic activity durations extension models the unpredictability of real life scheduling. We mention these extensions because they are very important in practical applications, see \citet{deblaere10} for multi-mode activities and see \citet{brucker99} for an overview of work on stochastic activity durations. Unfortunately, these extensions do not fit in the scope of this paper. 
+
+The aspects of the RCPSP will be discussed in detail while introducing the notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
+
+\subsubsection{Time horizon}
+A mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$. 
+The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
+The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
+
+\subsubsection{Activities}
+Each project consists of a finite set of activities denoted as $V = \{v_1 \ldots v_n\}$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
+Each activity $v_i \in V$ has a duration $\dur{v_i} \in \mathbb{N}$, also known as processing time in other work, which is the (estimated) time required to complete the activity. 
+Each activity will be assigned a starting time $\start{v_i} \in \mathbb{N}$. 
+The duration $\dur{v_i}$ is given in the number of time periods and the starting time of an activity $\start{v_i}$ is denoted as $t_j$. 
+We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
+
+The set of activities $V$ is often extended to a set of activities $W = w_0, \ldots w_{n+1}$, which incorporates a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. 
+The set $W$ therefore equals $V \cup \{v_0, v_{n+1}\}$. 
+Figure \ref{fig:activity_graph} shows the sets $V$ and $W$ for an example instance. 
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{Example of an activity graph with dummy activities. }
+	\label{fig:activity_graph}
+\end{figure}
+
+\subsubsection{Precedence constraints}
+Precedence constraints are specified by a set $E \subset V \times V$.
+This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
+Sometimes a precedence constraint may also be notated as $v_i \rightarrow v_j$ if $v_i$ has to be completed before $v_j$. 
+Figure \ref{fig:activity_graph} shows an with dummy activities augmented graph where the precedence constraints are reduced to a minimum. 
+
+\subsubsection{Resources}
+An activity requires a certain amount of resources to be available upon execution, this can either be a renewable resource or a consumable resource. 
+A renewable resource has a fixed amount of units available for every time period. 
+A consumable resource has a fixed amount of units available for the whole project. 
+Lets say we run a toy repairing workshop. There are three workbenches available to carry out repairs. 
+These workbenches will be available for the whole time horizon, they are an example of renewable resources. 
+Several of the repair activities require the material tape. 
+There is however a limited supply of tape that can be used. 
+Each piece of tape is a consumable resource because it can only be used once in the entire planning horizon. 
+
+The set of renewable resources is notated as $\renres$. 
+The set of consumable resources is notated as $\conres$. 
+The total set of resources is $\res = \renres \cup \conres$. 
+Notice that $\renres \cap \conres = \emptyset$ because a resource $r_i$ cannot be both renewable and consumable in this model to reduce notation complexity. 
+If a real life resource is both renewable and consumable it can be modelled by two separate resources $r_i \in \renres$ and $r_j \in \conres$ with $i \neq j$. 
+
+For all resources $r_i \in \res$, the amount of units available of that resource at time period $t_i$ is given by $\av{r_k, t_i} \in \mathbb{N}$. 
+This notation handles renewable and consumable resources elegantly. 
+
+Activities consume a certain amount of one or more resources.
+The amount that an activity $v_j \in V$ consumes of a resource $r_k \in \res$ during its execution is denoted by $\usage{v_j, r_k} \in \mathbb{N}$. 
+
+\subsubsection{Schedule}
+A common idea in resource constrained project scheduling is to minimize the project execution time, also called makespan, without violating any of the constraints that have been discussed. 
+\TODO{notation for makespan?}
+The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/time_schedule}
+	\caption{A possible schedule for the problem instance of figure \ref{fig:activity_graph}}
+	\label{fig:time_schedule}
+\end{figure}
+
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
+We define two sets of schedules: time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$. 
+The conjunction of the time-feasible and the resource-feasible schedules $S = S_R \cap S_T$ is the set of possible feasible schedules, the solution to the RCPSP. 
+
+\subsubsection{Notation table}
 
 Given:
 \begin{itemize}
@@ -112,96 +204,25 @@ Given:
 \item the availabilities of the resources $\av{r_i, t}$, so that $\av{r_k, t} \in \mathbb{N}$ denotes the availability of resource $r_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
 \item the per period usage for an activity $v_j$ of resource $r_k$ is denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
 \end{itemize}
+\TODO{convert to table}
 
-Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $\start{v_j} \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
-$S = (\start{v_1} \ldots \start{v_n})$ is a feasible schedule for the activities $V = (v_1 \ldots v_n)$.
+\subsection{Simple temporal networks}
+\label{text:STN}
+\TODO{give a better intuitive description and add imagery}
+An STN consists of a set $P$ of so-called \emph{time points} with associated time windows.
+Relations between each pair of time points can be specified.
+Using a technique called \emph{constraint propagation} \cite{policella07}, it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied.
+It has been proven that it is possible to find such bounds for in $O(n^3)$ time \cite{policella07}.
+Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$.
+One could, for example, take the lower bound of each time point and use that as the value for each time point.
 
-\subsection{Prerequisites}
-As shown in the formal definition the problem is composed of activities, resources and constraints.
-In this section we will discuss what activities, resources and constraints really are in the RCS problem.
-
-\subsubsection{Activities}
-Each project consists of a finite set of activities (also called jobs) denoted as $V = v_1 \ldots v_n$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
-Each activity $v_i \in V$ has a duration(processing time) $\dur{v_i} \in \mathbb{N}$, the time needed to complete the activity, and a starting time $\start{v_i} \in \mathbb{N}$, the time at which the activity should be executed. The duration $\dur{v_i}$ and the starting time $\start{v_i}$ are both denoted as a time period in the time horizon $T$.
-
-We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
-
-\begin{figure}[h]
-	\centering
-	\input{tikz/activity_graph}
-	\caption{Example of an activity graph with dummy activities. }
-	\label{fig:activity_graph}
-\end{figure}
-
-\subsubsection{Constraints}
-Apart from activities that consume resources, additional constraints can be added.
-Two of these are precedence constraints and temporal constrains.
-Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
-These dependencies are specified by a set $E \subset V \times V$.
-This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
-Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of the constraint and activity sets.
-
-\subsubsection{Resources}
-An activity requires a certain amount of resources to be available upon execution, this can either be a renewable resource or a consumable (also called nonrenewable) resource.
-With consumable we define resources, that when they are used it will no longer be available.
-This contrasts with renewable resources, which do not deplete when used.
-For example a renewable resource could be the workmen and a car lift that are required to change a flat tire and the consumable resource could be the replace tire itself.
-
-For renewable resources, the amount of units available of resource $r_k \in R$ at any given time is $\av{\renres_k, t} \in \mathbb{N}$ (for example the number of machines in a shop).
-The total amount of units available for a nonrenewable resource $r_k \in R$ is noted by $\av{\conres_k, t} \in \mathbb{N}$.
-Both return a number which represents the availability in units.
-The set of all renewable resources within a project is indicated with $\renres$ and the set of renewable resources is indicated by $\conres$. 
-
-Activities consume a certain amount of one or more resources.
-The amount that an activity $v_j \in V$ consumes of a resource $r_k \in R$ during a unit of time is denoted by $\usage{v_j, \renres_k} \in \mathbb{N}$ for a renewable resource and   $\usage{v_j, \conres_k} \in \mathbb{N}$ for an nonrenewable resource.
-Both return a number which represents the usage of a resource in the same type of units as the availability.
-
-
-\subsubsection{Constraints}
-Apart from activities that consume resources, additional constraints can be added.
-Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
-Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$.
-This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
-
-\subsubsection{Schedule}
-The general idea of resource scheduling is to minimize the project execution time without over-utilizing the resources or violate project constraints like the constraints discussed above.
-The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
-A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
-The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
-
-\begin{figure}[h]
-	\centering
-	\input{tikz/time_schedule}
-	\caption{\TODO{verzin caption}}
-	\label{fig:time_schedule}
-\end{figure}
-
-The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
-There are two types of schedules, time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$.
-The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$.
-We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
-
-\subsection{Problem Complexity}
-The RCSP belongs to the class of problems that are \emph{NP-complete} which is the subset of problems that are in the class \emph{NP-hard} and \emph{NP}. 
-According to the complexity theory a problem belongs to the class \emph{NP-complete} if the problem is in \emph{NP} and every problem in \emph{NP} is reducable to the problem.
-This can be easily proven if you reduce the RCS problem to an already existing \emph{NP-complete} problem, because then it automaticly is reducable to every problem in \emph{NP}.
-
-\TODO{Reference a paper where this is proven}
-
-\begin{comment}
-\TODO{Dit moest er toch uit?}
-\subsection{Problem Extension}
-The basic RCPS problem will sometimes not suffice. Several extensions to the RCPS problem have been made to better suit real-life environments. The following paragraphs will provide a brief overview of how the problem can be augmented. Although it is not in the scope of this paper to address the extensions in detail, some context is provided to show in which areas the model can be expanded.
-
-\subsubsection{Multi-mode project scheduling}
-In multi-mode RCPS, activities can be executed in multiple modes. The activity modes are characterized by a certain resource requirement and a duration. For instance, one can either build a wall with one worker in three days or with two workers in two days. Instead of letting $\dur{v_i}$ be the duration of an activity $v_i$, the duration is dependent on the mode in in which the activity is executed. The notation therefore becomes $\textit{Dur}(v_i, m)$ and $\textit{Av}(v_i, m)$ in which $m$ is the mode in which the activity is executed. See \cite{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
-
-\subsubsection{Stochastic processing times}
-Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
-\end{comment}
+Relations between time points can be added in the following way:
+\begin{itemize}
+\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ is allowed to be scheduled within the range of $[d_{ij},D_{ij}]$.
+\end{itemize}
+\TODO{Write in text form, not bullet point}
 
 \newpage
-
 \section{Schedule construction using PCP}
 \label{section:PCP}
 Since the RCPS problem belongs to the class of \emph{NP-complete} problems, no algorithm capable of constructing an optimal solution in $O(n^k)$ is known (unless of course, $P=NP$). In order to devise a solution using polynomial time, an approximation algorithm needs the be used. In this section, the approach of Precedence Constraint Posting (PCP) will be discussed.
@@ -221,19 +242,6 @@ This STP will then be used to explain the relevance of the Resource Layer.
 The temporal aspect of the problems deals with activity durations and precedence constraints.
 These relations can be represented as a graph $G=(V,E)$ as defined in section 2.1. 
 This so-called \emph{precedence graph} can be reduced to a \emph{Simple Temporal Network} (STN), the format in which an STP is expressed.
-
-\subsubsection{Simple Temporal Networks (STN)}
-An STN consists of a set $P$ of so-called \emph{time points} with associated time windows.
-Relations between each pair of time points can be specified.
-Using a technique called \emph{constraint propagation} \cite{policella07}, it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied.
-It has been proven that it is possible to find such bounds for in $O(n^3)$ time \cite{policella07}.
-Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$.
-One could, for example, take the lower bound of each time point and use that as the value for each time point.
-
-Relations between time points can be added in the following way:
-\begin{itemize}
-\item $t_i \xrightarrow{[d_{ij},D_{ij}]} t_j$ called a \emph{free constraint}, meaning that the time $\delta$ between the two time points $t_i$ and $t_j$ is allowed to be scheduled within the range of $[d_{ij},D_{ij}]$.
-\end{itemize}
 
 \subsubsection{Reduction to STN}
 \begin{enumerate}
