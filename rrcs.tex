@@ -4,8 +4,11 @@
 \usepackage{amsmath}
 \usepackage[numbers]{natbib}
 \usepackage{xcolor}
-\usepackage{hyperref}
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage{mathrsfs}
+\usepackage{comment}
+
+\input{tikz/tikz}
 
 % Nieuwe titel? : \title{Using Precedence Constraint Posting in Partial Order Schedules for Continuous Scheduling.}
 \title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
@@ -26,58 +29,62 @@
 \newcommand{\usage}[1]{\textit{Usage}(#1)} %usage
 \newcommand{\start}[1]{\textit{Start}(#1)} %start time
 
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
 
 \begin{document}
 \maketitle
 \thispagestyle{empty}
 
 \begin{abstract}
-\TODO{abstract als laatste schrijven}
+This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why PCP is suited for use in continuous scheduling problems. 
 \end{abstract}
 
 \newpage
 
 \section{Scope and purpose}
-\TODO{rewrite introduction after draft finished, explain structure, chapters etc.}\\
+%We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. 
+Scheduling is a common problem in many day-to-day applications, but represents one of the more complex problems to solve.
+Scheduling is the process of assigning start times to a set of activities, in other work also referred to as tasks or jobs, in such a way that a number of conditions are met. 
+In many applications several complicating factors may arise.
+Scheduling can deal with some of these complicating factors using constraints.
+For instance, a limited number of resources, uncertain length of task execution and deadlines.
+These are examples of relatively simple factors. 
+More complicating factors are those that can be found in practical applications, like: break-down of resources, delays or uncertain number of tasks.
+Especially in dynamic environments, which is the type of environment many practical applications need to deal with.
+In this paper we will explore the resource constraint scheduling problem and explain how the theory can be used to cope with these more complicating factors in a dynamic environment.
 
-\TODO{Ik vond "Scope and purpose" wel een mooie alternatieve titel voor dit stuk}
-In het kort begrijp ik het volgende van wat we doen: 
+%Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
+The purpose of this paper is to inform fellow students on the topic of resource constraint scheduling in dynamic applications.
+The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
+Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
 
-We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
+%Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. 
+First we will give an intuitive definition of resource constraint project scheduling. 
+It sketches the problem and gives examples of constraints that are encountered. 
+This is followed by a formal definition of the problem along with the notation used throughout this paper. 
+%Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
+We will then explain simple temporal networks. 
+Knowledge of STNs is required by the precedence constraint posting approach. Instances of RCPSP can be represented by a STN. 
+Temporal networks are a simple and flexible way to represent schedules.
+The formal definition of STNs is given afterwards. 
 
-Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
 
-Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is. Dan maken we de transitie naar continuous planning en waarom het nodig is. Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren. \\
+%Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is.
+Precedence constraint posting and partial order schedules will be explained in section \ref{section:PCP}. 
+We show how PCP utilizes simple temporal networks to represent a RCPSP instance and how PCP utilizes the flexibility of such networks so that the schedule can take new constraints into account. 
 
+%Dan maken we de transitie naar continuous planning en waarom het nodig is.
+Section \ref{section:continuous} elaborates on the obstacles encountered due to the continuity of real life problems. 
+The problems that are introduced because of this factor are explained. 
+Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well. 
+\TODO{Which methods are discussed? Do we tell the reader about proactive and reactive techniques (here)?}
 
+%Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.
+The last section will combine the resource constraint scheduling, partial order schedule and precedence constraint posting subjects to show that a flexible and robust schedule can be created using these theories. 
 
-The resource scheduling problem is a problem concerned with the scheduling of tasks on a specific set of resources.
-These, often scarce, resources form a constraint on the volume of tasks which can be processed at any one time.
-Scheduling focuses on optimizing a schedule to either consume the least amount of resources, or perform all tasks in minimum required time.  \cite{brucker99}
-There are several different forms of resource constrained scheduling, all dealing with a specific type of scheduling problem.
-
-The main aspects that will be covered in this paper are precedence constraint posting and continuous planning.
-Precedence constraints require a set of tasks to be performed in a specific order, requiring one task to be performed before the other.
-Also, temporal constraints have a part in this scheduling problem, but this will not be the focus in this paper.
-Continuous planning is a form of scheduling where the scheduling process is not completed, the process continuous while schedule is being executed.
-In this case the set of tasks to be performed is not closed, meaning that during execution of the schedule the set of tasks may change and with it the optimal solution.
-However, it may also be undesirable to introduce major changes in the baseline schedule.
-Therefore, the continuous planning aspect of scheduling is one of the more complex issues and also a quite common phenomenon in practical situations.
-
-In this paper we will combine these to elements in the scheduling problem and study this in the light of robust resource constrained scheduling.
-Robust resource constrained scheduling requires that the schedule not only gives an efficient solution to perform all tasks, it should also take in to account external changes.
-In this paper we will use the same definition of robust as in \cite{policella07} : ``{(1) the ability to absorb exogenous and/or unforeseen events without loss of consistency, and (2) the ability to keep the pace with the execution guaranteeing a prompt answer to the various events.}''
-These kinds of changes can also occur due to the continuous nature of the application in which the scheduling is applied, for example by adding new tasks to the set.
-
-In the following chapter we will be dealing with the theory on scheduling problems and discus several relevant research papers that cover the topic.
-After which the two main aspects, precedence constraint posting and continuous planning, will be discussed further and then combined and linked to practical problems.
-We will take a deeper look at the practical applications for the theory, with their respective overlap and conflicts with the aforementioned theory.
-As one might expect, several issues occur in day-to-day applications of scheduling and not every aspect that is found in practice is covered by theoretical research on this subject.
-As is not unusual for mathematical or logical models of real-life problems, there is aways some assumption on preconditions which needs to be done to make a simplified model.
-
-This paper is intended to link the practical applications of the scheduling problem to several aspects of the theory, thereby addressing the incompleteness of the problem theory and discover what aspects need further research.
+\TODO{ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
+\TODO{MickG: Is dat erg?}
 
 \newpage
 
@@ -126,6 +133,25 @@ Each activity $v_i \in V$ has a duration(processing time) $\dur{v_i} \in \mathbb
 
 We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
 
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{Example of an activity graph with dummy activities. }
+	\label{fig:activity_graph}
+\end{figure}
+
+\subsubsection{Constraints}
+Apart from activities that consume resources, additional constraints can be added.
+Two of these are precedence constraints and temporal constrains.
+Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
+These dependencies are specified by a set $E \subset V \times V$.
+This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
+Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of 
+
+Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
+The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
+\TODO{use math func. Latex}
+
 \subsubsection{Resources}
 An activity requires a certain amount of resources to be available upon execution, this can either be a renewable resource or a consumable (also called nonrenewable) resource.
 With consumable we define resources, that when they are used it will no longer be available.
@@ -155,33 +181,34 @@ The project itself can also have a deadline, the total amount of time units befo
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
 The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
 
-The RCS problem schedule solution is denoted by a schedule that consists of a set of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$ where $v_1 \ldots v_n \in V$.
-It is also possible that you don't have a solution because all possible schedules exceed either the maximum project execution time or the available resources.
+\begin{figure}[h]
+	\centering
+	\input{tikz/time_schedule}
+	\caption{\TODO{verzin caption}}
+	\label{fig:time_schedule}
+\end{figure}
+
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
+There are two types of schedules, time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$.
+The conjunction of the time-feasible and the resource-feasible schedule will give you a solution for the RCS problem, this is denoted by $S = S_R \cap S_T$.
+We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
 
 \subsection{Problem Complexity}
 The RCSP belongs to the class of problems that are \emph{NP-complete}. 
 According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-complete} if the problem is reducable to every problem in the class \emph{P}.
 This can be easily proven if you reduce the RCS problem to an already existing \emph{NP-complete} problem, because then it automaticly is reducable to every problem in \emph{P}.
 
+\begin{comment}
+\TODO{Dit moest er toch uit?}
 \subsection{Problem Extension}
-\TODO{Waarom extension, wat is het nut van deze paragraaf, als je het doet, bespreek het dan goed}
-
-\TODO{REMOVE?}
-
-The basic PS \TODO{Wtf PS?} problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
+The basic RCPS problem will sometimes not suffice. Several extensions to the RCPS problem have been made to better suit real-life environments. The following paragraphs will provide a brief overview of how the problem can be augmented. Although it is not in the scope of this paper to address the extensions in detail, some context is provided to show in which areas the model can be expanded.
 
 \subsubsection{Multi-mode project scheduling}
-Multi-mode project scheduling is an extension to the original PS problem.
-In short it takes multiple ways to perform and activity into account.
-The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity.
-See \citet{herroelen05} for details.
-The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
-Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
+In multi-mode RCPS, activities can be executed in multiple modes. The activity modes are characterized by a certain resource requirement and a duration. For instance, one can either build a wall with one worker in three days or with two workers in two days. Instead of letting $\dur{v_i}$ be the duration of an activity $v_i$, the duration is dependent on the mode in in which the activity is executed. The notation therefore becomes $\textit{Dur}(v_i, m)$ and $\textit{Av}(v_i, m)$ in which $m$ is the mode in which the activity is executed. See \cite{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
 
 \subsubsection{Stochastic processing times}
-Often times it will be hard to estimate processing times for activities in practice.
-There is a big chance that the actual processing time will be  different from the estimate.
-In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems \TODO{Welke problemen, welke resultaten, het zegt niks wat er staat} introduced by using a stochastic distribution for activity processing times.
+Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
+\end{comment}
 
 \subsection{Summary}
 \TODO{REMOVE / MOVE to 2.1}
@@ -207,16 +234,13 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 \newpage
 
 \section{Schedule construction using PCP}
-\TODO{Bastiaan}
-
-\TODO{Structuur: Waarom PCP? Er is een probleem => NP-compleet. Dus vorm van benadering. Oberveer het volgende: als we ons puur beperken tot het tijdsaspect danr educeert het naar STN probleem wat op te lossen is in poly-time. Kunnen we het probleem niet splitsen zodat we resource deel apart nemenv antijdsdeel? We kijken naar resourceprofiel en voegen constraints toe. We beginnen met STN verhaal en daarna bespreken we hoe we constraints moeten toevoege. Twee methoden: Conflict Free en ESTA verhaal. Conflict Free is feasable voor alle starttimes en ESTA alleen voor 1 starttime. Chaining => ESTA oplossing ombouwen tot een POS.}
-
+\label{section:PCP}
 Since the RCPS problem belongs to the class of \emph{NP-complete} problems, no algorithm capable of constructing an optimal solution in $O(n^k)$ is known (unless of course, $P=NP$). In order to devise a solution using polynomial time, an approximation algorithm needs the be used. In this section, the approach of Precedence Constraint Posting (PCP) will be discussed.
 
 \subsection{Introduction}
 When regarding the RCPS problem, the problem has got both a time-related as well as a resource-related aspect. 
-The time-related aspect focusses on scheduling the activities with respect to the given temporal constraints. 
-As will be discussed below, this time-aspect of the problem can be reduced to a \emph{Simple Temporal Problem} (STP) \TODO{Refer to paper} which can be solved in $O(n^3)$ time. 
+The time-related aspect focusses on scheduling the activities with respect to the given precedence constraints. 
+As will be discussed below, this time-aspect of the problem can be reduced to a \emph{Simple Temporal Problem} (STP) \cite{lombardi10} which can be solved in $O(n^3)$ time. 
 The result of this STP is a schedule or a set of schedules for which needs to be verified if the resource constraints are met. 
 If there are any resource violations, \emph{Precedence Constraint Posting} (PCP) will offer a method of adding constraints to the STP in such a way that forces the resource requirements to be met in the generated schedule. 
 
@@ -226,14 +250,16 @@ This STP will then be used to explain the relevance of the Resource Layer.
 
 \subsection{Time Layer}
 The temporal aspect of the problems deals with activity durations and precedence constraints.
-These relations can be represented as a graph $G=(V,E)$ as defined in section \TODO{Reference near definition}. 
-This so-called \emph{precedence graph} can be reduced to a \emph{Simple Temporal Network} (STN), which forms the basis for our STP.
+These relations can be represented as a graph $G=(V,E)$ as defined in section 2.1. 
+This so-called \emph{precedence graph} can be reduced to a \emph{Simple Temporal Network} (STN), the format in which an STP is expressed.
 
-\subsubsection{Simple Temporal Networks}
-An STN is used to represent the temporal aspect of the RCSP and forms the basis for the STP.
+\subsubsection{Simple Temporal Networks (STN)}
 An STN consists of a set $P$ of so-called \emph{time points} with associated time windows.
 Relations between each pair of time points can be specified.
-In an STN with uncertainty, the goal is to provide each time point $t_i$ with a lower and an upper bound such that, if a value for each $t_i$ is chosen in that interval, all the relations are satisfied.
+Using a technique called \emph{constraint propagation} \cite{policella07}, it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied.
+It has been proven that it is possible to find such bounds for in $O(n^3)$ time \cite{policella07}.
+Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$.
+One could, for example, take the lower bound of each time point and use that as the value for each time point.
 
 Relations between time points can be added in the following way:
 \begin{itemize}
@@ -248,80 +274,44 @@ Relations between time points can be added in the following way:
 \item For each precedence constraint $(v_i, v_j) \in E$, add a free constraint with bounds $[0, \infty]$
 \end{enumerate}
 
-The constraint introduced in step $3$ forces the duration of the activity to be exactly $\dur{v_i}$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: a precedence constraint.
+The constraint introduced in step $3$ forces the duration of the activity to be exactly $\dur{v_i}$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: the definition of a precedence constraint.
 
-\subsubsection{Relations Temporal Constraints}
-In the models used to simulate the problem at hand, it is convenient to express all constraints as temporal constraints.
-A precedence constraint can be modeled as a temporal constraint with a minimum lag of $0$, and a maximum lag of $\infty$.
-
-\subsubsection{Reduction to Temporal Constraints}
-The temporal aspect of the problem can be modeled using \emph{time points}, \emph{free constraints} and \emph{contingent constraints} so as to form an STN \TODO{STNU?, de Uncertainty komt van die contigent constraints toch?} in the following way:
-\begin{enumerate}
-\item For each activity $v_i$, introduce two time points $s_i$ and $e_i$;
-\item Add a contingent constraint $s_i \xrightarrow{[d_{ij}:D_{ij}]} e_i$ for each activity; \TODO{Zitten de $i$ en de $j$ hier wel goed?}
-\item Add a free constraint $s_i \xrightarrow{[d_{ij},D_{ij}]} e_i$ for each temporal constraint in the problem definition.
-\end{enumerate}
-
-\TODO{insert hip plaatje van een STNU hier}
-
-As defined above, each activity is represented by two time points.
-The contingent constraint connecting the two time points represents the duration of the activity.
-The exact processing time of the activity is not yet known at this stage, only a worst-case and a best-case processing time are given.
-These best-case and worst-case processing times are used respectively as lower and upper bounds for the contingent constraint.
-The schedule needs to be generated in such a way that for each possible value for all of the contingent constraints (all possible combinations of processing times), the free constraints are met.
-
-Using a technique called \emph{constraint propagation} \cite{policella07}, it is possible to bound the domains of each time point $t_i$ such that $t_i \in [lb_i, ub_i]$, in which $lb_i$ represents the lower bound and $ub_i$ represents the upper bound of the time domain for the time point $t_i$, in such a way that all relations are satisfied regardless of which duration the activities have.
-It has been proven that it is possible to find such bounds for $n$ constraints in $O(n^3)$ time.
-Note that the resulting STNU represents a set of schedules rather then one schedule in particular, because the exact execution times are not known yet.
 Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$.
-One could, for example, take the lower bound of each time point and use that as the value for each time point.
-\TODO{... to create an actual schedule instance?}
+One could, for example, take the lower bound of each time point and use that as the value for each time point in order to obtain an actual schedule instance.
 
 \subsection{Resource Layer}
-\TODO{Verhaal van Ciesta}
+The STN that has been generated in the Time Layer provides a set of schedules in which the activities are scheduled in such a way that the given precedence constraints are satisfied. The Resource Layer focusses on the other aspect of the problem; the resources. 
+
 \subsubsection{Resource leveling}
-\subsubsection{Minimum Conflict Sets}
+The Resource Layer takes the resulting STN of the Time Layer and analyzes the resource usage over time using a \emph{resource profiler}. This profiler will indicate the periods of resource violation, called \emph{contention peaks}, and the activities that create that contention peak. When the contention peaks are identified, additional precedence constraints are added to the Time Layer in order to level the resource usage and solve one or more of the detected contention peaks. The Time Layer then provides a new temporal graph (STN) which will then be analyzed again in the Resource Layer. This process continues until all resource constraints are satisfied or if precedence constraints are added in the Time Layer resulting in an inconsistent STN. 
 
-\subsection{Precedence Constraint Posting}
-\TODO{Explain how the two layers can be brought together}
-\subsubsection{Introduction}
-In the classical RCPS problem described in the previous section, the input parameters of the problem, such as processing times of activities, need to be known before generating the schedule.
-The solution of this problem is a fixed schedule which can then be employed in practice.
-However, this off-line generation of the schedule does not offer the amount of flexibility that is often desired in practical problems.
-For example, the processing time of the activities might not be precisely known beforehand and only best-case and a worst-case times can be given.
-A schedule that is able to react to uncertainties and can be updated once more and more parameters become known is desired.
-Using Precedence Constraint Posting (PCP), the solution of the problem is a flexible augmented schedule that can be generated using an estimate of the input parameters and can then be updated in real-time (also called on-line) to adapt to the actual values.
-\TODO{Complex, long, this/that sentence :p}
+\subsubsection{Earliest Start Time Algorithm (ESTA)}
+The \emph{Earliest Start Time Algorithm} (ESTA) computes the resource profile according to one temporal solution (remember that an STN represents a set of schedules). This temporal solution is obtained by assigning to each time point in the STN to the lowest possible value in its associated time window. Again, additional constraints are posted in the Time Layer and ESTA computes a new schedule. The strength of this approach is that it shows exactly what will happen to the activities and the resource usage in the schedule. The major drawback is that this approach only guarantees the resource constraints to be met in precisely one schedule, the earliest start time solution. 
 
-\subsubsection{Scheduling Policy}
-\subsubsection{Partial Ordering Schedules \TODO{Order?}}
+\subsubsection{Conflict Free Solution Algorithm (CSFA)}
+In continuous planning, one is not so much interested in the earliest completion time, but rather in the actual robustness and flexibility of the schedule. Since the ESTA only provides one schedule, this does not give much flexibility if ons of there are disturbances in the activities (unexpected extended durations for example). Using the CSFA described in \cite{cesta98}, a schedule can be made which satisfies both the temporal constraints and the resource constraints for each combination of starting times for the activities.
 
-\subsubsection{Problem Extension}
-Instead of assuming each activity to have a fixed processing time, each activity is linked to a worst-case or lower bound ($p_{j} \in \mathbb{N}$) and a best-case or upper bound ($P_{j} \in \mathbb{N}$) processing time.
-Whereas the classical solution of the RCPS problem was given in the form of one schedule, the result of PCP is an augmented precedence graph that defines a set of possible schedules.
-This graph can be used to devise a starting time for activity $a_i$ in real-time, based on the execution history so far.
-The graph needs to be constructed in such a way that 
-\TODO{I don't think this paragraph is in line with the current document structure}
+\subsection{Conclusion}
+Precedence Constraint Posting relies on the decoupling of the original RCPS problem into a Time Layer and a Resource Layer. By first satisfying all temporal constraints in the Time Layer before focussing on the resource constraints in the Resource Layer, a feasible solution for the problem can be found in polynomial time. This solution is a set of activities where for all activities a timespan is given in which the activity can be executed so that regardless of the combination of other start times, resource and temporal constraints are satisfied.
 
 \newpage
 
 \section{Continuous scheduling}
-\TODO{MickL}
-
-\TODO{rewrite, remove planning, continuous scheduling, use examples}
-
+\label{section:continuous}
 Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in a feasible schedule.
-This makes these solutions quite effective on more complex, closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
-In many practical environments of the scheduling problem there is another factor to take into account: continuity.
-In these applications the set of resources and tasks is not closed, but tasks are added during the process.
-This requires the schedule to be changed or updated while processing the tasks in the schedule.
+These solutions are effective on complex, closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
+In many practical environments of where scheduling is performed, flexibility or robustness of the schedule is important, whilst changes occur regularly.
+Either resources can be delayed, become unavailable or new tasks can be added to the set, all during execution.
+In these applications the set of resources and tasks is not closed, but changes constantly.
+This requires the schedule to be changed or updated during execution of the schedule.
+Here we will take a deeper look at how to make resource constraint scheduling more practically applicable in continuously changing environments.
 
-We will first discuss schedule repair solutions, which take into account that some changes or problems may occur during schedule execution.
-These repair solutions provide a way to repair a schedule when certain small changes occur, for example due to delays in the process.
-Then we will review partial order schedules, an example of a solution which provides a flexible schedule.
-The partial order schedule contains several feasible schedules, enabling it to adjust to changes without the need for repair.
-\TODO{}Precedence constraint posting can be used to deliver partial order schedules.
-Finally we will take a look at how these repairs can be used to create a flexible and robust schedule, that can handle the addition of new tasks during the process.
+We will first discuss schedule repair solutions, which reschedule the solution when problems occur that disrupt the execution.
+These repair solutions provide a way to repair a schedule when certain changes occur, for example due to delays in the process.
+Then we will review flexible schedules and a special example of these flexible schedules, namely partial order schedules.
+The flexible schedule contains several feasible schedules, enabling it to be adjusted to changes without the need for complete rescheduling.
+Partial order schedules have an extra property, where the original output schedule can be used as input schedule for recalculating the solution.
+Finally we will take a look at how precedence constraint posting can be used in combination with partial order schedules, to provide with flexible resource constraint schedules.
 
 \subsection{Schedule repair}
 One solution to handle continuous changes to the problem set is schedule repair.
@@ -329,79 +319,52 @@ This reactive solution reschedules the solution as soon as problems or conflicts
 Using this type of repair requires the execution of the schedule to be paused, a new schedule to be calculated based on the changed problem set and the execution to be restarted with the new schedule.
 Pausing and repairing a schedule is a very time consuming solution, especially in environments where many changes may occur.
 To maximize effectiveness, the repair needs to be fast and allow the execution to continue with the minimum delay.
-Different solutions exist, which mostly favor either a quick repair with less accuracy or a slower, but more complete rescheduling.
+Different solutions exist, which mostly favor either a quick repair or a more complete rescheduling.
 \cite{policella07}
+Complete rescheduling often provides with a better schedule, which has a shorter execution time or uses resources more efficient.
+Whilst the quick repair does not do this, but delivers a new schedule in less time.
 
-Schedule repair gives the robustness to build a schedule although there are unknown factors in the environment, but requires the execution to be paused and repaired when problems occur.
+Schedule repair gives the ability to build a schedule although there are unknown factors in the environment, but requires the execution to be paused and repaired when problems occur.
 
 \subsection{Flexible schedules}
 Another solution is a more proactive approach, using flexible schedules.
-Flexible schedules are schedules which retain flexibility and can cope with several changes without the need for rescheduling.
+Flexible schedules are schedules which retain flexibility by coping with several changes without the need for rescheduling.
 These solutions present a form of redundancy, in time and/or resources.
 This redundancy represents multiple feasible schedules within one solution.
 Therefore allowing the process to select the execution which most resembles the actual environment.
 For flexible schedules it is required to know all sorts of changes that may occur in advance, in order to construct the correct flexible schedule.
-This requirement poses a big strain on the scheduling on forehand.
-If an unexpected change should occur, the schedule might not be capable of handling that change.
-In this case rescheduling is necessary.
+This requirement poses a big strain on the scheduling on forehand, because several, possibly unknown, factors need to be taken into account.
+If an unexpected change should occur, the schedule will most likely not be capable of handling that change.
+In this case complete rescheduling is necessary.
 
 Flexible scheduling provide a way to use the original flexible schedule and adopt it to the environment, but can only cope with known changes and problems.
 
 \subsection{Partial order schedules}
-Partial order schedules, or POS, are flexible schedules which take the flexibility a step further.
+Partial order schedules are flexible schedules which take the flexibility a step further.
 In partial order schedules, as defined in \citet{policella07}, each activity retains a set of feasible start times.
-They are represented by a temporal network, this network represents the different feasible schedules.
-In case there is a change, which is not too big, a simple modification to the schedule suffices to generate a new feasible solution.
-Partial order scheduling uses repairs, just as the iterative repair schedules that were previously mentioned.
-However, the partial order schedule already contains several options for an easy fix of the schedule.
-Therefore the time consumed in the recalculating of the schedule is reduced tremendously.
+They are represented by a temporal network, this network represents the different feasible schedules, similar to other flexible schedules.
+In all flexible schedules there is a possibility that the changes that occur are too large to adapt the schedule and rescheduling is required.
+This is where the main advantage of partial partial order schedules is, the original schedule can be used as input for the rescheduling algorithm.
+By reusing the previous costly time can be preserved in building a new schedule.
 
-There is a possibility of the changes being significant enough to force a complete rescheduling, which takes more time than the quick repair.
-The partial order schedules are quicker to repair, but require more time initially and when large changes occur.
-In addition to this problem, the quick repairs do not represent an optimal schedule.
-Therefore partial order schedules are a better and more flexible manner of continuous planning, but still does not result in the best solution.
+The rescheduling algorithm uses a temporal network as input, which is similar to the output itself generates.
+Because the original schedule is modified and reused, partial order schedules make the complete rescheduling less intensive.
+This property makes partial order schedules not only flexible and robust, but also quick to repair when bigger changes occur.
+Therefore partial order scheduling is especially suitable for applications in a dynamic environment.
 
 \subsection{Precedence constraint posting in partial order schedules}
-\TODO{see policella07 chapt 5}
-
-\TODO{REMOVE / MERGE with previous chapter}
-Precedence Constraint Posting (PCP) is a technique for finding feasible schedules by adding new precedence constraints to the original project graph in such a way that start times can be computed for whatever combination of activity durations without compromising the resource constraints.
-We will first take a look at how PCP works and then describe how this technique can be utilized in continuous planning.
-
-
-The PCP approach to scheduling is suitable for continuous planning.
-A lot of the methods for PCP create a POS in the form of Simple Temporal Network.
-This network has temporal constraints that ensure not only consistency of the activity precedence relations but also that resource capacities are not exceeded.
-An advantage of using STNs is that it is possible to post additional constraints during schedule executions to recalculate a new feasible schedule from the POS in polynomial time.
-
-If for example a project manager notices that a certain activity takes longer than expected, the scheduler can post an additional temporal constraint to the POS and try to create a new schedule from it.
-Notice that the new schedule will probably not be optimal and in some cases it might not be possible to create a new resource and time feasible schedule.
-In that case a new POS has to be created from the remaining project graph.
-
-
-A complete recalculation will not be necessary as frequent as with other techniques because the POS can be utilized in some cases of, possibly unexpected, lowered resource capacity, extended activity processing time or additional activities.
-
+Precedence constraint posting, as discussed in the previous chapter, is a technique for finding feasible schedules by adding new precedence constraints to a temporal network.
+This posting of new precedence constraints can be used to update the temporal network of a partial order schedule.
+In this manner several large adjustments can be posted to a schedule, which can then be easily rescheduled.
+Precedence constraint posting in combination with partial order schedules give a very robust and flexible solution to the scheduling of tasks in a dynamic environment.
 
 \newpage
 
 \section{Conclusion}
-\TODO{The overall conclusion.
-Huidige tekst verplaatst uit continuous}
-Continuous planning poses a special problem in the scheduling domain.
-Although continuous planning seems obvious and the presence is ubiquitous in practical applications, there is no effective theoretical solution capable of providing a optimal solution in continuous planning.
-There is always a trade-of between optimal solutions and processing speed.
-Often the pressure to provide a quick solution overrules the optimum option.
+\TODO{The overall conclusion.}
 
 \newpage
 \bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
-
-
-
-
-
-
-
-
