@@ -10,8 +10,7 @@
 
 \input{tikz/tikz}
 
-% Nieuwe titel? : \title{Using Precedence Constraint Posting in Partial Order Schedules for Continuous Scheduling.}
-\title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
+\title{Resource Constraint Scheduling in Dynamic Applications using Precedence Constraint Posting.}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -37,7 +36,10 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why PCP is suited for use in continuous scheduling problems. 
+This paper gives an overview of the application of the precedence constraint posting technique in the resource constraint scheduling problem.
+A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. Precedence constraint posting proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance.
+Using precedence constraint posting, a solution for the resource constraint scheduling problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time.
+The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why precedence constraint posting is suited for use in continuous scheduling problems. 
 \end{abstract}
 
 \newpage
@@ -77,58 +79,49 @@ We show how PCP utilizes simple temporal networks to represent a RCPSP instance 
 %Dan maken we de transitie naar continuous planning en waarom het nodig is.
 Section \ref{section:continuous} elaborates on the obstacles encountered due to the continuity of real life problems. 
 The problems that are introduced because of this factor are explained. 
-Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well. 
-\TODO{Which methods are discussed? Do we tell the reader about proactive and reactive techniques (here)?}
+Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well.
+Making schedules flexible is done in two different approaches: reactive and proactive.
+Reactive means that a schedule is created in advance and when problems occur, it is rescheduled to deliver a new schedule.
+Proactive holds that a schedule is created which itself can handle some changes.
+These schedules mostly contain multiple solutions in one schedule.
 
 %Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.
 The last section will combine the resource constraint scheduling, partial order schedule and precedence constraint posting subjects to show that a flexible and robust schedule can be created using these theories. 
 
-\TODO{ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
-\TODO{MickG: Is dat erg?}
-
 \newpage
 
 \section{Problem background}
-\TODO{Freek}
+Before we start we need to explain a bit more about what the RCS problem is and how we define it.
+In this section we will start with the formal definition of our RCS problem, where our unifying representation is presented.
+Then we will try to explain the problem in some more depth by explaining a bit more about our prerequisites that are used in the formal definition.
+As last we will try to explain the problem complexity of the RCSP and how this is proven.
 
-\TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
 
-\TODO{define 'optimal'}
-
-Different aspects of the underlying theory leading to RRCS.
- Per point explanation of the theory with references to relevant papers.
-This will be the main section of the paper.
-
-\TODO{Describe what notation conventions we will adopt.
-I suggest using the notation from P. Brucker et al, European Journal of Operational Research 112 (1999). }
-
-Sched
 \subsection{Formal Definition}
-The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, W, E, R)$: \cite{brucker99}
+The general definition for the resource constraint scheduling problem (RCSP) is defined in the following definition\cite{brucker99}.
 
 Given:
 \begin{itemize}
 \item a horizon $T$ that denotes the total time horizon for the problem, where $T \in \mathbb{N}$
-\item a set of activities(jobs) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
-\item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $\forall v_j \in V (w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
+\item a set of activities (also called jobs or tasks) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
+\item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $\forall_{1 \leq j \leq n} (w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
 \item the durations, processing time of the activities $\dur{v_i}$, so that $\dur{v_k} \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
 \item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
 \item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $\renres$ and  consumable (nonrenewable) resources $\conres$ but with a possible overlap of doubly constrained resources ($r_j \in \renres \cap \conres$) \TODO{Dit lijkt me niet zo handig, stel $r_1$ is zo'n dubbele, wat is $Cap(r_1)$ dan?}
+\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $\renres$ and  consumable (nonrenewable) resources $\conres$.
 \item the availabilities of the resources $\av{r_i, t}$, so that $\av{r_k, t} \in \mathbb{N}$ denotes the availability of resource $r_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
-\item the per period usage for an activity $v_j$ of resource $r_k$ are denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$ \TODO{Weird}
+\item the per period usage for an activity $v_j$ of resource $r_k$ is denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
 \end{itemize}
 
-Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $\start{_j} \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
+Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $\start{v_j} \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
 $S = (\start{v_1} \ldots \start{v_n})$ is a feasible schedule for the activities $V = (v_1 \ldots v_n)$.
 
 \subsection{Prerequisites}
-In this section, the general problem focused on in this paper is explained.
-Projects composed of activities, resources and constraints are introduced and a unifying notation is presented.
-First, some terminology is discussed followed by a problem definition.
+As shown in the formal definition the problem is composed of activities, resources and constraints.
+In this section we will discuss what activities, resources and constraints really are in the RCS problem.
 
 \subsubsection{Activities}
-Each project consists of a finite set of activities(also called jobs) denoted as $V = v_1 \ldots v_n$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
+Each project consists of a finite set of activities (also called jobs) denoted as $V = v_1 \ldots v_n$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
 Each activity $v_i \in V$ has a duration(processing time) $\dur{v_i} \in \mathbb{N}$, the time needed to complete the activity, and a starting time $\start{v_i} \in \mathbb{N}$, the time at which the activity should be executed. The duration $\dur{v_i}$ and the starting time $\start{v_i}$ are both denoted as a time period in the time horizon $T$.
 
 We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
@@ -146,27 +139,31 @@ Two of these are precedence constraints and temporal constrains.
 Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
 These dependencies are specified by a set $E \subset V \times V$.
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
-Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of 
-
-Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
-The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
-\TODO{use math func. Latex}
+Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of the constraint and activity sets.
 
 \subsubsection{Resources}
-An activity requires a certain amount of resources to be available upon execution.
-For example, changing a tire might require two workmen and one car lift.
-In general, there are two kinds of resources: renewable and consumable (also named nonrenewable) resources.
-With a consumable resources (such as petrol), once a part of a resource is used, it will no longer be available.
+An activity requires a certain amount of resources to be available upon execution, this can either be a renewable resource or a consumable (also called nonrenewable) resource.
+With consumable we define resources, that when they are used it will no longer be available.
 This contrasts with renewable resources, which do not deplete when used.
-For renewable resources, the amount of units available of resource $r_k$ at any given time is $\av{\renres_k, t}$ (for example the number of machines in a shop).
-The total amount of units available for a nonrenewable resource $k$ is noted by $\av{\conres_k, t}$.
+For example a renewable resource could be the workmen and a car lift that are required to change a flat tire and the consumable resource could be the replace tire itself.
+
+For renewable resources, the amount of units available of resource $r_k \in R$ at any given time is $\av{\renres_k, t} \in \mathbb{N}$ (for example the number of machines in a shop).
+The total amount of units available for a nonrenewable resource $r_k \in R$ is noted by $\av{\conres_k, t} \in \mathbb{N}$.
+Both return a number which represents the availability in units.
 The set of all renewable resources within a project is indicated with $\renres$ and the set of renewable resources is indicated by $\conres$. 
 
 Activities consume a certain amount of one or more resources.
-The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $\usage{v_j, \renres_k}$ for a renewable resource and   $\usage{v_j, \conres_k}$ for an nonrenewable resource.
+The amount that an activity $v_j \in V$ consumes of a resource $r_k \in R$ during a unit of time is denoted by $\usage{v_j, \renres_k} \in \mathbb{N}$ for a renewable resource and   $\usage{v_j, \conres_k} \in \mathbb{N}$ for an nonrenewable resource.
+Both return a number which represents the usage of a resource in the same type of units as the availability.
+
+
+\subsubsection{Constraints}
+Apart from activities that consume resources, additional constraints can be added.
+Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
+Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$.
+This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
 
 \subsubsection{Schedule}
-\TODO{what is time horizon?, define RCS, two types of scheduling?, don't use completion times}
 The general idea of resource scheduling is to minimize the project execution time without over-utilizing the resources or violate project constraints like the constraints discussed above.
 The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
@@ -185,13 +182,11 @@ The conjunction of the time-feasible and the resource-feasible schedule will giv
 We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
 
 \subsection{Problem Complexity}
-\TODO{Reductie naar bestaand NP-compleet probleem. Dit is de reden van het paper.}
-The RCS problem belongs to the class of problems that are \emph{NP-hard}. According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-hard} if its decision version is \emph{NP-complete} \TODO{Een probleem zit in NPC als hij NP Hard is en in NP zit, ik vind deze redenatie een beetje achterstevoren}. 
-That the decision version of the RCS problem belongs to the class \emph{NP-complete} is proven and thereby is proven that the RCS problem belongs to the class \emph{NP-hard}. 
-\TODO{Ik zou dit stuk vervangen door een alinea die zegt in welke paper het bewijs gegeven is voor $RCPSP \in NP-Complete$ en een intuitief bewijsje geven voor waarom dat zo is}\\
-The time and space complexity of the RCS problem depends on the used algorithms and approaches used to solve the problem \TODO{Is inherent aan het problem. Het gaat om de EXACTE opplossing die NP-compleet is en bepaalde ruimte gebruikt}. 
-There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
-\TODO{Explain the time and space complexity between the two different approaches and add reference to the prove}
+The RCSP belongs to the class of problems that are \emph{NP-complete} which is the subset of problems that are in the class \emph{NP-hard} and \emph{NP}. 
+According to the complexity theory a problem belongs to the class \emph{NP-complete} if the problem is in \emph{NP} and every problem in \emph{NP} is reducable to the problem.
+This can be easily proven if you reduce the RCS problem to an already existing \emph{NP-complete} problem, because then it automaticly is reducable to every problem in \emph{NP}.
+
+\TODO{Reference a paper where this is proven}
 
 \begin{comment}
 \TODO{Dit moest er toch uit?}
@@ -204,27 +199,6 @@ In multi-mode RCPS, activities can be executed in multiple modes. The activity m
 \subsubsection{Stochastic processing times}
 Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
 \end{comment}
-
-\subsection{Summary}
-\TODO{REMOVE / MOVE to 2.1}
-\begin{tabular}{l l}
-\hline
-$T$ & time horizon \\
-$t$ \TODO{$t_i$?} &  index of a time period in the time horizon $T = (t_1 \ldots t_n)$\\
-$V$ & set of activities $V = (v_1 \ldots v_n)$ \\
-$n$ & number of original activities \\
-$E$ & set of constraints \\
-$\renres$ & consumable resources \\
-$\conres$ & renewable resources \\
-$\dur{v_i}$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
-$\av{r_i}$ & the availability of resource $r_i$ \\
-$\usage{v_j, r_k}$ & the per period usage for activity $v_j$ of resource $r_k$ \\
-$\start{v_i}$ & the start time of activity $v_i$ \\
-$S$ & a schedule consisting of st
-art times for the activities $S = (\start{v_1}) \ldots \start{v_n})$ \\
-$C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))$ \\
-\hline
-\end{tabular}
 
 \newpage
 
@@ -356,7 +330,22 @@ Precedence constraint posting in combination with partial order schedules give a
 \newpage
 
 \section{Conclusion}
-\TODO{The overall conclusion.}
+In this paper we discussed several aspects of the resource constraint scheduling problem.
+The resource constraint scheduling problem proves to be a challenging problem in many day-to-day applications.
+These applications often operate in dynamic environments, which pose many external constraints on the schedules.
+To cope with these constraints and problems, some techniques are applied to provide with a more flexible and robust schedule.
+Flexibility is key in providing a schedule that can function in a dynamic environment, handling the uncertainties which may occur.
+
+At first we discussed scheduling methods and relevant techniques, to discover that not all of these schedule deliver the same flexibility as needed.
+Other techniques like precedence constraint posting and temporal networks were introduced, to provide us with the tools to create more flexibility.
+
+We then discussed several ways flexible schedules can be created and what kind of techniques can be used to do so.
+Finally we found that a combination of a flexible schedule in the form of a temporal network and techniques used in partial order scheduling, provide with a very flexible structure.
+These flexible schedules are capable of handling the dynamic environment better than the simpler or more rigid variants.
+
+The capability to handle changes in the environment as well as a growing set of tasks makes this combination a good and efficient solution to many practical scheduling applications.
+When scheduling becomes a big and complex part of the daily business, one might consider using precedence constraint posting to help build resource constraint schedules in a dynamic environment.
+
 
 \newpage
 \bibliographystyle{plainnat}
