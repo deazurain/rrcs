@@ -26,15 +26,15 @@
 \newcommand{\usage}[1]{\textit{Usage}(#1)} %usage
 \newcommand{\start}[1]{\textit{Start}(#1)} %start time
 
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
 
 \begin{document}
 \maketitle
 \thispagestyle{empty}
 
 \begin{abstract}
-\TODO{abstract als laatste schrijven}
+This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time, which makes the schedule flexible enough to be able to adapt to the situation in real-time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, the link between precedence constrained posting and how it integrates with continuous scheduling problems will be discussed.
 \end{abstract}
 
 \newpage
@@ -179,7 +179,7 @@ There are currently two type of algorithms which are used in most cases, the exa
 The basic RCPS problem will sometimes not suffice. Several extensions to the RCPS problem have been made to better suit real-life environments. The following paragraphs will provide a brief overview of how the problem can be augmented. Although it is not in the scope of this paper to address the extensions in detail, some context is provided to show in which areas the model can be expanded.
 
 \subsubsection{Multi-mode project scheduling}
-In multi-mode RCPS, activities can be executed in multiple modes. The activity modes are characterized by a certain resource requirement and a duration. For instance, one can either build a wall with one worker in three days or with two workers in two days. Instead of letting $\dur{v_i}$ be the duration of an activity $v_i$, the duration is dependent on the mode in in which the activity is executed. The notation therefore becomes $\textit{Dur}(v_i, m)$ and $\textit{Av}(v_i, m)$ in which $m$ is the mode in which the activity is executed. See \citet{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
+In multi-mode RCPS, activities can be executed in multiple modes. The activity modes are characterized by a certain resource requirement and a duration. For instance, one can either build a wall with one worker in three days or with two workers in two days. Instead of letting $\dur{v_i}$ be the duration of an activity $v_i$, the duration is dependent on the mode in in which the activity is executed. The notation therefore becomes $\textit{Dur}(v_i, m)$ and $\textit{Av}(v_i, m)$ in which $m$ is the mode in which the activity is executed. See \cite{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
 
 \subsubsection{Stochastic processing times}
 Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
@@ -330,7 +330,6 @@ Precedence constraint posting, as discussed in the previous chapter, is a techni
 This posting of new precedence constraints can be used to update the temporal network of a partial order schedule.
 In this manner several large adjustments can be posted to a schedule, which can then be easily rescheduled.
 Precedence constraint posting in combination with partial order schedules give a very robust and flexible solution to the scheduling of tasks in a dynamic environment.
-
 
 \newpage
 
