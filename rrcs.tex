@@ -10,8 +10,7 @@
 
 \input{tikz/tikz}
 
-% Nieuwe titel? : \title{Using Precedence Constraint Posting in Partial Order Schedules for Continuous Scheduling.}
-\title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
+\title{Resource Constraint Scheduling in Dynamic Applications using Precedence Constraint Posting.}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -37,7 +36,10 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why PCP is suited for use in continuous scheduling problems. 
+This paper gives an overview of the application of the precedence constraint posting technique in the resource constraint scheduling problem.
+A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. Precedence constraint posting proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance.
+Using precedence constraint posting, a solution for the resource constraint scheduling problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time.
+The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why precedence constraint posting is suited for use in continuous scheduling problems. 
 \end{abstract}
 
 \newpage
@@ -77,14 +79,14 @@ We show how PCP utilizes simple temporal networks to represent a RCPSP instance 
 %Dan maken we de transitie naar continuous planning en waarom het nodig is.
 Section \ref{section:continuous} elaborates on the obstacles encountered due to the continuity of real life problems. 
 The problems that are introduced because of this factor are explained. 
-Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well. 
-\TODO{Which methods are discussed? Do we tell the reader about proactive and reactive techniques (here)?}
+Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well.
+Making schedules flexible is done in two different approaches: reactive and proactive.
+Reactive means that a schedule is created in advance and when problems occur, it is rescheduled to deliver a new schedule.
+Proactive holds that a schedule is created which itself can handle some changes.
+These schedules mostly contain multiple solutions in one schedule.
 
 %Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.
 The last section will combine the resource constraint scheduling, partial order schedule and precedence constraint posting subjects to show that a flexible and robust schedule can be created using these theories. 
-
-\TODO{ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
-\TODO{MickG: Is dat erg?}
 
 \newpage
 
