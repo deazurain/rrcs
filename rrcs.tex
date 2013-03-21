@@ -7,6 +7,10 @@
 \usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{mathrsfs}
 \usepackage{comment}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}% http://ctan.org/pkg/caption
+\captionsetup[table]{justification=raggedright, singlelinecheck=off}
 
 \input{tikz/tikz}
 
@@ -20,14 +24,18 @@
 \pagestyle{empty}
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+%\newcommand{\TODO}[1]{}
 
-\newcommand{\renres}[0]{R^\rho} %renewable resource
-\newcommand{\conres}[0]{R^\nu} %consumable resource
-\newcommand{\res}[0]{R} % all resources
-\newcommand{\av}[1]{\textit{Av}(#1)} %availability
-\newcommand{\dur}[1]{\textit{Dur}(#1)} %durability
-\newcommand{\usage}[1]{\textit{Usage}(#1)} %usage
-\newcommand{\start}[1]{\textit{Start}(#1)} %start time
+\newcommand{\renres}[0]{\ensuremath{R^\rho}} %renewable resource
+\newcommand{\conres}[0]{\ensuremath{R^\nu}} %consumable resource
+\newcommand{\res}[0]{\ensuremath{R}} % all resources
+\newcommand{\av}[1]{\ensuremath{Av(r_{#1})}} %availability
+\newcommand{\dur}[1]{\ensuremath{Dur(v_{#1})}} %durability
+\newcommand{\usage}[2]{\ensuremath{Usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
+\newcommand{\start}[1]{\ensuremath{Start(v_{#1})}} %start time
+% \TODO{This may be extremely evil ^^'
+\renewcommand{\stop}[1]{\ensuremath{Stop(v_{#1})}} %stop time
+\newcommand{\makespan}[1]{\ensuremath{C_{max}(#1)}} %makespan
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
@@ -130,12 +138,14 @@ The time period $t_j$ corresponds to the time interval $(t-1,t]$.
 
 \subsubsection{Activities}
 Each project consists of a finite set of activities denoted as $V = \{v_1 \ldots v_n\}$, where each element of $V$ is a unique identifier for an activity and $n \in \mathbb{N}$ is the total number of activities.
-Each activity $v_i \in V$ has a duration $\dur{v_i} \in \mathbb{N}$, also known as processing time in other work, which is the (estimated) time required to complete the activity. 
-Each activity will be assigned a starting time $\start{v_i} \in \mathbb{N}$. 
-The duration $\dur{v_i}$ is given in the number of time periods and the starting time of an activity $\start{v_i}$ is denoted as $t_j$. 
-We also define the completion times for the activities in $V$, this is denoted by $C = Stop(v_1) \ldots Stop(v_n)$ where $Stop(v_j)$ for each activity $v_j$ has to be less than the Time horizon $T$, this can be denoted as following $\forall_{v_j}(v_j < T)$.
+Each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$, also known as processing time in other work, which is the (estimated) time required to complete the activity. 
+Each activity will be assigned a starting time $\start{i} \in \mathbb{N}$. 
+The duration \dur{i} is given in the number of time periods and the starting time of an activity \start{i} is denoted as $t_j$. 
+We also define the completion times for the activities in $V$, this is denoted by $C = \stop{1},\ldots,\stop{n}$ where \stop{i} for each activity $v_i$ has to be less than the Time horizon $T$, this can be denoted as following $\forall{v_i \in V}(v_i < T)$.
 
 The set of activities $V$ is often extended to a set of activities $W = w_0, \ldots w_{n+1}$, which incorporates a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. 
+These dummy activities have a duration of $0$ periods. 
+Precedence constraints are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity. 
 The set $W$ therefore equals $V \cup \{v_0, v_{n+1}\}$. 
 Figure \ref{fig:activity_graph} shows the sets $V$ and $W$ for an example instance. 
 
@@ -149,7 +159,6 @@ Figure \ref{fig:activity_graph} shows the sets $V$ and $W$ for an example instan
 \subsubsection{Precedence constraints}
 Precedence constraints are specified by a set $E \subset V \times V$.
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
-Sometimes a precedence constraint may also be notated as $v_i \rightarrow v_j$ if $v_i$ has to be completed before $v_j$. 
 Figure \ref{fig:activity_graph} shows an with dummy activities augmented graph where the precedence constraints are reduced to a minimum. 
 
 \subsubsection{Resources}
@@ -162,21 +171,21 @@ Several of the repair activities require the material tape.
 There is however a limited supply of tape that can be used. 
 Each piece of tape is a consumable resource because it can only be used once in the entire planning horizon. 
 
-The set of renewable resources is notated as $\renres$. 
-The set of consumable resources is notated as $\conres$. 
+The set of renewable resources is notated as \renres. 
+The set of consumable resources is notated as \conres. 
 The total set of resources is $\res = \renres \cup \conres$. 
 Notice that $\renres \cap \conres = \emptyset$ because a resource $r_i$ cannot be both renewable and consumable in this model to reduce notation complexity. 
 If a real life resource is both renewable and consumable it can be modelled by two separate resources $r_i \in \renres$ and $r_j \in \conres$ with $i \neq j$. 
 
-For all resources $r_i \in \res$, the amount of units available of that resource at time period $t_i$ is given by $\av{r_k, t_i} \in \mathbb{N}$. 
+For all resources $r_i \in \res$, the amount of units available of that resource per time period is given by $\av{i} \in \mathbb{N}$. 
 This notation handles renewable and consumable resources elegantly. 
 
 Activities consume a certain amount of one or more resources.
-The amount that an activity $v_j \in V$ consumes of a resource $r_k \in \res$ during its execution is denoted by $\usage{v_j, r_k} \in \mathbb{N}$. 
+The amount of units that an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is denoted by $\usage{i}{j} \in \mathbb{N}$. 
 
 \subsubsection{Schedule}
 A common idea in resource constrained project scheduling is to minimize the project execution time, also called makespan, without violating any of the constraints that have been discussed. 
-\TODO{notation for makespan?}
+The makespan is notated as \makespan{s} for a schedule realisation $s$. 
 The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
 
 \begin{figure}[h]
@@ -186,25 +195,39 @@ The project itself can also have a deadline, the total amount of time units befo
 	\label{fig:time_schedule}
 \end{figure}
 
-The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
+The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{1}, \ldots, \start{n})$.
 We define two sets of schedules: time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$. 
 The conjunction of the time-feasible and the resource-feasible schedules $S = S_R \cap S_T$ is the set of possible feasible schedules, the solution to the RCPSP. 
 
 \subsubsection{Notation table}
-
-Given:
-\begin{itemize}
-\item a horizon $T$ that denotes the total time horizon for the problem, where $T \in \mathbb{N}$
-\item a set of activities (also called jobs or tasks) $V = v_1 \ldots v_n$, where $v_j \in V$ is a unique identifier for an activity
-\item an extended set $W = w_0, \ldots w_{n+1}$ of the activities set $V$, where $\forall_{1 \leq j \leq n} (w_j = v_j)$ with a unique dummy beginning activity $w_0$ and a unique dummy terminating activity $w_{n+1}$
-\item the durations, processing time of the activities $\dur{v_i}$, so that $\dur{v_k} \in \mathbb{N}$ denotes the duration of activity $v_k \in V$ in time periods of time horizon $T$
-\item a set of constraints which needs to be satisfied $E$, such that $(v_i,v_j) \in E$ means that $v_i \in V$ precedes activity $v_j \in V$ and $v_i \neq v_j$.
-\item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
-\item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $\renres$ and  consumable (nonrenewable) resources $\conres$.
-\item the availabilities of the resources $\av{r_i, t}$, so that $\av{r_k, t} \in \mathbb{N}$ denotes the availability of resource $r_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
-\item the per period usage for an activity $v_j$ of resource $r_k$ is denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
-\end{itemize}
-\TODO{convert to table}
+A summary of the notation used in this paper. 
+\begin{table}[h]
+	\caption{RCPSP notation}
+	\label{table:RCPSP_notation}
+	\noindent
+	\begin{tabularx}{\linewidth}{llX}
+		\toprule
+		Notation & Symbolic def. & Definition \\
+		\midrule
+		$T$ & $T \in \mathbb{N}$ & Time horizon \\
+		$t$ & $t = 1, 2, \ldots, T$ & Periods \\
+		$t_i$ & $t_i = (i - 1, i]$ & Time interval $i$ \\
+		$V$, $v_i$ & $v_i \in V$ & Set of original activities, activity $i$ \\
+		$n$ & $n = |V|$ & Number of activities \\
+		$E$ & $E \subset V \times V$ & Set of precedence constraints \\
+		$(v_i, v_j)$ & $(v_i, v_j) \in E$ & Precedence constraint \\
+		$G(V,E)$ && Directed graph of activities connected by precedence constraints \\
+		\renres, $r_i$ & $r_i \in \renres$ & Set of renewable resources, renewable resource $i$ \\
+		\conres, $r_i$ & $r_i \in \conres$ & Set of consumable resources, consumable resource $i$ \\
+		\res & $\res = \renres \cup \conres$ & All resources \\
+		\dur{i} && Duration of activity $v_i$ \\
+		\av{i} && Amount of units available of resource $r_i \in \res$ \\
+		\usage{i}{j} && Amount of units used by activity $v_i$ of resource $r_j$ \\
+		\start{i} && Start time of activity $v_i$ \\
+		\makespan{s} && Makespan; number of periods required to execute schedule realisation $s$ \\
+		\toprule
+	\end{tabularx}
+\end{table}
 
 \subsection{Simple temporal networks}
 \label{text:STN}
@@ -247,11 +270,11 @@ This so-called \emph{precedence graph} can be reduced to a \emph{Simple Temporal
 \begin{enumerate}
 \item Let S be an empty graph
 \item For each activity $v_i \in V$, add two nodes (time points) $s_i$ and $e_i$ to S
-\item Connect each pair of points $s_i$ and $e_i$ with a free constraint with bounds $[\dur{v_i}, \dur{v_i}]$
+\item Connect each pair of points $s_i$ and $e_i$ with a free constraint with bounds $[\dur{i}, \dur{i}]$
 \item For each precedence constraint $(v_i, v_j) \in E$, add a free constraint with bounds $[0, \infty]$
 \end{enumerate}
 
-The constraint introduced in step $3$ forces the duration of the activity to be exactly $\dur{v_i}$. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: the definition of a precedence constraint.
+The constraint introduced in step $3$ forces the duration of the activity to be exactly \dur{i}. The constraints added in step $4$ can have any, non-negative value which enforces the activities to take place some time after each other: the definition of a precedence constraint.
 
 Since a solution assigns values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$.
 One could, for example, take the lower bound of each time point and use that as the value for each time point in order to obtain an actual schedule instance.
