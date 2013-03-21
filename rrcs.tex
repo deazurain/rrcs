@@ -176,24 +176,13 @@ There are currently two type of algorithms which are used in most cases, the exa
 \TODO{Explain the time and space complexity between the two different approaches and add reference to the prove}
 
 \subsection{Problem Extension}
-\TODO{Waarom extension, wat is het nut van deze paragraaf, als je het doet, bespreek het dan goed}
-
-\TODO{REMOVE?}
-
-The basic PS \TODO{Wtf PS?} problem will sometimes not suffice. Several extensions to the PS problem have been made of which some will be discussed here. 
+The basic RCPS problem will sometimes not suffice. Several extensions to the RCPS problem have been made to better suit real-life environments. The following paragraphs will provide a brief overview of how the problem can be augmented. Although it is not in the scope of this paper to address the extensions in detail, some context is provided to show in which areas the model can be expanded.
 
 \subsubsection{Multi-mode project scheduling}
-Multi-mode project scheduling is an extension to the original PS problem.
-In short it takes multiple ways to perform and activity into account.
-The different 'modes' in which an activity can be performed have different processing times and resource requirements for that activity.
-See \citet{herroelen05} for details.
-The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
-Research into multi-mode scheduling with PCP for continuous planning has not been done to the best of the authors' knowledge. 
+In multi-mode RCPS, activities can be executed in multiple modes. The activity modes are characterized by a certain resource requirement and a duration. For instance, one can either build a wall with one worker in three days or with two workers in two days. Instead of letting $\dur{v_i}$ be the duration of an activity $v_i$, the duration is dependent on the mode in in which the activity is executed. The notation therefore becomes $\textit{Dur}(v_i, m)$ and $\textit{Av}(v_i, m)$ in which $m$ is the mode in which the activity is executed. See \citet{herroelen05} for details. The approach to scheduling that is discussed in this paper does not account for multi-mode activities.
 
 \subsubsection{Stochastic processing times}
-Often times it will be hard to estimate processing times for activities in practice.
-There is a big chance that the actual processing time will be  different from the estimate.
-In depth research has been done on stochastic processing time for project scheduling to model this deviation as has been shown in \cite{brucker99} covering several important problems \TODO{Welke problemen, welke resultaten, het zegt niks wat er staat} introduced by using a stochastic distribution for activity processing times.
+Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
 
 \subsection{Summary}
 \TODO{REMOVE / MOVE to 2.1}
