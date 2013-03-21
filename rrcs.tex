@@ -4,8 +4,10 @@
 \usepackage{amsmath}
 \usepackage[numbers]{natbib}
 \usepackage{xcolor}
-\usepackage{hyperref}
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage{mathrsfs}
+
+\input{tikz/tikz}
 
 % Nieuwe titel? : \title{Using Precedence Constraint Posting in Partial Order Schedules for Continuous Scheduling.}
 \title{Precedence Constraint Posting in Continuous Planning; Practical Adoption of the Scheduling Problem.}
@@ -130,6 +132,25 @@ Each activity $v_i \in V$ has a duration(processing time) $\dur{v_i} \in \mathbb
 
 We also have an extended set of activities $W = w_0, \ldots w_{n+1}$, which extends the activity set $V$ with a unique dummy beginning activity $w_0$ and a unique dummy ending activity $w_{n+1}$. This set contains all the activities of $V \subset W$ such that $forall_{1 \leq j \leq n}(w_j = v_j)$.
 
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{Example of an activity graph with dummy activities. }
+	\label{fig:activity_graph}
+\end{figure}
+
+\subsubsection{Constraints}
+Apart from activities that consume resources, additional constraints can be added.
+Two of these are precedence constraints and temporal constrains.
+Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
+These dependencies are specified by a set $E \subset V \times V$.
+This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
+Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of 
+
+Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
+The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
+\TODO{use math func. Latex}
+
 \subsubsection{Resources}
 An activity requires a certain amount of resources to be available upon execution.
 For example, changing a tire might require two workmen and one car lift.
@@ -143,24 +164,19 @@ The set of all renewable resources within a project is indicated with $\renres$ 
 Activities consume a certain amount of one or more resources.
 The amount that an activity $j$ consumes of a resource $k$ during a unit of time is denoted by $\usage{v_j, \renres_k}$ for a renewable resource and   $\usage{v_j, \conres_k}$ for an nonrenewable resource.
 
-
-\subsubsection{Constraints}
-Apart from activities that consume resources, additional constraints can be added.
-Two of these are precedence constraints and temporal constrains.
-Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
-Such activity precedence can be visualized using a so-called precedence graph $G = (V, E)$ in which every activity is represented by a node and directed edges between nodes $v_i$ and $v_j$ are added if an action $v_i$ needs to be executed before $v_j$.
-This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
-
-Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
-The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
-\TODO{use math func. Latex}
-
 \subsubsection{Schedule}
 \TODO{what is time horizon?, define RCS, two types of scheduling?, don't use completion times}
 The general idea of resource scheduling is to minimize the project execution time without over-utilizing the resources or violate project constraints like the constraints discussed above.
 The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
 The generated schedule may not exceed the Time Horizon $T$, when the project itself has an deadline.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/time_schedule}
+	\caption{\TODO{verzin caption}}
+	\label{fig:time_schedule}
+\end{figure}
 
 The RCS problem schedule solution is denoted by a schedule that consists of a vector of the starting times for all the activities $S =  (\start{v_1} \ldots \start{v_n})$.
 There are two types of schedules, time-feasible schedules that fulfills all time constraints denoted as $S_T$ and resource-feasible schedules that fulfills all the resource constraints denoted by $S_R$.
