@@ -6,6 +6,7 @@
 \usepackage{xcolor}
 \usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage{mathrsfs}
+\usepackage{comment}
 
 \input{tikz/tikz}
 
@@ -36,7 +37,7 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time, which makes the schedule flexible enough to be able to adapt to the situation in real-time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, the link between precedence constrained posting and how it integrates with continuous scheduling problems will be discussed.
+This paper gives an overview of the application of the Precedence Constraint Posting (PCP) technique in the Resource Constraint Project Scheduling problem (RCPSP). A unifying notation will be introduced and the procedure for generating a feasible schedule will be discussed. PCP proves to be a convenient method to use in an environment in which flexibility, robustness and continuity are of major importance. Using PCP, a solution for the RCPS problem can be found in polynomial time and executing small updates in the generated schedule can therefore also be done in polynomial time. The exact methods to do so are outlined, from iterative algorithms to partial ordering schedules. Finally, we will explain how and why PCP is suited for use in continuous scheduling problems. 
 \end{abstract}
 
 \newpage
@@ -44,11 +45,11 @@ This paper gives an overview of the application of the Precedence Constraint Pos
 \section{Scope and purpose}
 %We bekijken precedence constraint posting als methode voor het genereren van een schema voor het continuous resource constrained project scheduling probleem. 
 Scheduling is a common problem in many day-to-day applications, but represents one of the more complex problems to solve.
-Scheduling is the process of creating a feasible schedule with regard to a deadline, a given set of tasks and the available resources.
+Scheduling is the process of assigning start times to a set of activities, in other work also referred to as tasks or jobs, in such a way that a number of conditions are met. 
 In many applications several complicating factors may arise.
 Scheduling can deal with some of these complicating factors using constraints.
 For instance, a limited number of resources, uncertain length of task execution and deadlines.
-These factors represent the more simple constraints.
+These are examples of relatively simple factors. 
 More complicating factors are those that can be found in practical applications, like: break-down of resources, delays or uncertain number of tasks.
 Especially in dynamic environments, which is the type of environment many practical applications need to deal with.
 In this paper we will explore the resource constraint scheduling problem and explain how the theory can be used to cope with these more complicating factors in a dynamic environment.
@@ -56,34 +57,34 @@ In this paper we will explore the resource constraint scheduling problem and exp
 %Het doel van de paper is om een volledige informatie bron zijn voor een 3e jaars TI student over het hierboven genoemde
 The purpose of this paper is to inform fellow students on the topic of resource constraint scheduling in dynamic applications.
 The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
-Although some prerequisite knowledge is presumed to be common to the reader, most in-depth information aims to be complete and clear.
+Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
 
 %Eerst geven we een intuïtieve definitie van het RCPSP. Dan volgt een formele definitie van RCPSP. 
-First we will define the resource constraint scheduling problem and give a formal definition on the topic.
-Resource constraint scheduling is a form of scheduling that deals with a number of constraints.
-The scheduling process needs to take these constraints into account to make a feasible schedule.
-Constraints can for example be precedence constraints, in this case the set of tasks requires tasks to be performed in a specific order.
-
+First we will give an intuitive definition of resource constraint project scheduling. 
+It sketches the problem and gives examples of constraints that are encountered. 
+This is followed by a formal definition of the problem along with the notation used throughout this paper. 
 %Hierna volgt een intuïtieve definitie van STNs, daarna volgt een formele definitie van STNs. 
-We will then explain simple temporal networks and give the formal definition.
-Simple temporal networks are a reduction of the scheduling problem into a graph representing all tasks and constraints.
+We will then explain simple temporal networks. 
+Knowledge of STNs is required by the precedence constraint posting approach. Instances of RCPSP can be represented by a STN. 
 Temporal networks are a simple and flexible way to represent schedules.
-for example precedence constraints can be represented by an edge from one task to the other, forcing the process to execute one before the other.
+The formal definition of STNs is given afterwards. 
+
 
 %Dan kunnen we de diepte in en leggen we uit wat precedence constraint posting is.
-Precedence constraint posting and partial order schedules will be explained then.
-Precedence constraint posting is a way of posting new precedence constraints to an existing temporal network.
-This method utilizes the flexibility of such networks and allows the schedule to take new precedence constraints into account.
+Precedence constraint posting and partial order schedules will be explained in section \ref{section:PCP}. 
+We show how PCP utilizes simple temporal networks to represent a RCPSP instance and how PCP utilizes the flexibility of such networks so that the schedule can take new constraints into account. 
 
 %Dan maken we de transitie naar continuous planning en waarom het nodig is.
-Then the obstacles due to the continuity of the dynamic environment will be discussed.
-Explaining why the factors involved in the continuous nature of a real-life application impose more complications in scheduling.
-Some methods to improve flexibility of schedules will be discussed, to provide with a solution to these extra complications.
+Section \ref{section:continuous} elaborates on the obstacles encountered due to the continuity of real life problems. 
+The problems that are introduced because of this factor are explained. 
+Scheduling methods addressing this issue by for example improving the flexibility of schedules will be discussed as well. 
+\TODO{Which methods are discussed? Do we tell the reader about proactive and reactive techniques (here)?}
 
 %Hierna leggen we uit waarom PCP geschikt is om continuous planning mee te realiseren.
-The resource constraint scheduling, partial order schedule and precedence constraint posting subjects will be combined to show that a flexible and robust schedule can be created using these theories.
+The last section will combine the resource constraint scheduling, partial order schedule and precedence constraint posting subjects to show that a flexible and robust schedule can be created using these theories. 
 
-\TODO{Voelt nog incompleet, ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
+\TODO{ook lijkt de laatste zin van de intro nu wel haast een conclusie.}
+\TODO{MickG: Is dat erg?}
 
 \newpage
 
@@ -192,6 +193,8 @@ The time and space complexity of the RCS problem depends on the used algorithms 
 There are currently two type of algorithms which are used in most cases, the exact algorithms and the approximation algorithms.
 \TODO{Explain the time and space complexity between the two different approaches and add reference to the prove}
 
+\begin{comment}
+\TODO{Dit moest er toch uit?}
 \subsection{Problem Extension}
 The basic RCPS problem will sometimes not suffice. Several extensions to the RCPS problem have been made to better suit real-life environments. The following paragraphs will provide a brief overview of how the problem can be augmented. Although it is not in the scope of this paper to address the extensions in detail, some context is provided to show in which areas the model can be expanded.
 
@@ -200,6 +203,7 @@ In multi-mode RCPS, activities can be executed in multiple modes. The activity m
 
 \subsubsection{Stochastic processing times}
 Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
+\end{comment}
 
 \subsection{Summary}
 \TODO{REMOVE / MOVE to 2.1}
@@ -225,6 +229,7 @@ $C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))
 \newpage
 
 \section{Schedule construction using PCP}
+\label{section:PCP}
 Since the RCPS problem belongs to the class of \emph{NP-complete} problems, no algorithm capable of constructing an optimal solution in $O(n^k)$ is known (unless of course, $P=NP$). In order to devise a solution using polynomial time, an approximation algorithm needs the be used. In this section, the approach of Precedence Constraint Posting (PCP) will be discussed.
 
 \subsection{Introduction}
@@ -287,7 +292,7 @@ Precedence Constraint Posting relies on the decoupling of the original RCPS prob
 \newpage
 
 \section{Continuous scheduling}
-
+\label{section:continuous}
 Resource constraint scheduling algorithms focus on solving a given set of tasks, time and resource constraints in a feasible schedule.
 These solutions are effective on complex, closed sets of tasks, but the created schedules are not adaptive when the resources or set change during execution.
 In many practical environments of where scheduling is performed, flexibility or robustness of the schedule is important, whilst changes occur regularly.
