@@ -89,23 +89,14 @@ The last section will combine the resource constraint scheduling, partial order 
 \newpage
 
 \section{Problem background}
+Before we start we need to explain a bit more about what the RCS problem is and how we define it.
 In this section we will start with the formal definition of our RCS problem, where our unifying representation is presented.
-Then we will try to explain the problem in some more depth start with explaining our prerequisites followed by the problem complexity.
+Then we will try to explain the problem in some more depth by explaining a bit more about our prerequisites that are used in the formal definition.
+As last we will try to explain the problem complexity of the RCSP and how this is proven.
 
-\TODO{rewrite, more text for readers management, complete definition \& make formal, use normal R, reference, explain}
 
-\TODO{define 'optimal'}
-
-Different aspects of the underlying theory leading to RRCS.
- Per point explanation of the theory with references to relevant papers.
-This will be the main section of the paper.
-
-\TODO{Describe what notation conventions we will adopt.
-I suggest using the notation from P. Brucker et al, European Journal of Operational Research 112 (1999). }
-
-Sched
 \subsection{Formal Definition}
-The general definition for the resource constraint scheduling problem is defined by a tuple $(T, V, W, E, R)$: \cite{brucker99}
+The general definition for the resource constraint scheduling problem (RCSP) is defined in the following definition\cite{brucker99}.
 
 Given:
 \begin{itemize}
@@ -117,7 +108,7 @@ Given:
 \item a precedence graph of the constraints and activities $G = (V, E)$, where we assume that the graph doesn't contain a cycle, otherwise the precedence relations are inconsistent.
 \item a set of available resources $R$ where each element $r_i \in R$ is a unique identifier for a resource, split in renewable resources $\renres$ and  consumable (nonrenewable) resources $\conres$.
 \item the availabilities of the resources $\av{r_i, t}$, so that $\av{r_k, t} \in \mathbb{N}$ denotes the availability of resource $r_k \in R$ at a time period $t \in \mathbb{N}$ in the time horizon $t < T$
-\item the per period usage for an activity $v_j$ of resource $r_k$ is denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$ \TODO{Weird}
+\item the per period usage for an activity $v_j$ of resource $r_k$ is denoted by $\usage{v_j, r_k} \in \mathbb{N}$, such that it represents the amount of resource $r_k \in R$ used per time period in time horizon of executing activity $v_j \in V$
 \end{itemize}
 
 Find the feasible schedule where each activity gets executed with the available resources, the resources don't exceed their availability and all the constraints between the activities are satisfied where $\start{v_j} \in \mathbb{N}$ denotes the start time in periods of the time horizon $T$ for activity $v_j \in V$ and
@@ -146,11 +137,7 @@ Two of these are precedence constraints and temporal constrains.
 Some activities need to be executed before another activity can be executed (for example, a surface needs to be sanded before it can be painted).
 These dependencies are specified by a set $E \subset V \times V$.
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$. 
-Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of 
-
-Temporal constraints can be used to specify a minimum and maximum time lag between two activities $i$ and $j$.
-The notation used in this paper is $MinLag(v_i, v_j)$ and $MaxLag(v_i, v_j)$ respectively the minimum and the maximum time lag.
-\TODO{use math func. Latex}
+Figure \ref{fig:activity_graph} shows an augmented graph a visualisation of the constraint and activity sets.
 
 \subsubsection{Resources}
 An activity requires a certain amount of resources to be available upon execution, this can either be a renewable resource or a consumable (also called nonrenewable) resource.
@@ -175,7 +162,6 @@ Such activity precedence can be visualized using a so-called precedence graph $G
 This is denoted by $(v_i,v_j) \in E$, where $v_i, v_k \in V$.
 
 \subsubsection{Schedule}
-\TODO{what is time horizon?, define RCS, two types of scheduling?, don't use completion times}
 The general idea of resource scheduling is to minimize the project execution time without over-utilizing the resources or violate project constraints like the constraints discussed above.
 The project itself can also have a deadline, the total amount of time units before the project needs to be completed.
 A mapping of a unit of time in the model and an actual timespan in the real world can be indicated by the Time Horizon $t=1,2,3,\ldots,T$ and corresponding time intervals $[t-1,t]$.
@@ -195,8 +181,10 @@ We also define the completion times for the activities in $V$, this is denoted b
 
 \subsection{Problem Complexity}
 The RCSP belongs to the class of problems that are \emph{NP-complete}. 
-According to the \TODO{the?} complexity theory a problem belongs to the class \emph{NP-complete} if the problem is reducable to every problem in the class \emph{P}.
+According to the complexity theory a problem belongs to the class \emph{NP-complete} if the problem is reducable to every problem in the class \emph{P}.
 This can be easily proven if you reduce the RCS problem to an already existing \emph{NP-complete} problem, because then it automaticly is reducable to every problem in \emph{P}.
+
+\TODO{Reference a paper where this is proven}
 
 \begin{comment}
 \TODO{Dit moest er toch uit?}
@@ -209,27 +197,6 @@ In multi-mode RCPS, activities can be executed in multiple modes. The activity m
 \subsubsection{Stochastic processing times}
 Oftentimes it will be hard to estimate processing times for activities in practice and there is a big chance that the actual processing time will be different from the fixed estimate that was used in the model. Instead of using deterministic values for the activity duration, one could introduce a stochastic variable which has a certain probability distribution. In \cite{brucker99}, it is argued that stochastic processing times for project scheduling are an important step closer towards the real-life scenario. In this paper, we will focus on fixed activity durations.
 \end{comment}
-
-\subsection{Summary}
-\TODO{REMOVE / MOVE to 2.1}
-\begin{tabular}{l l}
-\hline
-$T$ & time horizon \\
-$t$ \TODO{$t_i$?} &  index of a time period in the time horizon $T = (t_1 \ldots t_n)$\\
-$V$ & set of activities $V = (v_1 \ldots v_n)$ \\
-$n$ & number of original activities \\
-$E$ & set of constraints \\
-$\renres$ & consumable resources \\
-$\conres$ & renewable resources \\
-$\dur{v_i}$ & the duration of activity $v_i$ \TODO{Ik heb tot nu toe de term "processing time" aangehouden, welke doen we?}\\
-$\av{r_i}$ & the availability of resource $r_i$ \\
-$\usage{v_j, r_k}$ & the per period usage for activity $v_j$ of resource $r_k$ \\
-$\start{v_i}$ & the start time of activity $v_i$ \\
-$S$ & a schedule consisting of st
-art times for the activities $S = (\start{v_1}) \ldots \start{v_n})$ \\
-$C$ & a vector of end times for the activities $C = (Stop(v_1) \ldots Stop(v_n))$ \\
-\hline
-\end{tabular}
 
 \newpage
 
