@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage{a4wide}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[numbers]{natbib}
+\usepackage{xcolor}
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{mathrsfs}
+\usepackage{comment}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}% http://ctan.org/pkg/caption
+\captionsetup[table]{justification=raggedright, singlelinecheck=off}
+
+\input{tikz/tikz}
+
+\title{Resource Constrained Project Scheduling for continuous applications using Precedence Constraint Posting.}
+\author{M. van Gelderen  \and
+    R.M. de Lange \and
+    B. Gris\`el \and
+    F. van Tienen}
+\date{}
+
+\pagestyle{empty}
+
+\newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+
+\newcommand{\renres}[0]{\ensuremath{R^\rho}} %renewable resource
+\newcommand{\conres}[0]{\ensuremath{R^\nu}} %consumable resource
+\newcommand{\res}[0]{\ensuremath{R}} % all resources
+\newcommand{\av}[1]{\ensuremath{Av(r_{#1})}} %availability
+\newcommand{\dur}[1]{\ensuremath{Dur(v_{#1})}} %durability
+\newcommand{\usage}[2]{\ensuremath{Usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
+\newcommand{\start}[1]{\ensuremath{Start(v_{#1})}} %start time
+\renewcommand{\stop}[1]{\ensuremath{Stop(v_{#1})}} %stop time
+\newcommand{\makespan}[1]{\ensuremath{C_{max}(#1)}} %makespan
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\TODO{rewrite when paper finished}
+\end{abstract}
+
+
+\newpage
+
+
+\section{Scope and purpose}
+
+\TODO{Roelf}
+%		-Motivation, waarom probleem behandelen?
+%		-Wat staat waar?
+%		-Dat het probleem moeilijk is dat we er in hoofdstuk 2 op terug komen?
+
+
+\newpage
+
+
+\section{Problem background}
+
+\TODO{Roelf: intro}
+%		-What are scheduling problems?
+%		-Examples form real life.
+%		-What is RSPCP and how can it solve them.
+%		-Why imporant.
+%		-Voorbeelden wat meer uitwerken. Intuitief verhaal.}
+
+\TODO{Freek: running example}
+
+\subsection{Resource constrained project scheduling problem}
+
+\TODO{Bastiaan}
+%		-Lijst met uitleg van termen naar aanleiding van running example.
+%		-Duidelijk schedule definieren.
+%		-Dit is een activity => Ow kut nu hebben we ook nog resources
+
+
+\TODO{Freek: Fomele definitie en wat is een oplossing}
+
+
+\TODO{Freek: complexiteit en oplosbaarheid.}
+%		-Wat zijn de voor en nadelen van heuristic (niet optimaal, eigenlijk is het best kut maar we kunnen niet anders)}
+
+
+\newpage
+
+
+\section{Schedule construction} \TODO{andere titel?}
+
+\TODO{Roelf: intro}
+%		-Wat gaan we benaderen (relefantie van STN)
+%		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
+%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
+
+\subsection{Simple temporal networks}
+
+\TODO{Bastiaan + Mick}
+%		-Wat is een STN probleem (wat is het resultaat)
+%		-Complexiteit
+%		-Hoe los je het op
+
+
+\subsubsection{Reduction to STN}
+
+\TODO{Bastiaan + Mick}
+%		-Het is dus geen goeie/volledige reductie :(
+%		-Algemene/formele reductie Reductiedefinitie
+
+
+\subsection{Resource}
+
+\TODO{Bastiaan + Mick}
+%		-Uitleggen huidige STN niet werkt (alleen temporal en niet resource feasable)
+%		-Globale idee van resource leveling using PCP
+%		-Algoritmw voor resource leveling (volgens ESTA en aan de hand van example)
+%		-Algemeen en Formeel algoritme
+
+\subsection{Final Schedule}
+
+\TODO{Bastiaan + Mick}
+%		-Hoe maak je van dat STN weer een schedule
+%		-Hoe voldoet het schedule (aan alle constraints)
+
+
+\newpage
+
+
+\section{Conclusion}
+
+\TODO{Roelf}
+
+%test
+
+\citet{brucker99}
+
+\citet{herroelen05}
+
+\citet{policella07}
+
+\citet{lombardi10}
+
+\citet{cesta98}
+
+\citet{deblaere10}
+
+
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
