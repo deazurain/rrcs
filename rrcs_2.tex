@@ -13,7 +13,6 @@
 \captionsetup[table]{justification=raggedright, singlelinecheck=off}
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{exmp}{Example}[section]
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
@@ -30,6 +29,7 @@
 \pagestyle{empty}
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+\newtheorem{example}{Example}[section]
 
 \newcommand{\res}[0]{\ensuremath{R}} %resources
 \newcommand{\av}[1]{\ensuremath{av(r_{#1})}} %availability
@@ -79,6 +79,7 @@
 
 \TODO{Freek: running example}
 
+\subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP.
 
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
@@ -113,31 +114,26 @@ This means that the sanding of each wooden surface (the door and the wall) needs
 Because of the limited resources, they can never paint more than two surfaces at the same time, or sand more than one surface at the same time.
 There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
 
-$V = \{v_1, \ldots, v_6\}$\\
-$E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
-$R = \{r_1, r_2\}$\\
-$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
-$\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
-$\capa{1} = 2, \capa{2} = 1$
-
 \subsection{Definition}
+
 \begin{figure}[h]
 	\centering
 	\input{tikz/activity_graph}
 	\caption{The activity graph for the running example. }
 	\label{fig:activity_graph}
 \end{figure}
+
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n \in \mathbb{N}$ and each activity is represented by a unique identifier. %identifier??
 In the running example we have six activities ($n = 6$): sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$.
 Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ for the running example.
 These activities are represented in Figure \ref{fig:activity_graph} as blocks.
 
-The \emph{Duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
+The \emph{duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
 In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$.
 The duration of each activity in the running example is represented by the length of the block in Figure \ref{fig:activity_graph}.
 
-\emph{Precedence constraints} are specified by a set $E \subset V \times V$.
+\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
 The running example has several precedence constraints between the activities, which will give the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
@@ -153,10 +149,45 @@ The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
 It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
 The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}, where the precedence constraints are reduced to a minimum.
 
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{The resource relations for the running example. }
+	\label{fig:resource_graph}
+\end{figure}
+
 \emph{Resources} are specified by a set $R = \{r_1, \ldots, r_m\}$.
 The total amount of resources is $m \in \mathbb{N}$ and each resource is represented by a unique identifier. %identifier??
 In the running example we have two resources ($m = 2$): the sanding machine $r_1$ and the painting brushes $r_2$.
 Which gives us the total set of resources $R = \{r_1, r_2\}$.
+In Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph} you will see all the resources of the running example.
+
+The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\cap{i} \in \mathbb{N}$.
+For the running example we the capacity for resources are: $\cap{1} = 1, \cap{1} = 2$.
+These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph}, represented as the height for each resource.
+
+The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
+The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$.
+Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources.
+Figure \ref{fig:usage_graph} shows us the usages represented as hight for each activity.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{A usage schedule for the running example. }
+	\label{fig:usage_graph}
+\end{figure}
+
+\begin{example}
+\label{exmp:running}
+$V = \{v_1, \ldots, v_6\}$\\
+$E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
+$R = \{r_1, r_2\}$\\
+$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
+$\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
+$\capa{1} = 2, \capa{2} = 1$
+\end{example}
+We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
 
 \subsection{Resource constrained project scheduling problem}
 
@@ -199,7 +230,8 @@ Let us first introduce a notion of such a Simple Temporal Network using a basic 
 Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
 
 \subsubsection{Example}
-\begin{exmp}
+\begin{example}
+\label{exmp:stn}
 Consider the following events which may occur on a typical work day:
 \begin{enumerate}
 \item I left my home between 8:05 and 8:10
@@ -207,7 +239,7 @@ Consider the following events which may occur on a typical work day:
 \item I waited for 5 to 10 minutes at the bridge
 \item At 8:30, I arrived at work 
 \end{enumerate}
-\end{exmp}
+\end{example}
 
 Question we'd now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
 Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
