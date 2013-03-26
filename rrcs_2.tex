@@ -78,7 +78,8 @@ In this paper we will use a simple running example based on the painting example
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
 Because the the door and the fence are made of wood, both the surfaces needs to be sanded first (\emph{precedence constraints}).
 This isn't needed for the wall, because the wall is made of bricks.
-This gives us five \emph{activities} $V$: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$ and painting the wall ($v_5$). And the following precedence constraints ($E$): sanding the door before painting the door $(v_1, v_3)$, sanding the fence before painting the fence $(v_2, v_4)$.
+At the end also all painting brushes need to be cleaned, and this can only be done when all the painting is done.
+This gives us six \emph{activities} $V$: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$. And the following precedence constraints ($E$): sanding the door before painting the door $(v_1, v_3)$, sanding the fence before painting the fence $(v_2, v_4)$ and all the painting activities needs to be done before cleaning the painting brushes $\{(v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time (\emph{duration}) to finish.
 Since this isn't the first painting job the workers have done, they know the exactly what the duration is for each activity:
@@ -88,24 +89,28 @@ Since this isn't the first painting job the workers have done, they know the exa
 \item painting the door: 2 hours ($\dur{3} = 2$)
 \item painting the fence: 1 hour ($\dur{4} = 1$)
 \item painting the wall: 5 hours ($\dur{5} = 5$)
+\item cleaning the painting brushes: 1 hour ($\dur(6) = 1$)
 \end{itemize}
 % moet nog even goed gestyled worden en even gecontroleerd worden of tijden beetje goed zijn
 Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources} $R$).
 So now they only have two painting brushes $r_1$ and one sanding machine $r_2$ (\emph{resource constraints}), which makes it impossible to sand more then one surface at the same time and to paint more then two surfaces at the same time.
 This shows us that the \emph{capacity} of painting surfaces at the same time is two ($\capa{1} = 2$) and the capacity of sanding surfaces at the same time is one  ($\capa{2} = 1$).
 
+Since every sanding job uses the sanding machine as a resource $r_1$, the usage of sanding the door $v_1$ and sanding the fence $v_2$ is $1$ ($\usage{1}{1} = 1, \usage{2}{1} = 1$).
+Also every painting job uses the painting brush as a resource $r_2$, so that painting the door $v_3$, painting the fence $v_4$ and painting the wall $v_5$ all have a usage of $1$ on the painting brush $r_2$ ($\usage{3}{2} = 1, \usage{4}{2} = 1, \usage{5}{2} = 1$).
+There is only one activity left, cleaning the painting brushes $v_6$, which will use both of the painting brushes resource $r_2$ so that the usage is $2$ ($\usage{6}{2} = 2$). All the other usages of the resources are $0$.
+
 They now want to make a schedule, where they define each starting time for the activities so that the schedule is feasible.
 This means that each surface from wood (the door and the wall) is finished sanding before starting with painting the surface.
 And they never paint three or more surfaces at the same time, or sand two or more surfaces at the same time.
 They also have a lot of other jobs to do, so they don't only want a feasible schedule but also want to optimize the time in which they finish all the activities.
 
-$V = v_1, \ldots, v_5$\\
-$E = \{(v_1, v_3), (v_2, v_4)\}$\\
+$V = v_1, \ldots, v_6$\\
+$E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
 $R = r_1, \ldots, r_2$\\
-$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5$\\
+$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur(6) = 1$\\
+$\usage{1}{1} = 1, \usage{2}{1} = 1, \usage{3}{2} = 1, \usage{4}{2} = 1, \usage{5}{2} = 1, \usage{6}{2} = 2$\\
 $\capa{1} = 2, \capa{2} = 1$
-
-%Willen we nog iets met usage of liever gewoon weg?
 
 
 \subsection{Resource constrained project scheduling problem}
