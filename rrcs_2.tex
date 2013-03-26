@@ -282,14 +282,15 @@ Consider the following events which may occur on a typical work day:
 \end{enumerate}
 \end{example}
 
-Question we'd now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
+Question we would now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
 Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
 Given the above constraints, it is not hard to discover that the only possible scenario is that I left home at 8:05 and waited only 5 minutes at the bridge.
-The challenge now is to implement an algorithm that performs the same kind of reasoning. This can be done by regarding this problem as a Simple Temporal Problem and represent it using a Simple Temporal Network.
+The challenge now is to implement an algorithm that performs the same kind of reasoning. This can be done by regarding this problem as an STP and represent it using a STN.
 
 \subsubsection{Constraint Graph}
 The first step is to represent the example above as a \emph{constraint graph}. 
-The nodes in this graph correspond to the events in the story and a directed edge from node $n_i$ to $n_j$ indicates that the event represented by node $n_i$ has to occur before the event represented by node $n_j$. Additionally, each edge $()$ has got a certain \emph{time window} associated with it, which indicates the minimum and maximum delay between the two events. 
+The nodes in this graph correspond to the events in the story and a directed edge from node $n_i$ to $n_j$ indicates that the event represented by node $n_i$ has to occur before the event represented by node $n_j$.
+These edges are called \emph{constraints}. Additionally, each edge $(n_i, n_j)$ has got a certain \emph{time window} associated with it, which indicates the minimum and maximum delay between the two events represented by time points $n_i$ and $n_j$. 
 Each node in this graph is called a \emph{time point}. 
 An additional time point is added and refers to \emph{time zero}. 
 A convenient time zero for this example is 8:00. 
@@ -329,7 +330,13 @@ The goal of this graph is to associate each time point with a \emph{time window}
 
 
 \subsubsection{Reduction to STN}
+The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction according to \TODO{Example}.
 
+The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
+These time points are then connected with a directed edge from $s_i$ to $e_i$ with time window $[\dur{i}, \dur{i}]$. 
+Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_i$ respectively and the time window associated with the edge that connects these two nodes forces the time between the two time points to be exactly the duration of the activity $v_i$.
+
+Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
 \TODO{Bastiaan + Mick}
 %		-Het is dus geen goeie/volledige reductie :(
