@@ -32,7 +32,7 @@
 \newtheorem{example}{Example}[section]
 
 \newcommand{\res}[0]{\ensuremath{R}} %resources
-\newcommand{\av}[1]{\ensuremath{av(r_{#1})}} %availability
+\newcommand{\av}[2]{\ensuremath{av(r_{#1}, t_{#2})}} %availability of resource #1 at time #2
 \newcommand{\capa}[1]{\ensuremath{cap(r_{#1})}} %capacity
 \newcommand{\dur}[1]{\ensuremath{dur(v_{#1})}} %durability
 \newcommand{\usage}[2]{\ensuremath{usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
@@ -106,7 +106,6 @@ This gives us a robust and effective solution for scheduling in many practical a
 \section{Problem background}
 \label{text:problem_background}
 
-\TODO{Roelf: intro}
 %		-What are scheduling problems?
 In this chapter we will take a deeper look at the resource constraint project scheduling problem.
 To do this, we will first discuss some real life examples and the use of the resource constraint project scheduling problem to get a more clear idea of the problem.
@@ -123,6 +122,7 @@ Such as for example the precedence constraint, in which one task needs to be fin
 These extra constraints place more demands on the schedule for it to be feasible.
 
 %		-Examples form real life.
+\TODO{subsections?}
 An example of a real life application of the resource constraint project scheduling problem is train maintenance scheduling.
 In scheduling the maintenance of trains, there are several factors which need to be taken into calculation.
 For instance, the trains should not be out of service due to maintenance for too long of a period.
@@ -133,20 +133,26 @@ These factors make scheduling in an efficient way a complex task.
 The same problems can be seen in other maintenance applications and also airport scheduling.
 Airport scheduling has even more complicating factors, such as refueling, baggage handling, boarding and disembarking.
 These are some complex examples to show that the problem has many difficult applications, but there exist simpler applications which require similar methods.
-In the next section we will show a simple example using painters and some painting tasks, which represent some of these complicating factors.
+In the next section we will show a simple example using painters and some painting tasks, in which these complicating factors are represented.
 
 %		-What is RCPSP and how can it solve them.
 %		-Why imporant.
 %		-Voorbeelden wat meer uitwerken. Intuitief verhaal.
-The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
-An activity is sometimes called a job, task or event in other work. 
-The activities are part of the input of a RCPSP and have a specified duration. 
-There are multiple types of constraints for activities of which one is precedence constraints. 
-Certain activities can only be executed after another activity has been completed. 
+\TODO{subsections?}
+Now we have an idea about the uses of resource constraint scheduling, but what is it exactly?
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
+This optimization might be either the shortest processing time or the most efficient use of resources.
+In this paper we will focus on the shortest processing time.
+The scheduling problem consists of a few main elements: activities, resources and constraints.
 
+Activities, also called tasks or jobs, are the tasks that need to be executed.
+These activities are the elements that need to be scheduled.
+Resources are the machines or tools needed to perform a specific activity.
+Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
+Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
+For example, a constraint can be the fact that there is a limited number of one type of resource available, or that one specific activity needs to be finished before another specific activity can be performed.
 
-\subsection{Running example}
-\TODO{Freek: running example}
+To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
 \subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP.
@@ -185,6 +191,7 @@ Because of the limited resources, they can never paint more than two surfaces at
 There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
 
 \subsection{Definition}
+\label{text:definitions}
 
 \begin{figure}[h]
 	\centering
@@ -246,6 +253,10 @@ The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 
 Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources.
 Figure \ref{fig:usage_graph} shows us the usages represented as hight for each activity.
 
+The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
+For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2,1} = 1$ because we have two painting brushes and only one is used.
+In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource.
+
 \begin{figure}[h]
 	\centering
 	\input{tikz/activity_graph}
@@ -253,6 +264,9 @@ Figure \ref{fig:usage_graph} shows us the usages represented as hight for each a
 	\label{fig:usage_graph}
 \end{figure}
 
+\subsection{Formal definition of the running example}
+
+In Example \ref{exmp:running} we define the formal definition of the \emph{Running Example} by using the definitions in subsection \ref{text:definitions}.
 \begin{example}
 \label{exmp:running}
 $V = \{v_1, \ldots, v_6\}$\\
@@ -262,9 +276,6 @@ $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
 $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
 $\capa{1} = 2, \capa{2} = 1$
 \end{example}
-We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
-
-\subsection{Resource constrained project scheduling problem}
 
 \TODO{Bastiaan}
 %		-Lijst met uitleg van termen naar aanleiding van running example.
@@ -272,21 +283,22 @@ We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
 %		-Dit is een activity => Ow kut nu hebben we ook nog resources
 
 
-\TODO{Freek: Fomele definitie en wat is een oplossing}
+\subsection{RCPSP formal definition}
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
-A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$.
+A feasible schedule $S = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
 Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
-And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_k \in T (\capa{i} > \sum)$.
+And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
 
 
+\subsection{Complexity of the RCPSP}
 \TODO{Freek: complexiteit en oplosbaarheid.}
 %		-Wat zijn de voor en nadelen van heuristic (niet optimaal, eigenlijk is het best kut maar we kunnen niet anders)}
 
@@ -301,8 +313,8 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 %		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
 %		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
 
-\subsection{Simple Temporal Problem (STN)}
-Let us first introduce a notion of such a Simple Temporal Network using a basic example. 
+\subsection{Simple Temporal Problem}
+Let us first introduce a notion of such a \emph{Simple Temporal Network} (STN) using a basic example. 
 Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
 
 \subsubsection{Example}
@@ -373,10 +385,58 @@ Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_
 
 Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
+Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
+
+\begin{tikzpicture}[
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3cm,
+     semithick
+  ]
+
+  \node[state] (s0)		 						{$s_0$};
+  \node[state] (e0) 	[right of=s0]			{$e_0$};
+  \node[state] (s1) 	[above right of=e0]	{$s_1$};
+  \node[state] (e1) 	[right of=s1]			{$e_1$};
+  \node[state] (s2) 	[right of=e0]			{$s_2$};
+  \node[state] (e2) 	[right of=s2]			{$e_2$};
+  
+  \node[state] (s3) 	[right of=e1]			{$s_3$};
+  \node[state] (e3) 	[right of=s3]			{$e_3$};
+  \node[state] (s4) 	[right of=e2]			{$s_4$};
+  \node[state] (e4) 	[right of=s4]			{$e_4$};
+  \node[state] (s5) 	[below right of=e0]	{$s_5$};
+  \node[state] (e5) 	[right of=s5]			{$e_5$};
+  \node[state] (s6) 	[right of=e4]			{$s_6$};
+  \node[state] (e6) 	[right of=s6]			{$e_6$};
+  \node[state] (s7) 	[right of=e6]			{$s_7$};
+  \node[state] (e7) 	[right of=s7]			{$e_7$};
+     
+  \path 		     	(s0) 		edge [dashed] node 			{$[\dur{0}, \dur{0}]$} 	(e0)
+  		     		(s1) 		edge [dashed] node 			{$[\dur{1}, \dur{1}]$} 	(e1)
+  		     		(s2) 		edge [dashed] node 			{$[\dur{2}, \dur{2}]$} 	(e2)
+  		    		(s3) 		edge [dashed] node 			{$[\dur{3}, \dur{3}]$} 	(e3)
+  		     		(s4) 		edge [dashed] node 			{$[\dur{4}, \dur{4}]$} 	(e4)
+  		     		(s5) 		edge [dashed] node 			{$[\dur{5}, \dur{5}]$} 	(e5)
+  		     		(s6) 		edge [dashed] node 			{$[\dur{6}, \dur{6}]$} 	(e6)
+  		     		(s7) 		edge [dashed] node 			{$[\dur{7}, \dur{7}]$} 	(e7)
+				
+				(e0) 		edge node 					{$[0, \infty]$} 			(s1)
+  				(e0) 		edge node 					{$[0, \infty]$} 			(s2)
+				(e0) 		edge node 					{$[0, \infty]$} 			(s5)
+				(e1) 		edge node 					{$[0, \infty]$} 			(s3)
+				(e2) 		edge node 					{$[0, \infty]$} 			(s4)
+				(e3) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e4) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e5) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e6) 		edge node 					{$[0, \infty]$} 			(s7);
+\end{tikzpicture}
+
 \TODO{Bastiaan + Mick}
 %		-Het is dus geen goeie/volledige reductie :(
 %		-Algemene/formele reductie Reductiedefinitie
-
 
 \subsection{Resource}
 
