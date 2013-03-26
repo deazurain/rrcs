@@ -273,13 +273,20 @@ In the running example we can create a time feasible schedule \ref{fig:time_feas
 \begin{figure}[h]
 	\centering
 	\input{tikz/feasible_schedule}
-	\caption{A time feasible schedule for the running example. }
-	\label{fig:feasible_schedule}
+	\caption{\TODO{A schedule that shows the exceeding in resources in the time schedule for the running example.} }
+	\label{fig:fail_schedule}
 \end{figure}
 
 The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
 For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2}{1} = 1$ because we have two painting brushes and only one is used.
 In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/feasible_schedule}
+	\caption{\TODO{A feasible schedule $S_f$ for the running example.} }
+	\label{fig:feasible_schedule}
+\end{figure}
 
 \subsection{Formal definition of the running example}
 
