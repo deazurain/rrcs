@@ -154,6 +154,10 @@ For example, a constraint can be the fact that there is a limited number of one 
 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
+\subsection{RCPSP in general}
+
+\TODO{c+p}
+
 \subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP.
 
@@ -242,27 +246,40 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 The total amount of resources is $m \in \mathbb{N}$ and each resource is represented by a unique identifier. %identifier??
 In the running example we have two resources ($m = 2$): the sanding machine $r_1$ and the painting brushes $r_2$.
 Which gives us the total set of resources $R = \{r_1, r_2\}$.
-In Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph} you will see all the resources of the running example.
+In Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule} you will see all the resources of the running example.
 
 The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\capa{i} \in \mathbb{N}$.
 For the running example we the capacity for resources are: $\capa{1} = 1, \capa{1} = 2$.
-These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph}, represented as the height for each resource.
+These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule}, represented as the height for each resource.
 
 The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
 The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$.
 Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources.
-Figure \ref{fig:usage_graph} shows us the usages represented as hight for each activity.
-
-The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
-For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2,1} = 1$ because we have two painting brushes and only one is used.
-In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource.
+Figure \ref{fig:feasible_schedule} shows us the usages represented as hight for each activity.
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/activity_graph}
-	\caption{A usage schedule for the running example. }
-	\label{fig:usage_graph}
+	\input{tikz/time_feasible_schedule}
+	\caption{A time feasible schedule for the running example. }
+	\label{fig:time_feasible_schedule}
 \end{figure}
+
+\TODO{schdule, makespan, availability, feasibile schedule}
+A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
+
+The \emph{makespan} of a schedule $S$ is specified by a function $\makespan{S} \in T$.
+In the running example we can create a time feasible schedule \ref{fig:time_feasible_schedule}, where the makespan is optimized to a minimum and all the precedence constraints hold.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/feasible_schedule}
+	\caption{A time feasible schedule for the running example. }
+	\label{fig:feasible_schedule}
+\end{figure}
+
+The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
+For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2}{1} = 1$ because we have two painting brushes and only one is used.
+In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource.
 
 \subsection{Formal definition of the running example}
 
@@ -277,11 +294,6 @@ $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{
 $\capa{1} = 2, \capa{2} = 1$
 \end{example}
 
-\TODO{Bastiaan}
-%		-Lijst met uitleg van termen naar aanleiding van running example.
-%		-Duidelijk schedule definieren.
-%		-Dit is een activity => Ow kut nu hebben we ook nog resources
-
 
 \subsection{RCPSP formal definition}
 
@@ -292,7 +304,7 @@ Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
-A feasible schedule $S = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
+A feasible schedule $S_f = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
 Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
 And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
@@ -306,12 +318,30 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 \newpage
 
 
-\section{Schedule construction} \TODO{andere titel?}
+\section{Schedule construction}
 
-\TODO{Roelf: intro}
+As shown, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
+In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
+In this chapter we will introduce this approximation, in the form of a \emph{Simple Temporal Network}, or STN.
+This graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
+We will then take a look at the resources and a method to post new activities and constraints to the created STN, using precedence constraint posting.
+The resulting schedule representation is flexible and robust, which makes it very useful for continuous applications.
+
 %		-Wat gaan we benaderen (relevantie van STN)
-%		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
-%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
+The use of an STN to approximate an RCPSP is specifically practical, while the STN allows us to save multiple starting times per activity.
+This makes the STN more of a collection of feasible schedules, which gives the schedule represented by it extra flexibility.
+Furthermore, the simple temporal problem is a problem which is quite similar to path finding and is thus solvable in polynomial time.
+These two important features make the STN a useful approximation of the RCPSP, which is neither flexible, nor solvable in polynomial time.
+
+%		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld 
+The STN does not completely represent the original RCPSP, but is just an approximation.
+There are cases in which the RCPSP is feasible, but using an STN will not give a working schedule.
+\TODO{wat zijn deze gevallen? Hebben we een voorbeeld? Of laten we dat weg?}
+This is an important shortcoming of this approximation.
+Given the advantages in speed and flexibility, this shortcoming has to be taken for granted in using RCPSP in a dynamic environment.
+
+%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan
+\TODO{idee van de reductie?}
 
 \subsection{Simple Temporal Problem}
 Let us first introduce a notion of such a \emph{Simple Temporal Network} (STN) using a basic example. 
