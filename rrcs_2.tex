@@ -82,16 +82,16 @@ The paper aims to be a good source of information on the topic of resource const
 Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
 
 %		-Wat staat waar?
-In the chapter \emph{Problem Background} \ref{text:problem_background} we will first go deeper in to the resource constraint scheduling problem.
+In  chapter \ref{text:problem_background} \emph{Problem Background} we will first go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint scheduling problem will be discussed.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
-We will also look into the complexity \ref{text:complex} \TODO{ref} of the problem, showing why an approximation is needed for practical applications.
+We will also look into the complexity \ref{text:complex} of the problem, showing why an approximation is needed for practical applications.
 
-The following chapter, \emph{Schedule Construction} \ref{text:schedule} \TODO{ref}, will deal with the approximation of the solution.
-For the approximation, simple temporal networks \ref{text:STN} \TODO{ref} will be used, which provide with a simpler way of representing a schedule.
+The following chapter, \ref{text:schedule} \emph{Schedule Construction}, will deal with the approximation of the solution.
+For the approximation, simple temporal networks \ref{text:STN} will be used, which provide with a simpler way of representing a schedule.
 The simple temporal networks will be explained using the example from the previous chapter and again giving an intuitive and formal definition.
-When a more dynamic way of adapting the schedule is required, precedence constraint posting \ref{text:PCP} \TODO{ref} is introduced to the simple temporal networks.
+When a more dynamic way of adapting the schedule is required, precedence constraint posting \ref{text:PCP} is introduced to the simple temporal networks.
 Precedence constraint posting is a technique which allows for changes to a temporal network by introducing new precedence constraints.
 The workings of precedence constraint posting will also be explained using the example and giving an intuitive and formal definition.
 
@@ -122,7 +122,6 @@ Such as for example the precedence constraint, in which one task needs to be fin
 These extra constraints place more demands on the schedule for it to be feasible.
 
 %		-Examples form real life.
-\TODO{subsections?}
 An example of a real life application of the resource constraint project scheduling problem is train maintenance scheduling.
 In scheduling the maintenance of trains, there are several factors which need to be taken into calculation.
 For instance, the trains should not be out of service due to maintenance for too long of a period.
@@ -138,7 +137,6 @@ In the next section we will show a simple example using painters and some painti
 %		-What is RCPSP and how can it solve them.
 %		-Why imporant.
 %		-Voorbeelden wat meer uitwerken. Intuitief verhaal.
-\TODO{subsections?}
 Now we have an idea about the uses of resource constraint scheduling, but what is it exactly?
 The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
 This optimization might be either the shortest processing time or the most efficient use of resources.
@@ -320,6 +318,7 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 
 
 \subsection{Complexity of the RCPSP}
+\label{text:complex}
 \TODO{Freek: complexiteit en oplosbaarheid.}
 %		-Wat zijn de voor en nadelen van heuristic (niet optimaal, eigenlijk is het best kut maar we kunnen niet anders)}
 
@@ -328,11 +327,13 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 
 
 \section{Schedule construction}
+\label{text:schedule}
 
 As shown, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
 In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
 In this chapter we will introduce this approximation, in the form of a \emph{Simple Temporal Network}, or STN.
-This graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
+After which a reduction of the RCPSP to a STN is given.
+The STN graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
 We will then take a look at the resources and a method to post new activities and constraints to the created STN, using precedence constraint posting.
 The resulting schedule representation is flexible and robust, which makes it very useful for continuous applications.
 
@@ -349,10 +350,8 @@ There are cases in which the RCPSP is feasible, but using an STN will not give a
 This is an important shortcoming of this approximation.
 Given the advantages in speed and flexibility, this shortcoming has to be taken for granted in using RCPSP in a dynamic environment.
 
-%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan
-\TODO{idee van de reductie?}
-
 \subsection{Simple Temporal Problem}
+\label{text:STN}
 Let us first introduce a notion of such a \emph{Simple Temporal Network} (STN) using a basic example. 
 Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
 
@@ -485,6 +484,7 @@ Using the method outlined in this section we are able to describe Example \ref{e
 	}
 
 \subsection{Resource}
+\label{text:PCP}
 As seen in the previous section, solving an STP provides us with a time-feasable schedule. This does not take in consideration, the resources that are used to 
 
 \TODO{
