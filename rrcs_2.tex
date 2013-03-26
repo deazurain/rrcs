@@ -59,10 +59,10 @@
 
 \section{Scope and purpose}
 
-In this paper we will discus the resource constraint scheduling problem in practical applications.
+In this paper we will discus the resource constraint project scheduling problem in practical applications.
 Scheduling is a very common problem in many day-to-day applications, because many situations require a suitable schedule to define the order in which to perform different tasks.
 Making a schedule proves to be a more complex process than one might expect, especially when complicating factors arise such as limited resources or a set deadline.
-These factors can be taken into account to some extent by the resource constraint scheduling problem.
+These factors can be taken into account to some extent by the resource constraint project scheduling problem.
 Some other complicating factors may occur in practical applications, such as the possibility of break down of resources, delays or a growing set of tasks.
 The scheduling problem is therefore, although it is quite common, one of the more complex problems in computer science.
 
@@ -84,6 +84,7 @@ Although the reader is presumed to have prerequisite knowledge about for example
 %		-Wat staat waar?
 In the chapter \emph{Problem Background} \ref{text:problem_background} we will first go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint scheduling problem will be discussed.
+Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
 We will also look into the complexity \ref{text:complex} \TODO{ref} of the problem, showing why an approximation is needed for practical applications.
 
@@ -94,7 +95,7 @@ When a more dynamic way of adapting the schedule is required, precedence constra
 Precedence constraint posting is a technique which allows for changes to a temporal network by introducing new precedence constraints.
 The workings of precedence constraint posting will also be explained using the example and giving an intuitive and formal definition.
 
-Combining these two methods gives us a flexible way of approximating a resource constraint scheduling problem.
+Combining these two methods gives us a flexible way of approximating a resource constraint project scheduling problem.
 Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
 This gives us a robust and effective solution for scheduling in many practical applications.
 
@@ -107,11 +108,44 @@ This gives us a robust and effective solution for scheduling in many practical a
 
 \TODO{Roelf: intro}
 %		-What are scheduling problems?
-%		-Examples form real life.
-%		-What is RSPCP and how can it solve them.
-%		-Why imporant.
-%		-Voorbeelden wat meer uitwerken. Intuitief verhaal.}
+In this chapter we will take a deeper look at the resource constraint project scheduling problem.
+To do this, we will first discuss some real life examples and the use of the resource constraint project scheduling problem to get a more clear idea of the problem.
+We will then give a running example, which will be used throughout this paper to make the problem more tangible.
+Using this example, we will illustrate the formal definition of the resource constraint project scheduling problem.
+With this formal definition and a good sense what the problem holds, the complexity of the problem will be discussed.
 
+Before we go into the examples and definitions, let us first see what scheduling problems are.
+Scheduling problems are problems in which several tasks need to be put into a schedule.
+For the execution of these tasks, there is often a limited amount of resources available.
+The schedule is called feasible when there is a solution that puts all tasks in the schedule in such a way that they are all executable by the resources needed and do not overlap with conflicting tasks.
+This is a simple form of scheduling, in the examples we will discuss further on more constraints will be added.
+Such as for example the precedence constraint, in which one task needs to be finished before the other can start.
+These extra constraints place more demands on the schedule for it to be feasible.
+
+%		-Examples form real life.
+An example of a real life application of the resource constraint project scheduling problem is train maintenance scheduling.
+In scheduling the maintenance of trains, there are several factors which need to be taken into calculation.
+For instance, the trains should not be out of service due to maintenance for too long of a period.
+Also, there is limited space for trains to be serviced in the maintenance depot and not in every service bay all jobs can be performed.
+There are service bays that maintain the electrical wiring or specialize in maintaining the wheels.
+These factors make scheduling in an efficient way a complex task.
+
+The same problems can be seen in other maintenance applications and also airport scheduling.
+Airport scheduling has even more complicating factors, such as refueling, baggage handling, boarding and disembarking.
+These are some complex examples to show that the problem has many difficult applications, but there exist simpler applications which require similar methods.
+In the next section we will show a simple example using painters and some painting tasks, which represent some of these complicating factors.
+
+%		-What is RCPSP and how can it solve them.
+%		-Why imporant.
+%		-Voorbeelden wat meer uitwerken. Intuitief verhaal.
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
+An activity is sometimes called a job, task or event in other work. 
+The activities are part of the input of a RCPSP and have a specified duration. 
+There are multiple types of constraints for activities of which one is precedence constraints. 
+Certain activities can only be executed after another activity has been completed. 
+
+
+\subsection{Running example}
 \TODO{Freek: running example}
 
 \subsection{Running example}
@@ -192,7 +226,7 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/activity_graph}
+	\input{tikz/usage}
 	\caption{The resource relations for the running example. }
 	\label{fig:resource_graph}
 \end{figure}
@@ -203,8 +237,8 @@ In the running example we have two resources ($m = 2$): the sanding machine $r_1
 Which gives us the total set of resources $R = \{r_1, r_2\}$.
 In Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph} you will see all the resources of the running example.
 
-The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\cap{i} \in \mathbb{N}$.
-For the running example we the capacity for resources are: $\cap{1} = 1, \cap{1} = 2$.
+The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\capa{i} \in \mathbb{N}$.
+For the running example we the capacity for resources are: $\capa{1} = 1, \capa{1} = 2$.
 These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph}, represented as the height for each resource.
 
 The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
@@ -242,13 +276,14 @@ We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E \subset V \times V$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
-A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$, where each precedence constraint in $E$ holds.
-And no resource exceeds its capacity in usage at any time in the schedule.
+A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$.
+Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
+And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_k \in T (\capa{i} > \sum)$.
 \end{definition}
 
 
