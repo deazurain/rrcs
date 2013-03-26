@@ -66,15 +66,14 @@ These factors can be taken into account to some extent by the resource constrain
 Some other complicating factors may occur in practical applications, such as the possibility of break down of resources, delays or a growing set of tasks.
 The scheduling problem is therefore, although it is quite common, one of the more complex problems in computer science.
 
-This paper will deal with the scheduling problem, some complicating factors and the solution to this problem in continuous applications.
-Because of its common usage in practical applications and the complexity of the problem, the way the solution is approximated gives an interesting insight in the problem.
+This paper will deal with the scheduling problem, some complicating factors and the approximation of a solution to this problem in continuous applications.
 In almost all practical application, an approximation is used to retrieve a schedule.
 Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
 For a continuous environment, this quick solution is key to keep up with the constant changes.
 
 An approximation method will be discussed in light of the practical applications of the scheduling problem.
 For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
-Simple temporal networks are a form of graph representations using the nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
+Simple temporal networks are a form of graph representations using nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
 One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
 
 The purpose of this paper is to inform the reader on the topic of resource constraint scheduling in continuous applications.
@@ -83,7 +82,6 @@ Although the reader is presumed to have prerequisite knowledge about for example
 
 %		-Wat staat waar?
 In  chapter \ref{text:problem_background} \emph{Problem Background} we will first go deeper in to the resource constraint scheduling problem.
-Here the different aspects of the resource constraint scheduling problem will be discussed.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
 We will also look into the complexity \ref{text:complex} of the problem, showing why an approximation is needed for practical applications.
@@ -91,7 +89,7 @@ We will also look into the complexity \ref{text:complex} of the problem, showing
 The following chapter, \ref{text:schedule} \emph{Schedule Construction}, will deal with the approximation of the solution.
 For the approximation, simple temporal networks \ref{text:STN} will be used, which provide with a simpler way of representing a schedule.
 The simple temporal networks will be explained using the example from the previous chapter and again giving an intuitive and formal definition.
-When a more dynamic way of adapting the schedule is required, precedence constraint posting \ref{text:PCP} is introduced to the simple temporal networks.
+When a more dynamic way of adjusting the schedule is required, precedence constraint posting \ref{text:PCP} is introduced to the simple temporal networks.
 Precedence constraint posting is a technique which allows for changes to a temporal network by introducing new precedence constraints.
 The workings of precedence constraint posting will also be explained using the example and giving an intuitive and formal definition.
 
@@ -114,9 +112,9 @@ Using this example, we will illustrate the formal definition of the resource con
 With this formal definition and a good sense what the problem holds, the complexity of the problem will be discussed.
 
 Before we go into the examples and definitions, let us first see what scheduling problems are.
-Scheduling problems are problems in which several tasks need to be put into a schedule.
-For the execution of these tasks, there is often a limited amount of resources available.
-The schedule is called feasible when there is a solution that puts all tasks in the schedule in such a way that they are all executable by the resources needed and do not overlap with conflicting tasks.
+Scheduling problems are problems in which several activities need to be put into a schedule.
+For the execution of these activities, there is often a limited amount of resources available.
+The schedule is called feasible when there is a solution that puts all activities in the schedule in such a way that they are all executable by the resources needed and do not overlap with conflicting tasks.
 This is a simple form of scheduling, in the examples we will discuss further on more constraints will be added.
 Such as for example the precedence constraint, in which one task needs to be finished before the other can start.
 These extra constraints place more demands on the schedule for it to be feasible.
@@ -129,10 +127,10 @@ Also, there is limited space for trains to be serviced in the maintenance depot 
 There are service bays that maintain the electrical wiring or specialize in maintaining the wheels.
 These factors make scheduling in an efficient way a complex task.
 
-The same problems can be seen in other maintenance applications and also airport scheduling.
+The same problems can be seen in other maintenance applications and also, for example, airport scheduling.
 Airport scheduling has even more complicating factors, such as refueling, baggage handling, boarding and disembarking.
 These are some complex examples to show that the problem has many difficult applications, but there exist simpler applications which require similar methods.
-In the next section we will show a simple example using painters and some painting tasks, in which these complicating factors are represented.
+In the next section we will show a simple example using painters and some painting tasks, in which these complicating factors are represented and is still easily comprehensible when reading.
 
 %		-What is RCPSP and how can it solve them.
 %		-Why imporant.
@@ -143,12 +141,12 @@ This optimization might be either the shortest processing time or the most effic
 In this paper we will focus on the shortest processing time.
 The scheduling problem consists of a few main elements: activities, resources and constraints.
 
-Activities, also called tasks or jobs, are the tasks that need to be executed.
-These activities are the elements that need to be scheduled.
-Resources are the machines or tools needed to perform a specific activity.
+Activities, also called tasks or jobs, are the tasks that need to be executed or jobs that need to be performed.
+These activities are the elements that need to be scheduled in the first place.
+Resources are the machines or personnel or equipment needed to perform a specific activity.
 Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
 Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
-For example, a constraint can be the fact that there is a limited number of one type of resource available, or that one specific activity needs to be finished before another specific activity can be performed.
+For example, a constraint can be the fact that there is a limited number of one type of resource available (\emph{resource constraint}), or that one specific activity needs to be finished before another specific activity can be performed (\emph{precedence constraint}).
 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
