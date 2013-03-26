@@ -157,17 +157,20 @@ To illustrate the RCPSP, we will give a simplified example of the problem in the
 \subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP. \TODO{uitweiden, \'e\'en zin als eerste alinea is een beetje schraal}
 
-\TODO{Dit valt een beetje uit het niets, in de alinea kan je uitleggen dat we kijken naar een bedrijf dat opknap klusjes/renovaties doet. Er is een opdracht binnengekomen waarbij een huis opnieuw geschilderd moeten worden. We beschijven een versimpelde problemeinstantie uit de werkelijkheid voor dit \emph{schilderproject} (handig om naar te kunnen refereren misschien als je die term eens noemt)}
+\TODO{Dit valt een beetje uit het niets, in de alinea kan je uitleggen dat we kijken naar een bedrijf dat opknap klusjes/renovaties doet. Er is een opdracht binnengekomen waarbij een huis opnieuw geschilderd moeten worden. We beschijven een versimpelde problemeinstantie uit de werkelijkheid voor dit \emph{schilderproject} (handig om naar te kunnen refereren misschien als je die term eens noemt) // zou ditg niet al beter in RCPSP in general moeten staan?}
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
-Because the the door and the fence are made of wood, both surfaces needs to be sanded first (\emph{precedence constraints}). \TODO{Ik vind het lelijk/ongepast om in een intuitieve definitie de termen tussen haakjes achter een vage beschrijving te zetten, gebruik het woord in de zin zoals je bij andere termen ook doet}
+Because the the door and the fence are made of wood, both surfaces needs to be sanded first.
+These constraints are called \emph{precedence constraints}.
 Sanding is not necessary for the wall, because the wall is made of bricks.
 When the job is finished all painting brushes need to be cleaned and this can only be done when all the painting is finished.
-This gives us six \emph{activities}: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning the painting brushes. \TODO{And aan het begin van de zin op deze manier lijkt me niet correct}
-And the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
+This gives us six \emph{activities}: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning the painting brushes.
+We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
 
-Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish (\emph{duration}) \TODO{Idem}.
-They define the duration for each of the activities in whole hours, because this makes it easier to schedule (\emph{time horizon}) \TODO{Na-ah}.
-Since this is not the first painting job the workers have done, we assume that they know the exact duration for each activity \TODO{For simplicity's sake ipv because they are extremely experienced}:
+Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish.
+Each activity can have a different \emph{duration}.
+They define the duration for each of the activities in whole hours, because this makes it easier to schedule.
+The total schedule is made in the \emph{time horizon}, where each hour is mapped to one step in the time horizon.
+For simplicity's sake, we assume that they know the exact duration for each activity
 \begin{itemize}
 \item sanding the door: 3 hours
 \item sanding the fence: 2 hours
@@ -179,21 +182,24 @@ Since this is not the first painting job the workers have done, we assume that t
 \TODO{lijkt me geschikt om in een tabel te zetten met kolommen activity en hours of periods, kun je er ook naar refereren. Misschien nog float right om de tabel naast de alinea te krijgen maar dat is voor latere zorg}
 % moet nog even goed gestyled worden
 
-Normally this would be an easy job \TODO{vaag, wat is \emph{this}? Iets in de strekking van: "Normally there are enough tools available for everyone to work with. Unfortunately, the crew has a very limited amount of tools this time around." lijkt me beter} (\emph{resources}) \TODO{ verwerk in tekst}
-So now they only have two painting brushes and one sanding machine (\emph{resource constraints}), which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
+Normally there are enough tools available for everyone to work with.
+Unfortunately, the crew has a very limited amount of tools this time around.
+These tools are often called \emph{resources}.
+So now they only have two painting brushes and one sanding machine, which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
+These constraints are called \emph{resource constraints}.
 This shows us that the \emph{capacity} of painting surfaces at the same time is two and the capacity of sanding surfaces at the same time is one.
 
-Since every sanding job uses the sanding machine as a resource, the usage of sanding the door and sanding the fence is $1$ for the sanding machine. \TODO{Ik denk dat dit een vreemde manier van opschrijven is voor iemand die de notatie nog niet kent}
-Also every painting job uses the painting brush as a resource, so that painting the door, painting the fence and painting the wall all have a usage of $1$ on the painting brush. \TODO{a usage of 1. Ik denk echt dat het volstaat om te noemen dat voor het uitvoeren van deze taken \'e\'en painting brush nodig is. }
-There is only one activity left, cleaning the painting brushes, which will use both of the painting brushes resource so that the usage on the painting brushes is $2$.
-Because a sanding activity doesn't use a painting brush, a painting activity doesn't use a sanding machine and cleaning the painting brushes doesn't use a sanding machine all of the other usages are $0$. \TODO{same story}
+Since every sanding job uses the sanding machine as a resource, the usage of sanding the door and sanding the fence is one sanding machine.
+Also every painting job uses the painting brush as a resource, so that painting the door, painting the fence and painting the wall all have a usage of one painting brush.
+There is only one activity left, cleaning the painting brushes, which will use both of the painting brushes resource.
+Because a sanding activity doesn't use a painting brush, a painting activity doesn't use a sanding machine and cleaning the painting brushes doesn't use a sanding machine all of the activities never use another resource.
 
 The painters want to make a schedule, where they define each starting time for the activities in such a way that the resulting schedule is feasible. \TODO{Splits dit in meer zinnen, 1: they want to make a schedule to complete the project 2: they define the schedule by assinging a start time to each .. 3: requirements for the schedule is that the the sanding happens before the painting, and the painting before the cleaning. 4: it also must keep the limited amount of tools in mind. }
 This means that the sanding of each wooden surface (the door and the wall) needs to be finished before starting the painting of that surface.
 Because of the limited resources, they can never paint more than two surfaces at once nor can they sand more than one surface at once. 
 \TODO{Describe in terms of projects instead of jobs, here you can refer to the painting project (earlier todo)} There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities. \TODO{what kind of optimization? I know what you mean but I shouldn't have to think about it first in the intuitive definition}
 
-\subsection{Definition \TODO{Definition is meer Notation imo}}
+\subsection{Notation}
 \label{text:definitions}
 
 \TODO{ik zou een paragraaf niet beginnen met een plaatje}
@@ -201,7 +207,7 @@ Because of the limited resources, they can never paint more than two surfaces at
 \begin{figure}[ht]
 	\centering
 	\input{tikz/activity_graph}
-	\caption{The activity graph for the running example. \TODO{"The" weglaten?}}
+	\caption{Activity graph for the running example.}
 	\label{fig:activity_graph}
 \end{figure}
 
@@ -210,37 +216,34 @@ The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$
 The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
 \TODO{Make a reference to a figure}
 
-\emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$. \TODO{each element $v_i$ from this set represents the i-th activity of the project? ipv identifier?}
-This is a set of activities where the total amount of activities is $n \in \mathbb{N}$ \TODO{$n = |V|$?} and each activity is represented by a unique identifier. %identifier??
+\emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
+This is a set of activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
 In the running example we have six activities: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$. 
 Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ with $n = 6$ for the running example.
 These activities are represented in Figure \ref{fig:activity_graph} as blocks.
 
 The \emph{duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
-In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$. \TODO{reference usage diagram for the activities with their durations?}
-
+In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$. 
 The duration of each activity in the running example is represented by the length of the block in Figure \ref{fig:activity_graph}.
 
-\TODO{Discuss W here as well and the reason why their blocks are filled with a shade of gray. You can do it before discussing the precedence constraints because you have already talked about activities anyway}
-
-\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$ \TODO{Volgens mij wilde cees ipv $\neq$ juist $v_i < v_j$, zie aantekeningen}
-This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
-The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
-\TODO{Discuss the precedence constraints of the dummy activities here}
-Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
-\TODO{Explain why there is no precedence ($v_0$, $v_6$) for example in the illustration}
-
-\TODO{MOVE UP}
 The \emph{extended activity set} is specified by $W = V \cup \{v_0, v_{n+1}\}$.
 Which consists of the activity set $V$ and incorporates a unique dummy beginning activity $v_0$ and a unique dummy ending activity $v_{n+1}$. 
 These dummy activities have a duration of $0$ periods.
-Precedence constraints are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity. 
-For the running example we will have a set $W = \{v_0, \ldots v_7\}$. \TODO{Ik denk dat "will have" hier een beetje nederengels is}
-Figure \ref{fig:activity_graph} shows $W$ for the running example. 
+For the running example we have a set $W = \{v_0, \ldots v_7\}$.
+Figure \ref{fig:activity_graph} shows $W$ for the running example.
+In the figure $v_0$ and $v_7$ are filled with a shade of gray, because they have a duration of $0$ instead of a duration relative to the width. 
+
+\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$ \TODO{Volgens mij wilde cees ipv $\neq$ juist $v_i < v_j$, zie aantekeningen // welke aantekeningen?}
+This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
+The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
+Precedence constraints for the dummy activities $v_0$ and $v_7$ are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity.
+Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
+The precedence constraints in Figure \ref{fig:activity_graph} are reduced to a minimum, because you can reduce for example $(v_0,v_6), (v_0, v_5), (v_5, v_6)$ to $(v_0, v_5), (v_5, v_6)$.
 
 The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
 It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
-The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}, where the precedence constraints are reduced to a minimum. \TODO{Dit stukje moet misschien eerder ofzo?}
+The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}.
+\TODO{Dit stukje moet misschien eerder ofzo?}
 
 \begin{figure}[h]
 	\centering
@@ -256,7 +259,7 @@ Which gives us the total set of resources $R = \{r_1, r_2\}$.
 In Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule} you will see all the resources of the running example. \TODO{informeel}
 
 The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\capa{i} \in \mathbb{N}$.
-For the running example we the capacity for resources are: $\capa{1} = 1, \capa{1} = 2$. \TODO{hmm?}
+For the running example the capacity for the resources are: $\capa{1} = 1, \capa{1} = 2$. \TODO{hmm?}
 These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule}, represented as the height for each resource. 
 
 The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
@@ -274,7 +277,7 @@ Figure \ref{fig:feasible_schedule} shows us the usages represented as hight for 
 \end{figure}
 
 \TODO{use fig:time\_feasible\_schedule to explain what a schedule is, what the makespan, feasability and mabye availability}
-\TODO{I do not see a use for availability to be honest but whatever}
+\TODO{I do not see a use for availability to be honest but whatever // it is needed for the formal definition, because that's the only thing that depends on time}
 
 A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
 For the running example a possible schedule is shown in Figure \ref{fig:time_feasible_schedule}.
