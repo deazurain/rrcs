@@ -6,41 +6,47 @@
 
 %\begin{document}
 
-\tikzstyle{activity}=[rectangle, draw=black, text centered, anchor=west, text=black, thick, minimum height=1.8em, minimum width=1.8em]
-\tikzstyle{dummy}=[rectangle, draw=black, text centered, anchor=west, text=black, thick, minimum height=1.8em, minimum width=1.8em]
+\tikzstyle{activity}=[rectangle, draw=black, text centered, text=black, thick, minimum height=1.8em, minimum width=1.8em]
+\tikzstyle{dummy}=[rectangle, fill=black!7, draw=black, text centered, text=black, thick, minimum height=1.8em, minimum width=1.8em]
 \tikzstyle{precedence}=[->,>=stealth, draw=black!70, thick]
 
-\begin{tikzpicture}[node distance=1]
-    \node (v0) [dummy, text width=.5cm] {$v_0$};
-    \node (v2) [activity, text width=4cm, right=of v0] {$v_2$};
-    \node (v1) [activity, text width=3cm, above=of v2] {$v_1$};
-    \node (v3) [activity, text width=2cm, below=of v2] {$v_3$};
-    \node (v4) [activity, text width=2cm, right=of v2] {$v_4$};
-    \node (v5) [dummy, text width=.5cm, right=of v4] {$v_5$};
-    
+\newcommand{\activity}[3]{\node (v#1) [activity, text width=#2cm, #3] {$v_#1$};}
+
+\begin{tikzpicture}[node distance=.8cm]
+		\node (v0) [dummy] {$v_0$};
+    \activity{2}{2}{right=1.6cm of v0}
+    \activity{1}{3}{above=of v2}
+    \activity{3}{2}{right=of v1}
+    \activity{4}{1}{below=of v3}
+    \activity{5}{5}{below=of v2}
+    \activity{6}{1}{right=1.6cm of v4}
+		\node (v7) [dummy, right=of v6] {$v_7$};
+		
     \draw[precedence] (v0.east) to[out=0,in=180] (v1.west);
     \draw[precedence] (v0.east) to[out=0,in=180] (v2.west);
-    \draw[precedence] (v0.east) to[out=0,in=180] (v3.west);
-    \draw[precedence] (v1.east) to[out=0,in=180] (v4.west);
+    \draw[precedence] (v0.east) to[out=0,in=180] (v5.west);
+    \draw[precedence] (v1.east) to[out=0,in=180] (v3.west);
     \draw[precedence] (v2.east) to[out=0,in=180] (v4.west);
-    \draw[precedence] (v4.east) to[out=0,in=180] (v5.west);
+    \draw[precedence] (v3.east) to[out=0,in=180] (v6.west);
+    \draw[precedence] (v4.east) to[out=0,in=180] (v6.west);
     % start bending from the projection v4 on the line y=v3.y
-    \draw[precedence] (v3.east) -- ($(v3)!(v4)!($(v3)+(1,0)$)$) to[out=0,in=180] (v5.west);
+    \draw[precedence] (v5.east) -- ($(v5)!(v4)!($(v5)+(1,0)$)$) to[out=0,in=180] (v6.west);
+		\draw[precedence] (v6.east) to[out=0,in=180] (v7.west);		    
 
     % Descriptions
-    \path (v1.east) to[out=0,in=180] coordinate (temp) (v4.west);
-    \draw[shorten <=2pt, shorten >=2pt] (temp) -- ++(.8,.6) node[anchor=west, yshift=2pt] {Precedence constraint $(v_1, v_4) \in E$};
+    \path (v3.east) to[out=0,in=180] coordinate (temp) (v6.west);
+    \draw[shorten <=2pt, shorten >=2pt] (temp) -- ++(.8,.6) node[anchor=west, yshift=2pt, text width=2cm] {Precedence constraint $(v_3, v_6) \in E$};
     
-    \draw[shorten <=2pt, shorten >=2pt] (v3.south) -- ++(.8,-.6) node[anchor=west, yshift=-2pt] {Activity $v_3$};
+    \draw[shorten <=2pt, shorten >=2pt] (v5.south) -- ++(.8,-.6) node[anchor=west, yshift=-2pt] {Activity $v_5$};
     
     % Funky braces
     \draw[decorate,decoration={brace,amplitude=8pt}]
-        let \p1 = (v2.west), \p2 = (v4.east), \p3 = (v1) in 
-        (\x1, \y3+1cm) -- (\x2, \y3+1cm) node[midway, above=10pt] {$V = \{v_1, \ldots, v_4\}$};
+        let \p1 = (v5.west), \p2 = (v6.east), \p3 = (v1) in 
+        (\x1, \y3+1cm) -- (\x2, \y3+1cm) node[midway, above=10pt] {$V = \{v_1, \ldots, v_6\}$};
         
     \draw[decorate,decoration={brace,amplitude=8pt}]
-        let \p1 = (v0.west), \p2 = (v5.east), \p3 = (v1) in 
-        (\x1, \y3+2cm) -- (\x2, \y3+2cm) node[midway, above=10pt] {$W = V \cup \{v_0, v_5\}$};
+        let \p1 = (v0.west), \p2 = (v7.east), \p3 = (v1) in 
+        (\x1, \y3+2cm) -- (\x2, \y3+2cm) node[midway, above=10pt] {$W = V \cup \{v_0, v_7\}$};
     
 \end{tikzpicture}
 
