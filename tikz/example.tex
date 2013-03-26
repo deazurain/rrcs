@@ -1,16 +1,24 @@
 % Author: Mick van Gelderen
 % Example tikz include file
 
-\documentclass{minimal}
+\documentclass{article}
+\usepackage{comment}
+
 \input{tikz}
 
 \begin{document}
 
+\begin{figure}[h]
+	\centering
+	\input{activity_graph}
+	\caption{Example of an activity graph with dummy activities. }
+	\label{fig:activity_graph}
+\end{figure}
+
+\begin{comment}
 \begin{center}
 \input{activity_graph}
-
 \vspace{1em}
-
 \emph{The activities $v_0$ and $v_5$ are dummy activities. They do not belong to the original set of activities $V$. The set $W$ consists of the original activities plus the dummy activities. }
 \end{center}
 
@@ -19,5 +27,5 @@
 \begin{center}
 \input{time_schedule}
 \end{center}
-
+\end{comment}
 \end{document}

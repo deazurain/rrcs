@@ -79,47 +79,84 @@
 
 \TODO{Freek: running example}
 
-In this paper we will use a simple running example based on the painting example used to explain the RCPSP.
+In this paper we will use a simple running example based on a painting job to explain the RCPSP.
 
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
-Because the the door and the fence are made of wood, both the surfaces needs to be sanded first (\emph{precedence constraints}).
-This isn't needed for the wall, because the wall is made of bricks.
-At the end all painting brushes need to be cleaned, and this can only be done when all the painting is finished.
-This gives us six \emph{activities} $V$: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$.
-And the following precedence constraints $E$: sanding the door before painting the door $(v_1, v_3)$, sanding the fence before painting the fence $(v_2, v_4)$ and all the painting activities needs to be done before cleaning the painting brushes $\{(v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
+Because the the door and the fence are made of wood, both surfaces needs to be sanded first (\emph{precedence constraints}).
+Sanding is not necessary for the wall, because the wall is made of bricks.
+When the job is finished all painting brushes need to be cleaned and this can only be done when all the painting is finished.
+This gives us six \emph{activities}: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning the painting brushes.
+And the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
 
-Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time (\emph{duration}) to finish.
-Since this isn't the first painting job the workers have done, they know the exactly what the duration is for each activity:
+Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish (\emph{duration}).
+Since this is not the first painting job the workers have done, we assume that they know the exact duration for each activity:
 \begin{itemize}
-\item sanding the door: 3 hours ($\dur{1} = 3$)
-\item sanding the fence: 2 hours ($\dur{2} = 2$)
-\item painting the door: 2 hours ($\dur{3} = 2$)
-\item painting the fence: 1 hour ($\dur{4} = 1$)
-\item painting the wall: 5 hours ($\dur{5} = 5$)
-\item cleaning the painting brushes: 1 hour ($\dur{6} = 1$)
+\item sanding the door: 3 hours
+\item sanding the fence: 2 hours
+\item painting the door: 2 hours
+\item painting the fence: 1 hour
+\item painting the wall: 5 hours
+\item cleaning the painting brushes: 1 hour
 \end{itemize}
 % moet nog even goed gestyled worden en even gecontroleerd worden of tijden beetje goed zijn
-Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources} $R$).
-So now they only have two painting brushes $r_1$ and one sanding machine $r_2$ (\emph{resource constraints}), which makes it impossible to sand more then one surface at the same time and to paint more then two surfaces at the same time.
-This shows us that the \emph{capacity} of painting surfaces at the same time is two ($\capa{1} = 2$) and the capacity of sanding surfaces at the same time is one  ($\capa{2} = 1$).
+Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources}).
+So now they only have two painting brushes and one sanding machine (\emph{resource constraints}), which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
+This shows us that the \emph{capacity} of painting surfaces at the same time is two and the capacity of sanding surfaces at the same time is one.
 
-Since every sanding job uses the sanding machine as a resource $r_1$, the usage of sanding the door $v_1$ and sanding the fence $v_2$ is $1$ for the sanding machine $r_1$ ($\usage{1}{1} = 1, \usage{2}{1} = 1$).
-Also every painting job uses the painting brush as a resource $r_2$, so that painting the door $v_3$, painting the fence $v_4$ and painting the wall $v_5$ all have a usage of $1$ on the painting brush $r_2$ ($\usage{3}{2} = 1, \usage{4}{2} = 1, \usage{5}{2} = 1$).
-There is only one activity left, cleaning the painting brushes $v_6$, which will use both of the painting brushes resource $r_2$ so that the usage on the painting brushes $r_2$ is $2$ ($\usage{6}{2} = 2$).
+Since every sanding job uses the sanding machine as a resource, the usage of sanding the door and sanding the fence is $1$ for the sanding machine.
+Also every painting job uses the painting brush as a resource, so that painting the door, painting the fence and painting the wall all have a usage of $1$ on the painting brush.
+There is only one activity left, cleaning the painting brushes, which will use both of the painting brushes resource so that the usage on the painting brushes is $2$.
 Because a sanding activity doesn't use a painting brush, a painting activity doesn't use a sanding machine and cleaning the painting brushes doesn't use a sanding machine all of the other usages are $0$.
 
-They now want to make a schedule, where they define each starting time for the activities so that the schedule is feasible.
-This means that each surface from wood (the door and the wall) is finished sanding before starting with painting the surface.
-And they never paint three or more surfaces at the same time, or sand two or more surfaces at the same time.
-They also have a lot of other jobs to do, so they don't only want a feasible schedule but also want to optimize the time in which they finish all the activities.
+The painters want to make a schedule, where they define each starting time for the activities in such a way that the resulting schedule is feasible.
+This means that the sanding of each wooden surface (the door and the wall) needs to be finished before starting the painting of that surface.
+Because of the limited resources, they can never paint more than two surfaces at the same time, or sand more than one surface at the same time.
+There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
 
-$V = v_1, \ldots, v_6$\\
+$V = \{v_1, \ldots, v_6\}$\\
 $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
-$R = r_1, r_2$\\
+$R = \{r_1, r_2\}$\\
 $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
-$\usage{1}{1} = 1, \usage{2}{1} = 1, \usage{3}{2} = 1, \usage{4}{2} = 1, \usage{5}{2} = 1, \usage{6}{2} = 2$\\
+$\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
 $\capa{1} = 2, \capa{2} = 1$
 
+\subsubsection{Definition}
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{The activity graph for the running example. }
+	\label{fig:activity_graph}
+\end{figure}
+\emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
+This is a set of activities where the total amount of activities is $n \in \mathbb{N}$ and each activity is represented by a unique identifier. %identifier??
+In the running example we have six activities ($n = 6$): sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$.
+Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ for the running example.
+These activities are represented in Figure \ref{fig:activity_graph} as blocks.
+
+The \emph{Duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
+In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$.
+The duration of each activity in the running example is represented by the length of the block in Figure \ref{fig:activity_graph}.
+
+\emph{Precedence constraints} are specified by a set $E \subset V \times V$.
+This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
+The running example has several precedence constraints between the activities, which will give the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
+Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
+
+The \emph{extended activity set} is specified by $W = V \cup \{v_0, v_{n+1}\}$.
+Which consists of the activity set $V$ and incorporates a unique dummy beginning activity $v_0$ and a unique dummy ending activity $v_{n+1}$. 
+These dummy activities have a duration of $0$ periods.
+Precedence constraints are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity. 
+For the running example we will have a set $W = \{v_0, \ldots v_7\}$.
+Figure \ref{fig:activity_graph} shows $W$ for the running example. 
+
+The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
+It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
+The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}, where the precedence constraints are reduced to a minimum.
+
+\emph{Resources} are specified by a set $R = \{r_1, \ldots, r_m\}$.
+The total amount of resources is $m \in \mathbb{N}$ and each resource is represented by a unique identifier. %identifier??
+In the running example we have two resources ($m = 2$): the sanding machine $r_1$ and the painting brushes $r_2$.
+Which gives us the total set of resources $R = \{r_1, r_2\}$
 
 \subsection{Resource constrained project scheduling problem}
 
