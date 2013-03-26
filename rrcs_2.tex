@@ -125,6 +125,7 @@ This gives us six \emph{activities}: sanding the the door, sanding the fence,  p
 And the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish (\emph{duration}).
+They define the duration for each of the activities in whole hours, because this makes it easier to schedule (\emph{time horizon}).
 Since this is not the first painting job the workers have done, we assume that they know the exact duration for each activity:
 \begin{itemize}
 \item sanding the door: 3 hours
@@ -134,7 +135,7 @@ Since this is not the first painting job the workers have done, we assume that t
 \item painting the wall: 5 hours
 \item cleaning the painting brushes: 1 hour
 \end{itemize}
-% moet nog even goed gestyled worden en even gecontroleerd worden of tijden beetje goed zijn
+% moet nog even goed gestyled worden
 Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources}).
 So now they only have two painting brushes and one sanding machine (\emph{resource constraints}), which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
 This shows us that the \emph{capacity} of painting surfaces at the same time is two and the capacity of sanding surfaces at the same time is one.
@@ -157,6 +158,11 @@ There are also a lot of other jobs to do, so the painter not only want a feasibl
 	\caption{The activity graph for the running example. }
 	\label{fig:activity_graph}
 \end{figure}
+
+The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
+The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
+The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
+\TODO{Make a reference to a figure}
 
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n \in \mathbb{N}$ and each activity is represented by a unique identifier. %identifier??
