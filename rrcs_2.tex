@@ -13,7 +13,6 @@
 \captionsetup[table]{justification=raggedright, singlelinecheck=off}
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{exmp}{Example}[section]
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
@@ -30,6 +29,7 @@
 \pagestyle{empty}
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+\newtheorem{example}{Example}[section]
 
 \newcommand{\res}[0]{\ensuremath{R}} %resources
 \newcommand{\av}[1]{\ensuremath{av(r_{#1})}} %availability
@@ -59,16 +59,51 @@
 
 \section{Scope and purpose}
 
-\TODO{Roelf}
-%		-Motivation, waarom probleem behandelen?
+In this paper we will discus the resource constraint scheduling problem in practical applications.
+Scheduling is a very common problem in many day-to-day applications, because many situations require a suitable schedule to define the order in which to perform different tasks.
+Making a schedule proves to be a more complex process than one might expect, especially when complicating factors arise such as limited resources or a set deadline.
+These factors can be taken into account to some extent by the resource constraint scheduling problem.
+Some other complicating factors may occur in practical applications, such as the possibility of break down of resources, delays or a growing set of tasks.
+The scheduling problem is therefore, although it is quite common, one of the more complex problems in computer science.
+
+This paper will deal with the scheduling problem, some complicating factors and the solution to this problem in continuous applications.
+Because of its common usage in practical applications and the complexity of the problem, the way the solution is approximated gives an interesting insight in the problem.
+In almost all practical application, an approximation is used to retrieve a schedule.
+Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
+For a continuous environment, this quick solution is key to keep up with the constant changes.
+
+An approximation method will be discussed in light of the practical applications of the scheduling problem.
+For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
+Simple temporal networks are a form of graph representations using the nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
+One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
+
+The purpose of this paper is to inform the reader on the topic of resource constraint scheduling in continuous applications.
+The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
+Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
+
 %		-Wat staat waar?
-%		-Dat het probleem moeilijk is dat we er in hoofdstuk 2 op terug komen?
+In the chapter \emph{Problem Background} \ref{text:problem_background} we will first go deeper in to the resource constraint scheduling problem.
+Here the different aspects of the resource constraint scheduling problem will be discussed.
+An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
+We will also look into the complexity \ref{text:complex} \TODO{ref} of the problem, showing why an approximation is needed for practical applications.
+
+The following chapter, \emph{Schedule Construction} \ref{text:schedule} \TODO{ref}, will deal with the approximation of the solution.
+For the approximation, simple temporal networks \ref{text:STN} \TODO{ref} will be used, which provide with a simpler way of representing a schedule.
+The simple temporal networks will be explained using the example from the previous chapter and again giving an intuitive and formal definition.
+When a more dynamic way of adapting the schedule is required, precedence constraint posting \ref{text:PCP} \TODO{ref} is introduced to the simple temporal networks.
+Precedence constraint posting is a technique which allows for changes to a temporal network by introducing new precedence constraints.
+The workings of precedence constraint posting will also be explained using the example and giving an intuitive and formal definition.
+
+Combining these two methods gives us a flexible way of approximating a resource constraint scheduling problem.
+Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
+This gives us a robust and effective solution for scheduling in many practical applications.
 
 
 \newpage
 
 
 \section{Problem background}
+\label{text:problem_background}
 
 \TODO{Roelf: intro}
 %		-What are scheduling problems?
@@ -79,6 +114,7 @@
 
 \TODO{Freek: running example}
 
+\subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP.
 
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
@@ -89,6 +125,7 @@ This gives us six \emph{activities}: sanding the the door, sanding the fence,  p
 And the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish (\emph{duration}).
+They define the duration for each of the activities in whole hours, because this makes it easier to schedule (\emph{time horizon}).
 Since this is not the first painting job the workers have done, we assume that they know the exact duration for each activity:
 \begin{itemize}
 \item sanding the door: 3 hours
@@ -98,7 +135,7 @@ Since this is not the first painting job the workers have done, we assume that t
 \item painting the wall: 5 hours
 \item cleaning the painting brushes: 1 hour
 \end{itemize}
-% moet nog even goed gestyled worden en even gecontroleerd worden of tijden beetje goed zijn
+% moet nog even goed gestyled worden
 Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources}).
 So now they only have two painting brushes and one sanding machine (\emph{resource constraints}), which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
 This shows us that the \emph{capacity} of painting surfaces at the same time is two and the capacity of sanding surfaces at the same time is one.
@@ -113,31 +150,31 @@ This means that the sanding of each wooden surface (the door and the wall) needs
 Because of the limited resources, they can never paint more than two surfaces at the same time, or sand more than one surface at the same time.
 There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
 
-$V = \{v_1, \ldots, v_6\}$\\
-$E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
-$R = \{r_1, r_2\}$\\
-$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
-$\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
-$\capa{1} = 2, \capa{2} = 1$
+\subsection{Definition}
 
-\subsubsection{Definition}
 \begin{figure}[h]
 	\centering
 	\input{tikz/activity_graph}
 	\caption{The activity graph for the running example. }
 	\label{fig:activity_graph}
 \end{figure}
+
+The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
+The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
+The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
+\TODO{Make a reference to a figure}
+
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n \in \mathbb{N}$ and each activity is represented by a unique identifier. %identifier??
 In the running example we have six activities ($n = 6$): sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$.
 Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ for the running example.
 These activities are represented in Figure \ref{fig:activity_graph} as blocks.
 
-The \emph{Duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
+The \emph{duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
 In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$.
 The duration of each activity in the running example is represented by the length of the block in Figure \ref{fig:activity_graph}.
 
-\emph{Precedence constraints} are specified by a set $E \subset V \times V$.
+\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
 The running example has several precedence constraints between the activities, which will give the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
@@ -153,10 +190,45 @@ The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
 It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
 The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}, where the precedence constraints are reduced to a minimum.
 
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{The resource relations for the running example. }
+	\label{fig:resource_graph}
+\end{figure}
+
 \emph{Resources} are specified by a set $R = \{r_1, \ldots, r_m\}$.
 The total amount of resources is $m \in \mathbb{N}$ and each resource is represented by a unique identifier. %identifier??
 In the running example we have two resources ($m = 2$): the sanding machine $r_1$ and the painting brushes $r_2$.
-Which gives us the total set of resources $R = \{r_1, r_2\}$
+Which gives us the total set of resources $R = \{r_1, r_2\}$.
+In Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph} you will see all the resources of the running example.
+
+The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\cap{i} \in \mathbb{N}$.
+For the running example we the capacity for resources are: $\cap{1} = 1, \cap{1} = 2$.
+These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:usage_graph}, represented as the height for each resource.
+
+The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
+The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$.
+Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources.
+Figure \ref{fig:usage_graph} shows us the usages represented as hight for each activity.
+
+\begin{figure}[h]
+	\centering
+	\input{tikz/activity_graph}
+	\caption{A usage schedule for the running example. }
+	\label{fig:usage_graph}
+\end{figure}
+
+\begin{example}
+\label{exmp:running}
+$V = \{v_1, \ldots, v_6\}$\\
+$E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$\\
+$R = \{r_1, r_2\}$\\
+$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$\\
+$\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$\\
+$\capa{1} = 2, \capa{2} = 1$
+\end{example}
+We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
 
 \subsection{Resource constrained project scheduling problem}
 
@@ -190,7 +262,7 @@ And no resource exceeds its capacity in usage at any time in the schedule.
 \section{Schedule construction} \TODO{andere titel?}
 
 \TODO{Roelf: intro}
-%		-Wat gaan we benaderen (relefantie van STN)
+%		-Wat gaan we benaderen (relevantie van STN)
 %		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
 %		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
 
@@ -199,7 +271,8 @@ Let us first introduce a notion of such a Simple Temporal Network using a basic 
 Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
 
 \subsubsection{Example}
-\begin{exmp}
+\begin{example}
+\label{exmp:stn}
 Consider the following events which may occur on a typical work day:
 \begin{enumerate}
 \item I left my home between 8:05 and 8:10
@@ -207,7 +280,7 @@ Consider the following events which may occur on a typical work day:
 \item I waited for 5 to 10 minutes at the bridge
 \item At 8:30, I arrived at work 
 \end{enumerate}
-\end{exmp}
+\end{example}
 
 Question we would now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
 Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
@@ -292,19 +365,6 @@ Now that the activities are simulated in an STN, it is time to also incorporate 
 
 \TODO{Roelf}
 
-%test
-
-\citet{brucker99}
-
-\citet{herroelen05}
-
-\citet{policella07}
-
-\citet{lombardi10}
-
-\citet{cesta98}
-
-\citet{deblaere10}
 
 
 \newpage
