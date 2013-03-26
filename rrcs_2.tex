@@ -106,7 +106,6 @@ This gives us a robust and effective solution for scheduling in many practical a
 \section{Problem background}
 \label{text:problem_background}
 
-\TODO{Roelf: intro}
 %		-What are scheduling problems?
 In this chapter we will take a deeper look at the resource constraint project scheduling problem.
 To do this, we will first discuss some real life examples and the use of the resource constraint project scheduling problem to get a more clear idea of the problem.
@@ -123,6 +122,7 @@ Such as for example the precedence constraint, in which one task needs to be fin
 These extra constraints place more demands on the schedule for it to be feasible.
 
 %		-Examples form real life.
+\TODO{subsections?}
 An example of a real life application of the resource constraint project scheduling problem is train maintenance scheduling.
 In scheduling the maintenance of trains, there are several factors which need to be taken into calculation.
 For instance, the trains should not be out of service due to maintenance for too long of a period.
@@ -133,17 +133,26 @@ These factors make scheduling in an efficient way a complex task.
 The same problems can be seen in other maintenance applications and also airport scheduling.
 Airport scheduling has even more complicating factors, such as refueling, baggage handling, boarding and disembarking.
 These are some complex examples to show that the problem has many difficult applications, but there exist simpler applications which require similar methods.
-In the next section we will show a simple example using painters and some painting tasks, which represent some of these complicating factors.
+In the next section we will show a simple example using painters and some painting tasks, in which these complicating factors are represented.
 
 %		-What is RCPSP and how can it solve them.
 %		-Why imporant.
 %		-Voorbeelden wat meer uitwerken. Intuitief verhaal.
-The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
-An activity is sometimes called a job, task or event in other work. 
-The activities are part of the input of a RCPSP and have a specified duration. 
-There are multiple types of constraints for activities of which one is precedence constraints. 
-Certain activities can only be executed after another activity has been completed. 
+\TODO{subsections?}
+Now we have an idea about the uses of resource constraint scheduling, but what is it exactly?
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
+This optimization might be either the shortest processing time or the most efficient use of resources.
+In this paper we will focus on the shortest processing time.
+The scheduling problem consists of a few main elements: activities, resources and constraints.
 
+Activities, also called tasks or jobs, are the tasks that need to be executed.
+These activities are the elements that need to be scheduled.
+Resources are the machines or tools needed to perform a specific activity.
+Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
+Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
+For example, a constraint can be the fact that there is a limited number of one type of resource available, or that one specific activity needs to be finished before another specific activity can be performed.
+
+To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
 \subsection{Running example}
 In this paper we will use a simple running example based on a painting job to explain the RCPSP.
