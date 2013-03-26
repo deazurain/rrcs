@@ -32,7 +32,7 @@
 \newtheorem{example}{Example}[section]
 
 \newcommand{\res}[0]{\ensuremath{R}} %resources
-\newcommand{\av}[1]{\ensuremath{av(r_{#1})}} %availability
+\newcommand{\av}[2]{\ensuremath{av(r_{#1}, t_{#2})}} %availability of resource #1 at time #2
 \newcommand{\capa}[1]{\ensuremath{cap(r_{#1})}} %capacity
 \newcommand{\dur}[1]{\ensuremath{dur(v_{#1})}} %durability
 \newcommand{\usage}[2]{\ensuremath{usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
@@ -246,6 +246,10 @@ The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 
 Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources.
 Figure \ref{fig:usage_graph} shows us the usages represented as hight for each activity.
 
+The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
+For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2,1} = 1$ because we have two painting brushes and only one is used.
+In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource.
+
 \begin{figure}[h]
 	\centering
 	\input{tikz/activity_graph}
@@ -283,7 +287,7 @@ And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ wit
 Find:
 A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$.
 Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
-And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_k \in T (\capa{i} > \sum)$.
+And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
 
 
