@@ -226,7 +226,7 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/activity_graph}
+	\input{tikz/usage}
 	\caption{The resource relations for the running example. }
 	\label{fig:resource_graph}
 \end{figure}
@@ -276,13 +276,14 @@ We will refer to Example \ref{exmp:running} as the \emph{Running Example}.
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E \subset V \times V$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
-A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$, where each precedence constraint in $E$ holds.
-And no resource exceeds its capacity in usage at any time in the schedule.
+A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$.
+Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
+And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_k \in T (\capa{i} > \sum)$.
 \end{definition}
 
 
