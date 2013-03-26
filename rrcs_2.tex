@@ -264,7 +264,7 @@ In Figure \ref{fig:feasible_schedule} the availability of a resource can be dedu
 	\label{fig:usage_graph}
 \end{figure}
 
-\subsection{Formal definition of running example}
+\subsection{Formal definition of the running example}
 
 In Example \ref{exmp:running} we define the formal definition of the \emph{Running Example} by using the definitions in subsection \ref{text:definitions}.
 \begin{example}
@@ -287,12 +287,12 @@ $\capa{1} = 2, \capa{2} = 1$
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
-A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$.
+A feasible schedule $S = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
 Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
 And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
