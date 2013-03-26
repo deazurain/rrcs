@@ -11,6 +11,12 @@
 \usepackage{booktabs}
 \usepackage{caption}% http://ctan.org/pkg/caption
 \captionsetup[table]{justification=raggedright, singlelinecheck=off}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
 
 \input{tikz/tikz}
 
@@ -188,7 +194,60 @@ And no resource exceeds its capacity in usage at any time in the schedule.
 %		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
 %		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
 
-\subsection{Simple temporal networks}
+\subsection{Simple Temporal Problem (STN)}
+Let us first introduce a notion of such a Simple Temporal Network using a basic example. 
+Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
+
+\subsubsection{Example}
+\begin{exmp}
+Consider the following events which may occur on a typical work day:
+\begin{enumerate}
+\item I left my home between 8:05 and 8:10
+\item After driving for 20 minutes, I had to stop for an open bridge
+\item I waited for 5 to 10 minutes at the bridge
+\item At 8:30, I arrived at work 
+\end{enumerate}
+\end{exmp}
+
+Question we'd now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
+Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
+Given the above constraints, it is not hard to discover that the only possible scenario is that I left home at 8:05 and waited only 5 minutes at the bridge.
+The challenge now is to implement an algorithm that performs the same kind of reasoning. This can be done by regarding this problem as a Simple Temporal Problem and represent it using a Simple Temporal Network.
+
+\subsubsection{Constraint Graph}
+The first step is to represent the example above as a \emph{constraint graph}. 
+The nodes in this graph correspond to the events in the story and a directed edge from node $n_i$ to $n_j$ indicates that the event represented by node $n_i$ has to occur before the event represented by node $n_j$. Additionally, each edge $()$ has got a certain \emph{time window} associated with it, which indicates the minimum and maximum delay between the two events. 
+Each node in this graph is called a \emph{time point}. 
+An additional time point is added and refers to \emph{time zero}. 
+A convenient time zero for this example is 8:00. 
+The constraint graph for this example is shown below. 
+In this example, the time zero node is called \emph{0}, and the events \emph{leaving home},  \emph{waiting at the bridge} and \emph{arrived at work} are denoted with nodes \emph{L}, \emph{B} and \emph{W} respectively.
+
+\begin{tikzpicture}[
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3cm,
+     semithick
+  ]
+
+  \node[state] (1) 					{0};
+  \node[state] (2) [right of=1] 		{L};
+  \node[state] (3) [right of=2] 		{B};
+  \node[state] (4) [right of=3] 		{W};
+
+  \path (1) 	edge [bend left]    	node {[5,10]} 	(2)
+            		edge [bend right] 	node {[30,30]} 	(4)
+       	 (2) 	edge [bend left]		node {[20,20]} 	(3)
+        	 (3) 	edge [bend left]     	node {[5,10]} 	(4);
+        
+\end{tikzpicture}
+
+The goal of this graph is to associate each time point with a \emph{time window}, which is nothing more than an interval with a lower and an upper bound, in such a way that if each time point is associated with a value that lies within its time window, the schedule is consistent.
+
+\subsubsection{Distance Graph}
+
 
 \TODO{Bastiaan + Mick}
 %		-Wat is een STN probleem (wat is het resultaat)
@@ -197,6 +256,7 @@ And no resource exceeds its capacity in usage at any time in the schedule.
 
 
 \subsubsection{Reduction to STN}
+
 
 \TODO{Bastiaan + Mick}
 %		-Het is dus geen goeie/volledige reductie :(
