@@ -59,10 +59,44 @@
 
 \section{Scope and purpose}
 
-\TODO{Roelf}
-%		-Motivation, waarom probleem behandelen?
+In this paper we will discus the resource constraint scheduling problem in practical applications.
+Scheduling is a very common problem in many day-to-day applications, because many situations require a suitable schedule to define the order in which to perform different tasks.
+Making a schedule proves to be a more complex process than one might expect, especially when complicating factors arise such as limited resources or a set deadline.
+These factors can be taken into account to some extent by the resource constraint scheduling problem.
+Some other complicating factors may occur in practical applications, such as the possibility of break down of resources, delays or a growing set of tasks.
+The scheduling problem is therefore, although it is quite common, one of the more complex problems in computer science.
+
+This paper will deal with the scheduling problem, some complicating factors and the solution to this problem in continuous applications.
+Because of its common usage in practical applications and the complexity of the problem, the way the solution is approximated gives an interesting insight in the problem.
+In almost all practical application, an approximation is used to retrieve a schedule.
+Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
+For a continuous environment, this quick solution is key to keep up with the constant changes.
+
+An approximation method will be discussed in light of the practical applications of the scheduling problem.
+For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
+Simple temporal networks are a form of graph representations using the nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
+One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
+
+The purpose of this paper is to inform the reader on the topic of resource constraint scheduling in continuous applications.
+The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
+Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
+
 %		-Wat staat waar?
-%		-Dat het probleem moeilijk is dat we er in hoofdstuk 2 op terug komen?
+In the chapter \emph{Problem Background} \ref{text:problembg} \TODO{ref} we will first go deeper in to the resource constraint scheduling problem.
+Here the different aspects of the resource constraint scheduling problem will be discussed.
+An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
+We will also look into the complexity \ref{text:complex} \TODO{ref} of the problem, showing why an approximation is needed for practical applications.
+
+The following chapter, \emph{Schedule Construction} \ref{text:schedule} \TODO{ref}, will deal with the approximation of the solution.
+For the approximation, simple temporal networks \ref{text:STN} \TODO{ref} will be used, which provide with a simpler way of representing a schedule.
+The simple temporal networks will be explained using the example from the previous chapter and again giving an intuitive and formal definition.
+When a more dynamic way of adapting the schedule is required, precedence constraint posting \ref{text:PCP} \TODO{ref} is introduced to the simple temporal networks.
+Precedence constraint posting is a technique which allows for changes to a temporal network by introducing new precedence constraints.
+The workings of precedence constraint posting will also be explained using the example and giving an intuitive and formal definition.
+
+Combining these two methods gives us a flexible way of approximating a resource constraint scheduling problem.
+Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
+This gives us a robust and effective solution for scheduling in many practical applications.
 
 
 \newpage
@@ -190,7 +224,7 @@ And no resource exceeds its capacity in usage at any time in the schedule.
 \section{Schedule construction} \TODO{andere titel?}
 
 \TODO{Roelf: intro}
-%		-Wat gaan we benaderen (relefantie van STN)
+%		-Wat gaan we benaderen (relevantie van STN)
 %		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
 %		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
 
@@ -285,19 +319,6 @@ The goal of this graph is to associate each time point with a \emph{time window}
 
 \TODO{Roelf}
 
-%test
-
-\citet{brucker99}
-
-\citet{herroelen05}
-
-\citet{policella07}
-
-\citet{lombardi10}
-
-\citet{cesta98}
-
-\citet{deblaere10}
 
 
 \newpage
