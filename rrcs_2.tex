@@ -306,12 +306,30 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 \newpage
 
 
-\section{Schedule construction} \TODO{andere titel?}
+\section{Schedule construction}
 
-\TODO{Roelf: intro}
+As shown, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
+In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
+In this chapter we will introduce this approximation, in the form of a \emph{Simple Temporal Network}, or STN.
+This graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
+We will then take a look at the resources and a method to post new activities and constraints to the created STN, using precedence constraint posting.
+The resulting schedule representation is flexible and robust, which makes it very useful for continuous applications.
+
 %		-Wat gaan we benaderen (relevantie van STN)
-%		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
-%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
+The use of an STN to approximate an RCPSP is specifically practical, while the STN allows us to save multiple starting times per activity.
+This makes the STN more of a collection of feasible schedules, which gives the schedule represented by it extra flexibility.
+Furthermore, the simple temporal problem is a problem which is quite similar to path finding and is thus solvable in polynomial time.
+These two important features make the STN a useful approximation of the RCPSP, which is neither flexible, nor solvable in polynomial time.
+
+%		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld 
+The STN does not completely represent the original RCPSP, but is just an approximation.
+There are cases in which the RCPSP is feasible, but using an STN will not give a working schedule.
+\TODO{wat zijn deze gevallen? Hebben we een voorbeeld? Of laten we dat weg?}
+This is an important shortcoming of this approximation.
+Given the advantages in speed and flexibility, this shortcoming has to be taken for granted in using RCPSP in a dynamic environment.
+
+%		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan
+\TODO{idee van de reductie?}
 
 \subsection{Simple Temporal Problem}
 Let us first introduce a notion of such a \emph{Simple Temporal Network} (STN) using a basic example. 
