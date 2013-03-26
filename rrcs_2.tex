@@ -305,8 +305,8 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 %		-Geen volledige reductie, dus niet alle instanties worden chill afgebeeld
 %		-Globale idee geven van opzet van de reductie en hoe je daarmee het probleem kan 
 
-\subsection{Simple Temporal Problem (STN)}
-Let us first introduce a notion of such a Simple Temporal Network using a basic example. 
+\subsection{Simple Temporal Problem}
+Let us first introduce a notion of such a \emph{Simple Temporal Network} (STN) using a basic example. 
 Note that the problem in question is called a \emph{Simple Temporal Problem} (STP) which is represented using an STN.
 
 \subsubsection{Example}
@@ -377,10 +377,58 @@ Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_
 
 Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
+Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
+
+\begin{tikzpicture}[
+	->,
+	>=stealth',
+	shorten >=1pt,
+	auto,
+	node distance=3cm,
+     semithick
+  ]
+
+  \node[state] (s0)		 						{$s_0$};
+  \node[state] (e0) 	[right of=s0]			{$e_0$};
+  \node[state] (s1) 	[above right of=e0]	{$s_1$};
+  \node[state] (e1) 	[right of=s1]			{$e_1$};
+  \node[state] (s2) 	[right of=e0]			{$s_2$};
+  \node[state] (e2) 	[right of=s2]			{$e_2$};
+  
+  \node[state] (s3) 	[right of=e1]			{$s_3$};
+  \node[state] (e3) 	[right of=s3]			{$e_3$};
+  \node[state] (s4) 	[right of=e2]			{$s_4$};
+  \node[state] (e4) 	[right of=s4]			{$e_4$};
+  \node[state] (s5) 	[below right of=e0]	{$s_5$};
+  \node[state] (e5) 	[right of=s5]			{$e_5$};
+  \node[state] (s6) 	[right of=e4]			{$s_6$};
+  \node[state] (e6) 	[right of=s6]			{$e_6$};
+  \node[state] (s7) 	[right of=e6]			{$s_7$};
+  \node[state] (e7) 	[right of=s7]			{$e_7$};
+     
+  \path 		     	(s0) 		edge [dashed] node 			{$[\dur{0}, \dur{0}]$} 	(e0)
+  		     		(s1) 		edge [dashed] node 			{$[\dur{1}, \dur{1}]$} 	(e1)
+  		     		(s2) 		edge [dashed] node 			{$[\dur{2}, \dur{2}]$} 	(e2)
+  		    		(s3) 		edge [dashed] node 			{$[\dur{3}, \dur{3}]$} 	(e3)
+  		     		(s4) 		edge [dashed] node 			{$[\dur{4}, \dur{4}]$} 	(e4)
+  		     		(s5) 		edge [dashed] node 			{$[\dur{5}, \dur{5}]$} 	(e5)
+  		     		(s6) 		edge [dashed] node 			{$[\dur{6}, \dur{6}]$} 	(e6)
+  		     		(s7) 		edge [dashed] node 			{$[\dur{7}, \dur{7}]$} 	(e7)
+				
+				(e0) 		edge node 					{$[0, \infty]$} 			(s1)
+  				(e0) 		edge node 					{$[0, \infty]$} 			(s2)
+				(e0) 		edge node 					{$[0, \infty]$} 			(s5)
+				(e1) 		edge node 					{$[0, \infty]$} 			(s3)
+				(e2) 		edge node 					{$[0, \infty]$} 			(s4)
+				(e3) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e4) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e5) 		edge node 					{$[0, \infty]$} 			(s6)
+				(e6) 		edge node 					{$[0, \infty]$} 			(s7);
+\end{tikzpicture}
+
 \TODO{Bastiaan + Mick}
 %		-Het is dus geen goeie/volledige reductie :(
 %		-Algemene/formele reductie Reductiedefinitie
-
 
 \subsection{Resource}
 
