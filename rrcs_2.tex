@@ -25,15 +25,16 @@
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 
-\newcommand{\renres}[0]{\ensuremath{R^\rho}} %renewable resource
-\newcommand{\conres}[0]{\ensuremath{R^\nu}} %consumable resource
-\newcommand{\res}[0]{\ensuremath{R}} % all resources
-\newcommand{\av}[1]{\ensuremath{Av(r_{#1})}} %availability
-\newcommand{\dur}[1]{\ensuremath{Dur(v_{#1})}} %durability
-\newcommand{\usage}[2]{\ensuremath{Usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
-\newcommand{\start}[1]{\ensuremath{Start(v_{#1})}} %start time
-\renewcommand{\stop}[1]{\ensuremath{Stop(v_{#1})}} %stop time
+\newcommand{\res}[0]{\ensuremath{R}} %resources
+\newcommand{\av}[1]{\ensuremath{av(r_{#1})}} %availability
+\newcommand{\capa}[1]{\ensuremath{cap(r_{#1})}} %capacity
+\newcommand{\dur}[1]{\ensuremath{dur(v_{#1})}} %durability
+\newcommand{\usage}[2]{\ensuremath{usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
+\newcommand{\start}[1]{\ensuremath{start(v_{#1})}} %start time
 \newcommand{\makespan}[1]{\ensuremath{C_{max}(#1)}} %makespan
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip}
@@ -72,6 +73,41 @@
 
 \TODO{Freek: running example}
 
+In this paper we will use a simple running example based on the painting example used to explain the RCPSP.
+
+The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
+Because the the door and the fence are made of wood, both the surfaces needs to be sanded first (\emph{precedence constraints}).
+This isn't needed for the wall, because the wall is made of bricks.
+This gives us five \emph{activities} $V$: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$ and painting the wall ($v_5$). And the following precedence constraints ($E$): sanding the door before painting the door $(v_1, v_3)$, sanding the fence before painting the fence $(v_2, v_4)$.
+
+Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time (\emph{duration}) to finish.
+Since this isn't the first painting job the workers have done, they know the exactly what the duration is for each activity:
+\begin{itemize}
+\item sanding the door: 3 hours ($\dur{1} = 3$)
+\item sanding the fence: 2 hours ($\dur{2} = 2$)
+\item painting the door: 2 hours ($\dur{3} = 2$)
+\item painting the fence: 1 hour ($\dur{4} = 1$)
+\item painting the wall: 5 hours ($\dur{5} = 5$)
+\end{itemize}
+% moet nog even goed gestyled worden en even gecontroleerd worden of tijden beetje goed zijn
+Normally this would be an easy job, but they have forgotten a lot of their tools (\emph{resources} $R$).
+So now they only have two painting brushes $r_1$ and one sanding machine $r_2$ (\emph{resource constraints}), which makes it impossible to sand more then one surface at the same time and to paint more then two surfaces at the same time.
+This shows us that the \emph{capacity} of painting surfaces at the same time is two ($\capa{1} = 2$) and the capacity of sanding surfaces at the same time is one  ($\capa{2} = 1$).
+
+They now want to make a schedule, where they define each starting time for the activities so that the schedule is feasible.
+This means that each surface from wood (the door and the wall) is finished sanding before starting with painting the surface.
+And they never paint three or more surfaces at the same time, or sand two or more surfaces at the same time.
+They also have a lot of other jobs to do, so they don't only want a feasible schedule but also want to optimize the time in which they finish all the activities.
+
+$V = v_1, \ldots, v_5$\\
+$E = \{(v_1, v_3), (v_2, v_4)\}$\\
+$R = r_1, \ldots, r_2$\\
+$\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5$\\
+$\capa{1} = 2, \capa{2} = 1$
+
+%Willen we nog iets met usage of liever gewoon weg?
+
+
 \subsection{Resource constrained project scheduling problem}
 
 \TODO{Bastiaan}
@@ -81,6 +117,17 @@
 
 
 \TODO{Freek: Fomele definitie en wat is een oplossing}
+
+\begin{definition}
+Given:
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = r_1, \ldots, r_m$ and a set of precedence constraints $E \subset V \times V$.
+Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
+And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
+
+Find:
+A feasible schedule $S = s_1, \ldots s_n$, consisting of starting times for the activities in $V$, where each precedence constraint in $E$ holds.
+And no resource exceeds its capacity in usage at any time in the schedule.
+\end{definition}
 
 
 \TODO{Freek: complexiteit en oplosbaarheid.}
