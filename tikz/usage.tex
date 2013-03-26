@@ -17,14 +17,14 @@
 	\tikzstyle{header}=[font=\bfseries]
 	\tikzstyle{usage}=[->,>=stealth, draw=black!70, thick]
 
-	\node (v0) [activity] {$v_0$: Dummy start};
-	\node (v1) [activity, below=of v0.west, anchor=west] {$v_1$: Sand door};
-	\node (v2) [activity, below=of v1.west, anchor=west] {$v_2$: Sand fence};
-	\node (v3) [activity, below=of v2.west, anchor=west] {$v_3$: Paint door};
-	\node (v4) [activity, below=of v3.west, anchor=west] {$v_4$: Paint fence};
-	\node (v5) [activity, below=of v4.west, anchor=west] {$v_5$: Paint wall};
-	\node (v6) [activity, below=of v5.west, anchor=west] {$v_6$: Clean brushes};
-	\node (v7) [activity, below=of v6.west, anchor=west] {$v_7$: Dummy end};
+	\node (v0) [activity] {$v_0$: Dummy start, 0};
+	\node (v1) [activity, below=of v0.west, anchor=west] {$v_1$: Sand door, 3};
+	\node (v2) [activity, below=of v1.west, anchor=west] {$v_2$: Sand fence, 2};
+	\node (v3) [activity, below=of v2.west, anchor=west] {$v_3$: Paint door, 2};
+	\node (v4) [activity, below=of v3.west, anchor=west] {$v_4$: Paint fence, 1};
+	\node (v5) [activity, below=of v4.west, anchor=west] {$v_5$: Paint wall, 5};
+	\node (v6) [activity, below=of v5.west, anchor=west] {$v_6$: Clean brushes, 1};
+	\node (v7) [activity, below=of v6.west, anchor=west] {$v_7$: Dummy end, 0};
 	
 	\node (u1) [right=5.7cm of v1.west] {1};
 	\node (u2) [right=5.7cm of v2.west] {1};
@@ -34,12 +34,12 @@
 	\node (u6) [right=5.7cm of v6.west] {2};
 
 	\coordinate (mid) at ($(v0.west)!.5!(v7.west) + (12,0)$);
-	\node (r1) [resource, above=1cm of mid, anchor=east] {$r_1$: Sanding machine};
-	\node (r2) [resource, above=-1cm of mid, anchor=east] {$r_2$: Painting brushes};
+	\node (r1) [resource, above=1cm of mid, anchor=east] {$r_1$: Sanding machine, 1};
+	\node (r2) [resource, above=-1cm of mid, anchor=east] {$r_2$: Painting brushes, 2};
 
 	\draw let \p1 = (v0), \p2 = (r1) in 
-		node (ac) [header] at ($(\x1,\y1) + (0,1)$) {Activity}
-		node (res) [header] at ($(\x2,\y1) + (0,1)$) {Resource};
+		node (ac) [header] at ($(\x1,\y1) + (0,1)$) {Activity, duration}
+		node (res) [header] at ($(\x2,\y1) + (0,1)$) {Resource, capacity};
 	\node (us) [header] at ($(ac)!.5!(res)$) {Usage};
 	
   \draw[usage] (v1.east) -- (u1) to[out=0,in=180] (r1.west);
