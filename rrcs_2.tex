@@ -90,7 +90,6 @@ This paper deals with a type of scheduling problem called the \emph{Resource Con
 This model is flexible enough to give for example an accurate enough representation of for example the train and airport scheduling problems. 
 What we mean by accurate enough is that a solution to the model can be used as a schedule in practice. 
 Specific extensions to the RCPSP can be made to better accomodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
-Chapter \ref{text:RCPSP} does name two possible extensions for the interested reader. \TODO{check dit, niet zomaar weghalen deze todo}
 
 % Schedules vinden is moeilijk
 Practical applications of scheduling show us that there are additional requirements that a schedule needs to fulfill. 
@@ -136,14 +135,16 @@ Although the reader should be familiar with some scientific notation and theorie
 
 \newpage
 
-\section{Problem background}
+\section{Problem background \TODO{Misschien een andere titel omdat we STN's niet meer bespreken en alleen RCPSPen de running example uit de doeken doen}}
 \label{text:problem_background}
+\label{text:RCPSP}
 
-\TODO{KLOPT NIKS MEER VAN, FIX IK WEL (MICKG)}
+%	What are scheduling problems?
+This chapter provides an overview of what the RCPSP is along with an example that we use to demonstrate ideas and concepts through the entire paper. 
+In Section \ref{text:RCPSP_description} we introduce the components that are used in describing a RCPSP instantation. After we are used to these components we can describe our running example which is done in Section  \ref{text:running_example_description}. The notation that we will use to write denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. In Section \ref{text:running_example_definition} we can give a short description using the notation that has been explained in the previous section. This is followed by section \ref{text:RCPSP_definition} where we give a short formal definition of the RCPSP. This chapter concludes with a note on the complexity of the RCPSP. 
 
-%		-What are scheduling problems?
-In this chapter we will take a deeper look at the resource constraint project scheduling problem.
-To do this, we will first discuss some real life examples and the use of the resource constraint project scheduling problem to get a more clear idea of the problem.
+\TODO{wat is het verhaal hier achter? Gaat het niet te diep in op RCPSP? Ik moet denk ik even pauze nemen}
+{\itshape
 We will then give a running example, which will be used throughout this paper to make the problem more tangible.
 Using this example, we will illustrate the formal definition of the resource constraint project scheduling problem.
 With this formal definition and a good sense what the problem holds, the complexity of the problem will be discussed.
@@ -172,6 +173,7 @@ Resources are the machines or personnel or equipment needed to perform a specifi
 Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
 Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
 For example, a constraint can be the fact that there is a limited number of one type of resource available (\emph{resource constraint}), or that one specific activity needs to be finished before another specific activity can be performed (\emph{precedence constraint}).
+}
 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
