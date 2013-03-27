@@ -174,36 +174,54 @@ For example, a constraint can be the fact that there is a limited number of one 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
 \subsection{RCPSP in general}
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
+An activity is sometimes called a job, task or event in other work. 
+The activities are part of the input of a RCPSP and have a specified duration. 
+There are multiple types of constraints for activities of which one is precedence constraints. 
+Certain activities can only be executed after another activity has been completed. 
+Take for example the painting of a fence. 
+The activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
+Another type of constraint is concerned with resources. 
+Lets say there are two people working on a house painting project and there is only one painting brush available. 
+The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
 
-\TODO{c+p}
+In some practical applications it is useful to have a deadline for the entire schedule. 
+If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a feasible schedule. 
+In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met. 
+The house painting project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activies. 
+
+A project is scheduled on a so called time horizon. This time horizon defines the periods over which the activities can be scheduled. Lets say that the house painting manager expresses the duration of activities in hours. It might make sense to schedule the activities on whole hours.
+
+The aspects of the RCPSP will be discussed in detail while introducing a running example and introducing a formal notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
 
 \subsection{Running example}
-In this paper we will use a simple running example based on a painting job to explain the RCPSP. \TODO{uitweiden, \'e\'en zin als eerste alinea is een beetje schraal}
+In this paper we will use a simple running example based on a painting job to show you what the RCPSP problem is.
+After we explained the RCPSP, we will use this running example to explain the schedule construction in Section \ref{text:schedule}.
 
-\TODO{Dit valt een beetje uit het niets, in de alinea kan je uitleggen dat we kijken naar een bedrijf dat opknap klusjes/renovaties doet. Er is een opdracht binnengekomen waarbij een huis opnieuw geschilderd moeten worden. We beschijven een versimpelde problemeinstantie uit de werkelijkheid voor dit \emph{schilderproject} (handig om naar te kunnen refereren misschien als je die term eens noemt) // zou ditg niet al beter in RCPSP in general moeten staan?}
+For the running example we are looking into a painting company which has several projects to do.
+One of these projects is painting some parts of a house, which is a simple example of a real RCPSP problem.
 The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
 Because the the door and the fence are made of wood, both surfaces needs to be sanded first.
 These constraints are called \emph{precedence constraints}.
 Sanding is not necessary for the wall, because the wall is made of bricks.
-When the job is finished all painting brushes need to be cleaned and this can only be done when all the painting is finished.
+When the job is finished all painting brushes and the sanding machine needs to be cleaned and this can only be done when all the painting and sanding is finished.
 This gives us six \emph{activities}: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning the painting brushes.
-We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting activities need to be done before cleaning the painting brushes.
+We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting and sanding activities needs to be done before cleaning the painting brushes.
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish.
 Each activity can have a different \emph{duration}.
 They define the duration for each of the activities in whole hours, because this makes it easier to schedule.
 The total schedule is made in the \emph{time horizon}, where each hour is mapped to one step in the time horizon.
-For simplicity's sake, we assume that they know the exact duration for each activity
-\begin{itemize}
-\item sanding the door: 3 hours
-\item sanding the fence: 2 hours
-\item painting the door: 2 hours
-\item painting the fence: 1 hour
-\item painting the wall: 5 hours
-\item cleaning the painting brushes: 1 hour
-\end{itemize}
-\TODO{lijkt me geschikt om in een tabel te zetten met kolommen activity en hours of periods, kun je er ook naar refereren. Misschien nog float right om de tabel naast de alinea te krijgen maar dat is voor latere zorg}
-% moet nog even goed gestyled worden
+For simplicity's sake, we assume that they know the exact duration for each activity:
+
+\begin{tabular}{ll}
+sanding the door&3 hours\\
+sanding the fence&2 hours\\
+painting the door&2 hours\\
+painting the fence&1 hour\\
+painting the wall&5 hours\\
+cleaning the painting brushes&1 hour\\
+\end{tabular}
 
 Normally there are enough tools available for everyone to work with.
 Unfortunately, the crew has a very limited amount of tools this time around.
@@ -217,15 +235,23 @@ Also every painting job uses the painting brush as a resource, so that painting 
 There is only one activity left, cleaning the painting brushes, which will use both of the painting brushes resource.
 Because a sanding activity doesn't use a painting brush, a painting activity doesn't use a sanding machine and cleaning the painting brushes doesn't use a sanding machine all of the activities never use another resource.
 
-The painters want to make a schedule, where they define each starting time for the activities in such a way that the resulting schedule is feasible. \TODO{Splits dit in meer zinnen, 1: they want to make a schedule to complete the project 2: they define the schedule by assinging a start time to each .. 3: requirements for the schedule is that the the sanding happens before the painting, and the painting before the cleaning. 4: it also must keep the limited amount of tools in mind. }
-This means that the sanding of each wooden surface (the door and the wall) needs to be finished before starting the painting of that surface.
-Because of the limited resources, they can never paint more than two surfaces at once nor can they sand more than one surface at once. 
-\TODO{Describe in terms of projects instead of jobs, here you can refer to the painting project (earlier todo)} There are also a lot of other jobs to do, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities. \TODO{what kind of optimization? I know what you mean but I shouldn't have to think about it first in the intuitive definition}
+The painters want to make a \emph{schedule} to complete the project.
+They define a schedule by assigning a start time to each activity.
+One of the requirements for the schedule is that the sanding has to be finished before the painting.
+The other requirement is that the painting and the sanding both have to be finished before the cleaning.
+As last they also have to keep in mind that they have limited tools available and for example can't sand two surfaces at the same time.
+The painters want to make a schedule, where they define each starting time for the activities in such a way that the resulting schedule is feasible. 
+The painters also have a lot of other projects to be done, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
+This means that they want to finishes all activities in the least amount of time.
 
 \subsection{Notation}
 \label{text:definitions}
+Trough this paper we will use a formal notation.
+This notation is explained trough images and the running example, to really understand how the RCPSP is defined in the formal definition.
 
-\TODO{ik zou een paragraaf niet beginnen met een plaatje}
+The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
+The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
+The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
 
 \begin{figure}[ht]
 	\centering
@@ -233,11 +259,6 @@ Because of the limited resources, they can never paint more than two surfaces at
 	\caption{Activity graph for the running example.}
 	\label{fig:activity_graph}
 \end{figure}
-
-The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
-The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
-The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
-\TODO{Make a reference to a figure}
 
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
@@ -256,7 +277,7 @@ For the running example we have a set $W = \{v_0, \ldots v_7\}$.
 Figure \ref{fig:activity_graph} shows $W$ for the running example.
 In the figure $v_0$ and $v_7$ are filled with a shade of gray, because they have a duration of $0$ instead of a duration relative to the width. 
 
-\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$ \TODO{Volgens mij wilde cees ipv $\neq$ juist $v_i < v_j$, zie aantekeningen // welke aantekeningen?}
+\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
 The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Precedence constraints for the dummy activities $v_0$ and $v_7$ are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity.
@@ -266,12 +287,11 @@ The precedence constraints in Figure \ref{fig:activity_graph} are reduced to a m
 The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
 It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
 The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}.
-\TODO{Dit stukje moet misschien eerder ofzo?}
 
 \begin{figure}[h]
 	\centering
 	\input{tikz/usage}
-	\caption{Activities, resources and the relation between them for the running example. }
+	\caption{Activities, resources and the relation between them for the running example.}
 	\label{fig:resource_graph}
 \end{figure}
 
@@ -279,19 +299,15 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 The total amount of resources is $m \in \mathbb{N}$ and each resource is represented by a unique identifier. %identifier??
 In the running example we have two resources ($m = 2$): the sanding machine $r_1$ and the painting brushes $r_2$.
 Which gives us the total set of resources $R = \{r_1, r_2\}$.
-In Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule} you will see all the resources of the running example. \TODO{informeel}
 
 The \emph{capacity} of each resource $r_i \in R$ is specified by a function $\capa{i} \in \mathbb{N}$.
-For the running example the capacity for the resources are: $\capa{1} = 1, \capa{1} = 2$. \TODO{hmm?}
-These capacities are shown in Figure \ref{fig:resource_graph} and in Figure \ref{fig:feasible_schedule}, represented as the height for each resource. 
+For the running example the capacity for the resources are: $\capa{1} = 1, \capa{1} = 2$, because we have one sanding machine and two painting brushes.
+These capacities of the running example are shown in Figure \ref{fig:resource_graph}.
 
 The \emph{usage} of an activity $v_i \in V$ consumes of a resource $r_j \in \res$ during its execution is specified by the function $\usage{i}{j} \in \mathbb{N}$.
 The running example has the following usages: $\usage{1}{2} = 1, \usage{2}{2} = 1, \usage{3}{1} = 1, \usage{4}{1} = 1, \usage{5}{1} = 1, \usage{6}{1} = 2$.
-Figure \ref{fig:resource_graph} shows the usages as relations between activities and resources. \TODO{reformulate}
+In Figure \ref{fig:resource_graph} the usage of the running example is expressed as a relation between activities and resources, where the number between the relation is the amount of usage.
 
-Figure \ref{fig:feasible_schedule} shows us the usages represented as hight for each activity. \TODO{what si this doing here?}
-
-\TODO{introduce the time feasible schedule here shortly}
 \begin{figure}[h]
 	\centering
 	\inputtikz{time_feasible_schedule}
@@ -299,32 +315,32 @@ Figure \ref{fig:feasible_schedule} shows us the usages represented as hight for 
 	\label{fig:time_feasible_schedule}
 \end{figure}
 
-\TODO{use fig:time\_feasible\_schedule to explain what a schedule is, what the makespan, feasability and mabye availability}
-\TODO{I do not see a use for availability to be honest but whatever // it is needed for the formal definition, because that's the only thing that depends on time}
-
 A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
-For the running example a possible schedule is shown in Figure \ref{fig:time_feasible_schedule}.
+In this schedule each activity $v_i \in V$ has a starting time $\start{i}$ which is defined in the schedule $S$.
+When we create a schedule for the running and we also take in account the precedence constraints, you could get the following schedule:
+\{0, 0, 3, 2, 0, 6\}.
+This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}.
 
 The \emph{makespan} of a schedule $S$ is the number of periods required to finish the project using the schedule $S$. The makespan is notated as $\makespan{S} \in T$.
-In the running example we can create a time feasible schedule (shown in Figure \ref{fig:time_feasible_schedule}) \TODO{dont you parenthesis on me again}, where the makespan is optimized to a minimum and all the precedence constraints hold. 
-
-\begin{figure}[h]
-	\centering
-	\inputtikz{feasible_schedule}
-	\caption{\TODO{A schedule that shows the exceeding in resources in the time schedule for the running example.} }
-	\label{fig:fail_schedule}
-\end{figure}
-
-The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
-For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2}{1} = 1$ because we have two painting brushes and only one is used.
-In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced as the total hight of a resource minus all the activities that uses the resource. 
+In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, where the makespan is optimized to a minimum and all the precedence constraints hold.
 
 \begin{figure}[h]
 	\centering
 	\inputtikz{schedule_comparison}
-	\caption{\TODO{A feasible schedule $S_f$ for the running example.} }
+	\caption{Two possible schedules for the running example. }
 	\label{fig:feasible_schedule}
 \end{figure}
+
+A \emph{feasible schedule} is denoted as $S_f$ and takes in account both the precedence and the resource constraints.
+The schedule from Figure \ref{fig:time_feasible_schedule} is also represented in Figure \ref{fig:feasible_schedule} as Schedule A.
+In Figure \ref{fig:feasible_schedule} you can see the capacity of the resources, denoted by dotted line, and the usage of resources at a certain time, denoted by the height of the activities in the graph.
+This makes it easy to see that the capacity of $r_1$ (the sanding machine) is exceeded from $t_0$ till $t_2$, because they can't sand the fence and the door at the same time.
+This means that Schedule A is a time feasible schedule, but not a feasible schedule.
+An example of a feasible schedule is shown in Figure \ref{fig:feasible_schedule}, Schedule B.
+
+The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
+For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2}{1} = 1$ because we have two painting brushes and only one is used.
+In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced trough capacity, the dotted line, and the sum of the usage on a given time, the height of the activities in the graph. 
 
 \subsection{Formal definition of the running example}
 
@@ -447,6 +463,7 @@ The constraint graph for this example is shown below.
 The goal of this graph is to associate each time point with a \emph{time window}, which is nothing more than an interval with a lower and an upper bound, in such a way that if each time point is associated with a value that lies within its time window, the schedule is consistent.
 
 \subsubsection{Distance Graph}
+
 \TODO{
 		-Wat is een STN probleem (wat is het resultaat)
 		-Complexiteit
@@ -454,7 +471,7 @@ The goal of this graph is to associate each time point with a \emph{time window}
 }
 
 \subsubsection{Reduction to STN}
-The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction according to \TODO{Example}.
+The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to \TODO{Example}.
 
 The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
 These time points are then connected with a directed edge from $s_i$ to $e_i$ with time window $[\dur{i}, \dur{i}]$. 
@@ -464,68 +481,93 @@ Now that the activities are simulated in an STN, it is time to also incorporate 
 
 Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
 
-\begin{tikzpicture}[
-	->,
-	>=stealth',
-	shorten >=1pt,
-	auto,
-	node distance=3cm,
-     semithick
-  ]
-  \label{fig:reduced-stn}
 
-  \node[state] (s0) [thick] 	 						{$s_0$};
-  \node[state] (e0) [thick] 	[right of=s0]			{$e_0$};
-  \node[state] (s1) [thick] 	[above right of=e0]	{$s_1$};
-  \node[state] (e1) [thick] 	[right of=s1]			{$e_1$};
-  \node[state] (s2) [thick] 	[right of=e0]			{$s_2$};
-  \node[state] (e2) [thick] 	[right of=s2]			{$e_2$};
-  
-  \node[state] (s3) 	[thick] 	[right of=e1]			{$s_3$};
-  \node[state] (e3) 	[thick] 	[right of=s3]			{$e_3$};
-  \node[state] (s4) 	[thick] 	[right of=e2]			{$s_4$};
-  \node[state] (e4)	[thick] 	[right of=s4]			{$e_4$};
-  \node[state] (s5) 	[thick]	[below right of=e0]	{$s_5$};
-  \node[state] (e5)	[thick]	[right of=s5]			{$e_5$};
-  \node[state] (s6)	[thick] 	[right of=e4]				{$s_6$};
-  \node[state] (e6) 	[thick] 	[right of=s6]			{$e_6$};
-  \node[state] (s7) 	[thick] 	[right of=e6]			{$s_7$};
-  \node[state] (e7) 	[thick] 	[right of=s7]			{$e_7$};
-     
-  \path 		     	(s0) 		edge [thick] node 		{$[\dur{0}, \dur{0}]$} 	(e0)
-  		     		(s1) 		edge [thick] node 		{$[\dur{1}, \dur{1}]$} 	(e1)
-  		     		(s2) 		edge [thick] node 		{$[\dur{2}, \dur{2}]$} 	(e2)
-  		    		(s3) 		edge [thick] node 		{$[\dur{3}, \dur{3}]$} 	(e3)
-  		     		(s4) 		edge [thick] node 		{$[\dur{4}, \dur{4}]$} 	(e4)
-  		     		(s5) 		edge [thick] node 		{$[\dur{5}, \dur{5}]$} 	(e5)
-  		     		(s6) 		edge [thick] node 		{$[\dur{6}, \dur{6}]$} 	(e6)
-  		     		(s7) 		edge [thick] node 		{$[\dur{7}, \dur{7}]$} 	(e7)
-				
-				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s1)
-  				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s2)
-				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s5)
-				(e1) 		edge [dashed] node 		{$[0, \infty]$} 			(s3)
-				(e2) 		edge [dashed] node 		{$[0, \infty]$} 			(s4)
-				(e3) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e4) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e5) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e6) 		edge [dashed] node 		{$[0, \infty]$} 			(s7);
-				
-  \draw[decorate,decoration={brace,amplitude=10pt}]
-        let \p1 = (s1.west), \p2 = (e1.east), \p3 = (v1) in 
-        (\x1, \y3+1.2cm) -- (\x2, \y3+1.2cm) node[midway, above=10pt] {$v_1$};
-\end{tikzpicture}
+\begin{figure}[h]
+	\makebox[\textwidth]{
+		\centering
+		\begin{tikzpicture}[
+			->,
+			>=stealth',
+			shorten >=1pt,
+			auto,
+			node distance=2.4cm,
+			scale=0.8, 
+			every node/.style={transform shape},
+		     semithick
+		  ]
+		  \label{fig:reduced-stn}
+		
+		  \node[state] (s0) [thick] 	 						{$s_0$};
+		  \node[state] (e0) [thick] 	[right of=s0]			{$e_0$};
+		  \node[state] (s1) [thick] 	[above right of=e0]	{$s_1$};
+		  \node[state] (e1) [thick] 	[right of=s1]			{$e_1$};
+		  \node[state] (s2) [thick] 	[right of=e0]			{$s_2$};
+		  \node[state] (e2) [thick] 	[right of=s2]			{$e_2$};
+		  
+		  \node[state] (s3) 	[thick] 	[right of=e1]			{$s_3$};
+		  \node[state] (e3) 	[thick] 	[right of=s3]			{$e_3$};
+		  \node[state] (s4) 	[thick] 	[right of=e2]			{$s_4$};
+		  \node[state] (e4)	[thick] 	[right of=s4]			{$e_4$};
+		  \node[state] (s5) 	[thick]	[below right of=e0]	{$s_5$};
+		  \node[state] (e5)	[thick]	[right of=s5]			{$e_5$};
+		  \node[state] (s6)	[thick] 	[right of=e4]			{$s_6$};
+		  \node[state] (e6) 	[thick] 	[right of=s6]			{$e_6$};
+		  \node[state] (s7) 	[thick] 	[right of=e6]			{$s_7$};
+		  \node[state] (e7) 	[thick] 	[right of=s7]			{$e_7$};
+		     
+		  \path 		     	(s0) 		edge [thick] node 		{$[0,0]$} 	(e0)
+		  		     		(s1) 		edge [thick] node 		{$[3,3]$} 	(e1)
+		  		     		(s2) 		edge [thick] node 		{$[2,2]$} 	(e2)
+		  		    		(s3) 		edge [thick] node 		{$[2,2]$} 	(e3)
+		  		     		(s4) 		edge [thick] node 		{$[1,1]$} 	(e4)
+		  		     		(s5) 		edge [thick] node 		{$[5,5]$} 	(e5)
+		  		     		(s6) 		edge [thick] node 		{$[1,1]$} 	(e6)
+		  		     		(s7) 		edge [thick] node 		{$[0,0]$} 	(e7)
+						
+						(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s1)
+		  				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s2)
+						(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s5)
+						(e1) 		edge [dashed] node 		{$[0, \infty]$} 			(s3)
+						(e2) 		edge [dashed] node 		{$[0, \infty]$} 			(s4)
+						(e3) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e4) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e5) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e6) 		edge [dashed] node 		{$[0, \infty]$} 			(s7);		\end{tikzpicture}
+	}
+	\caption{In this figure, the temporal aspect of the running example is reduced to an STN. Each pair of nodes $(s_i, e_i)$ represents the start and end time of an activity $v_i$. The dotted edges represent precedence constraints and the solid edges emulate activity durations.}
+\end{figure}
 
 \TODO{
 		-Het is dus geen goeie/volledige reductie
 		-Algemene/formele reductie Reductiedefinitie
 	}
 
-\subsection{Resource}
+\subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a time-feasable schedule. This does not take in consideration, the resources that are used to 
+As seen in the previous section, solving an STP provides us with a time-feasable schedule. 
+This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
+In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) is used. 
+
+\subsubsection{Minimizing the Makespan}
+The STN as constructed in the previous section assigns bounds to the time points in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in the original STP are satisfied.
+Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN.
+
+According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible (without violating the constraints in the STP), which means that all activities occur as soon as possible (without violating the precedence constraints in the problem definition).
+
+\subsubsection{Contention Peak Detection}
+Hoe detect je een contention peak
+Pairwise Selection
+MCS
+
+\subsubsection{Conflict Extraction}
+Hoe haal je de twee activiteiten die een conflict vorm uit die set
+
+\subsubsection{Conflict Resolution}
+En hoe leg je de constraint aan?
+
 
 \TODO{
+	-Temporal lower bound for each activity can be computed via the shortest path algorithm
 		-Uitleggen huidige STN niet werkt (alleen temporal en niet resource feasable)
 		-Globale idee van resource leveling using PCP
 		-Algoritmw voor resource leveling (volgens ESTA en aan de hand van example)
@@ -538,6 +580,8 @@ As seen in the previous section, solving an STP provides us with a time-feasable
 		-Hoe maak je van dat STN weer een schedule
 		-Hoe voldoet het schedule (aan alle constraints)
 }
+
+\subsection{Algorithm}
 
 \newpage
 
