@@ -153,8 +153,25 @@ For example, a constraint can be the fact that there is a limited number of one 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
 
 \subsection{RCPSP in general}
+The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
+An activity is sometimes called a job, task or event in other work. 
+The activities are part of the input of a RCPSP and have a specified duration. 
+There are multiple types of constraints for activities of which one is precedence constraints. 
+Certain activities can only be executed after another activity has been completed. 
+Take for example the painting of a fence. 
+The activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
+Another type of constraint is concerned with resources. 
+Lets say there are two people working on a house painting project and there is only one painting brush available. 
+The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
 
-\TODO{c+p}
+In some practical applications it is useful to have a deadline for the entire schedule. 
+If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a feasible schedule. 
+In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met. 
+The house painting project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activies. 
+
+A project is scheduled on a so called time horizon. This time horizon defines the periods over which the activities can be scheduled. Lets say that the house painting manager expresses the duration of activities in hours. It might make sense to schedule the activities on whole hours.
+
+The aspects of the RCPSP will be discussed in detail while introducing a running example and introducing a formal notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
 
 \subsection{Running example}
 In this paper we will use a simple running example based on a painting job to show you what the RCPSP problem is.
