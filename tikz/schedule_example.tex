@@ -1,3 +1,4 @@
+
 % Author: Mick van Gelderen
 % Example tikz include file
 
@@ -11,20 +12,24 @@
 \begin{figure}[ht]
 	\centering
 	\input{time_feasible_schedule}
-	\caption{Le caption tres bien!}
+	\caption{Schedule A}
 	\label{fig:activity_graph}
 \end{figure}
 
-\begin{comment} For images exceeding the text width
+\begin{figure}[ht]
+	\centering
+	\input{feasible_schedule}
+	\caption{Schedule B}
+	\label{fig:activity_graph}
+\end{figure}
 
 \begin{figure}[ht]
+
 	\makebox[\textwidth][c]{
 		\input{schedule_comparison}
 	}
 	\caption{Resource feasibility demonstration}
 	\label{fig:activity_graph}
 \end{figure}
-
-\end{comment}
 
 \end{document}
