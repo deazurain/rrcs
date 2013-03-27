@@ -7,6 +7,7 @@
 \usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 \usepackage{mathrsfs}
 \usepackage{comment}
+
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{caption}% http://ctan.org/pkg/caption
@@ -14,10 +15,9 @@
 \usepackage{amsthm}
 \theoremstyle{definition}
 \usepackage{pgf}
-\usepackage{tikz}
-\usetikzlibrary{arrows,automata}
+\newcommand{\inputtikz}[1]{\input{tikz/#1}}
 
-\input{tikz/tikz}
+\inputtikz{preamble}
 
 \title{Resource Constrained Project Scheduling for continuous applications using Precedence Constraint Posting.}
 \author{M. van Gelderen  \and
@@ -27,6 +27,8 @@
 \date{}
 
 \pagestyle{empty}
+
+
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 \newtheorem{example}{Example}[section]
@@ -206,7 +208,7 @@ Because of the limited resources, they can never paint more than two surfaces at
 
 \begin{figure}[ht]
 	\centering
-	\input{tikz/activity_graph}
+	\inputtikz{activity_graph}
 	\caption{Activity graph for the running example.}
 	\label{fig:activity_graph}
 \end{figure}
@@ -271,7 +273,7 @@ Figure \ref{fig:feasible_schedule} shows us the usages represented as hight for 
 \TODO{introduce the time feasible schedule here shortly}
 \begin{figure}[h]
 	\centering
-	\input{tikz/time_feasible_schedule}
+	\inputtikz{time_feasible_schedule}
 	\caption{A time feasible schedule for the running example. }
 	\label{fig:time_feasible_schedule}
 \end{figure}
@@ -287,7 +289,7 @@ In the running example we can create a time feasible schedule (shown in Figure \
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/feasible_schedule}
+	\inputtikz{feasible_schedule}
 	\caption{\TODO{A schedule that shows the exceeding in resources in the time schedule for the running example.} }
 	\label{fig:fail_schedule}
 \end{figure}
@@ -298,7 +300,7 @@ In Figure \ref{fig:feasible_schedule} the availability of a resource can be dedu
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/schedule_comparison}
+	\inputtikz{schedule_comparison}
 	\caption{\TODO{A feasible schedule $S_f$ for the running example.} }
 	\label{fig:feasible_schedule}
 \end{figure}

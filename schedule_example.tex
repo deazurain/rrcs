@@ -5,20 +5,20 @@
 \documentclass{article}
 \usepackage{comment}
 
-\input{tikz}
+\input{tikz/preamble}
 
 \begin{document}
 
 \begin{figure}[ht]
 	\centering
-	\input{time_feasible_schedule}
+	\input{tikz/time_feasible_schedule}
 	\caption{Schedule A}
 	\label{fig:activity_graph}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
-	\input{feasible_schedule}
+	\input{tikz/feasible_schedule}
 	\caption{Schedule B}
 	\label{fig:activity_graph}
 \end{figure}
@@ -26,7 +26,7 @@
 \begin{figure}[ht]
 
 	\makebox[\textwidth][c]{
-		\input{schedule_comparison}
+		\input{tikz/schedule_comparison}
 	}
 	\caption{Resource feasibility demonstration}
 	\label{fig:activity_graph}

@@ -4,14 +4,14 @@
 \documentclass{article}
 \usepackage{comment}
 
-\input{tikz}
+\input{tikz/preamble}
 
 \begin{document}
 
 \begin{figure}[ht]
 	\centering
 	\makebox[\textwidth][c]{
-		\input{schedule_comparison}
+		\input{tikz/schedule_comparison}
 	}
 	\caption{Le caption tres bien!}
 	\label{fig:activity_graph}
@@ -21,7 +21,7 @@
 
 \begin{figure}[ht]
 	\makebox[\textwidth][c]{
-		\input{schedule_comparison}
+		\input{tikz/schedule_comparison}
 	}
 	\caption{Resource feasibility demonstration}
 	\label{fig:activity_graph}
