@@ -250,7 +250,7 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 \begin{figure}[h]
 	\centering
 	\input{tikz/usage}
-	\caption{Activities, resources and the relation between them for the running example. }
+	\caption{Activities, resources and the relation between them for the running example.}
 	\label{fig:resource_graph}
 \end{figure}
 
@@ -426,6 +426,7 @@ The constraint graph for this example is shown below.
 The goal of this graph is to associate each time point with a \emph{time window}, which is nothing more than an interval with a lower and an upper bound, in such a way that if each time point is associated with a value that lies within its time window, the schedule is consistent.
 
 \subsubsection{Distance Graph}
+
 \TODO{
 		-Wat is een STN probleem (wat is het resultaat)
 		-Complexiteit
@@ -433,7 +434,7 @@ The goal of this graph is to associate each time point with a \emph{time window}
 }
 
 \subsubsection{Reduction to STN}
-The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction according to \TODO{Example}.
+The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to \TODO{Example}.
 
 The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
 These time points are then connected with a directed edge from $s_i$ to $e_i$ with time window $[\dur{i}, \dur{i}]$. 
@@ -443,68 +444,93 @@ Now that the activities are simulated in an STN, it is time to also incorporate 
 
 Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
 
-\begin{tikzpicture}[
-	->,
-	>=stealth',
-	shorten >=1pt,
-	auto,
-	node distance=3cm,
-     semithick
-  ]
-  \label{fig:reduced-stn}
 
-  \node[state] (s0) [thick] 	 						{$s_0$};
-  \node[state] (e0) [thick] 	[right of=s0]			{$e_0$};
-  \node[state] (s1) [thick] 	[above right of=e0]	{$s_1$};
-  \node[state] (e1) [thick] 	[right of=s1]			{$e_1$};
-  \node[state] (s2) [thick] 	[right of=e0]			{$s_2$};
-  \node[state] (e2) [thick] 	[right of=s2]			{$e_2$};
-  
-  \node[state] (s3) 	[thick] 	[right of=e1]			{$s_3$};
-  \node[state] (e3) 	[thick] 	[right of=s3]			{$e_3$};
-  \node[state] (s4) 	[thick] 	[right of=e2]			{$s_4$};
-  \node[state] (e4)	[thick] 	[right of=s4]			{$e_4$};
-  \node[state] (s5) 	[thick]	[below right of=e0]	{$s_5$};
-  \node[state] (e5)	[thick]	[right of=s5]			{$e_5$};
-  \node[state] (s6)	[thick] 	[right of=e4]				{$s_6$};
-  \node[state] (e6) 	[thick] 	[right of=s6]			{$e_6$};
-  \node[state] (s7) 	[thick] 	[right of=e6]			{$s_7$};
-  \node[state] (e7) 	[thick] 	[right of=s7]			{$e_7$};
-     
-  \path 		     	(s0) 		edge [thick] node 		{$[\dur{0}, \dur{0}]$} 	(e0)
-  		     		(s1) 		edge [thick] node 		{$[\dur{1}, \dur{1}]$} 	(e1)
-  		     		(s2) 		edge [thick] node 		{$[\dur{2}, \dur{2}]$} 	(e2)
-  		    		(s3) 		edge [thick] node 		{$[\dur{3}, \dur{3}]$} 	(e3)
-  		     		(s4) 		edge [thick] node 		{$[\dur{4}, \dur{4}]$} 	(e4)
-  		     		(s5) 		edge [thick] node 		{$[\dur{5}, \dur{5}]$} 	(e5)
-  		     		(s6) 		edge [thick] node 		{$[\dur{6}, \dur{6}]$} 	(e6)
-  		     		(s7) 		edge [thick] node 		{$[\dur{7}, \dur{7}]$} 	(e7)
-				
-				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s1)
-  				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s2)
-				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s5)
-				(e1) 		edge [dashed] node 		{$[0, \infty]$} 			(s3)
-				(e2) 		edge [dashed] node 		{$[0, \infty]$} 			(s4)
-				(e3) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e4) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e5) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
-				(e6) 		edge [dashed] node 		{$[0, \infty]$} 			(s7);
-				
-  \draw[decorate,decoration={brace,amplitude=10pt}]
-        let \p1 = (s1.west), \p2 = (e1.east), \p3 = (v1) in 
-        (\x1, \y3+1.2cm) -- (\x2, \y3+1.2cm) node[midway, above=10pt] {$v_1$};
-\end{tikzpicture}
+\begin{figure}[h]
+	\makebox[\textwidth]{
+		\centering
+		\begin{tikzpicture}[
+			->,
+			>=stealth',
+			shorten >=1pt,
+			auto,
+			node distance=2.4cm,
+			scale=0.8, 
+			every node/.style={transform shape},
+		     semithick
+		  ]
+		  \label{fig:reduced-stn}
+		
+		  \node[state] (s0) [thick] 	 						{$s_0$};
+		  \node[state] (e0) [thick] 	[right of=s0]			{$e_0$};
+		  \node[state] (s1) [thick] 	[above right of=e0]	{$s_1$};
+		  \node[state] (e1) [thick] 	[right of=s1]			{$e_1$};
+		  \node[state] (s2) [thick] 	[right of=e0]			{$s_2$};
+		  \node[state] (e2) [thick] 	[right of=s2]			{$e_2$};
+		  
+		  \node[state] (s3) 	[thick] 	[right of=e1]			{$s_3$};
+		  \node[state] (e3) 	[thick] 	[right of=s3]			{$e_3$};
+		  \node[state] (s4) 	[thick] 	[right of=e2]			{$s_4$};
+		  \node[state] (e4)	[thick] 	[right of=s4]			{$e_4$};
+		  \node[state] (s5) 	[thick]	[below right of=e0]	{$s_5$};
+		  \node[state] (e5)	[thick]	[right of=s5]			{$e_5$};
+		  \node[state] (s6)	[thick] 	[right of=e4]			{$s_6$};
+		  \node[state] (e6) 	[thick] 	[right of=s6]			{$e_6$};
+		  \node[state] (s7) 	[thick] 	[right of=e6]			{$s_7$};
+		  \node[state] (e7) 	[thick] 	[right of=s7]			{$e_7$};
+		     
+		  \path 		     	(s0) 		edge [thick] node 		{$[0,0]$} 	(e0)
+		  		     		(s1) 		edge [thick] node 		{$[3,3]$} 	(e1)
+		  		     		(s2) 		edge [thick] node 		{$[2,2]$} 	(e2)
+		  		    		(s3) 		edge [thick] node 		{$[2,2]$} 	(e3)
+		  		     		(s4) 		edge [thick] node 		{$[1,1]$} 	(e4)
+		  		     		(s5) 		edge [thick] node 		{$[5,5]$} 	(e5)
+		  		     		(s6) 		edge [thick] node 		{$[1,1]$} 	(e6)
+		  		     		(s7) 		edge [thick] node 		{$[0,0]$} 	(e7)
+						
+						(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s1)
+		  				(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s2)
+						(e0) 		edge [dashed] node 		{$[0, \infty]$} 			(s5)
+						(e1) 		edge [dashed] node 		{$[0, \infty]$} 			(s3)
+						(e2) 		edge [dashed] node 		{$[0, \infty]$} 			(s4)
+						(e3) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e4) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e5) 		edge [dashed] node 		{$[0, \infty]$} 			(s6)
+						(e6) 		edge [dashed] node 		{$[0, \infty]$} 			(s7);		\end{tikzpicture}
+	}
+	\caption{In this figure, the temporal aspect of the running example is reduced to an STN. Each pair of nodes $(s_i, e_i)$ represents the start and end time of an activity $v_i$.}
+\end{figure}
 
 \TODO{
 		-Het is dus geen goeie/volledige reductie
 		-Algemene/formele reductie Reductiedefinitie
 	}
 
-\subsection{Resource}
+\subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a time-feasable schedule. This does not take in consideration, the resources that are used to 
+As seen in the previous section, solving an STP provides us with a time-feasable schedule. 
+This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
+In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) is used. 
+
+\subsubsection{Minimizing the Makespan}
+The STN as constructed in the previous section assigns bounds to the time points in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in the original STP are satisfied.
+Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN.
+
+According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible (without violating the constraints in the STP), which means that all activities occur as soon as possible (without violating the precedence constraints in the problem definition).
+
+\subsubsection{Contention Peak Detection}
+Hoe detect je een contention peak
+Pairwise Selection
+MCS
+
+\subsubsection{Conflict Extraction}
+Hoe haal je de twee activiteiten die een conflict vorm uit die set
+
+\subsubsection{Conflict Resolution}
+En hoe leg je de constraint aan?
+
 
 \TODO{
+	-Temporal lower bound for each activity can be computed via the shortest path algorithm
 		-Uitleggen huidige STN niet werkt (alleen temporal en niet resource feasable)
 		-Globale idee van resource leveling using PCP
 		-Algoritmw voor resource leveling (volgens ESTA en aan de hand van example)
@@ -517,6 +543,8 @@ As seen in the previous section, solving an STP provides us with a time-feasable
 		-Hoe maak je van dat STN weer een schedule
 		-Hoe voldoet het schedule (aan alle constraints)
 }
+
+\subsection{Algorithm}
 
 \newpage
 
