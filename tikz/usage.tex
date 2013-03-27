@@ -12,7 +12,7 @@
 \newcommand{\activity}[3]{\node (v#1) [activity, text width=#2cm, #3] {$v_#1$};}
 
 \begin{tikzpicture}[node distance=.8cm]
-	\tikzstyle{activity}=[text centered, text=black, thick, minimum height=1.8em, minimum width=1.8em]
+	\tikzstyle{activity}=[text centered, text=black, thick, text height=2ex, text depth=1ex, minimum width=1.8em]
 	\tikzstyle{resource}=[text centered]
 	\tikzstyle{header}=[font=\bfseries]
 	\tikzstyle{usage}=[->,>=stealth, draw=black!70, thick]
@@ -23,16 +23,17 @@
 	\node (v3) [activity, below=of v2.west, anchor=west] {$v_3$: Paint door, 2};
 	\node (v4) [activity, below=of v3.west, anchor=west] {$v_4$: Paint fence, 1};
 	\node (v5) [activity, below=of v4.west, anchor=west] {$v_5$: Paint wall, 5};
-	\node (v6) [activity, below=of v5.west, anchor=west] {$v_6$: Clean brushes, 1};
+	\node (v6) [activity, below=of v5.west, anchor=west] {$v_6$: Cleanup, 1};
 	\node (v7) [activity, below=of v6.west, anchor=west] {$v_7$: Dummy end, 0};
 	
-	\node (u1) [right=5.7cm of v1.west] {1};
-	\node (u2) [right=5.7cm of v2.west] {1};
-	\node (u3) [right=5.7cm of v3.west] {1};
-	\node (u4) [right=5.7cm of v4.west] {1};
-	\node (u5) [right=5.7cm of v5.west] {1};
-	\node (u6) [right=5.7cm of v6.west] {2};
-
+	\node (u1) [above right=.3cm and 5.7cm of v1.west] {1};
+	\node (u2) [above right=.3cm and 5.7cm of v2.west] {1};
+	\node (u3) [above right=.3cm and 5.7cm of v3.west] {1};
+	\node (u4) [above right=.3cm and 5.7cm of v4.west] {1};
+	\node (u5) [above right=.3cm and 5.7cm of v5.west] {1};
+	\node (u6) [above right=.3cm and 5.7cm of v6.west] {1};
+	\node (u7) [above right=.3cm and 5.7cm of v7.west] {2};
+	
 	\coordinate (mid) at ($(v0.west)!.5!(v7.west) + (12,0)$);
 	\node (r1) [resource, above=1cm of mid, anchor=east] {$r_1$: Sanding machine, 1};
 	\node (r2) [resource, above=-1cm of mid, anchor=east] {$r_2$: Painting brushes, 2};
@@ -47,9 +48,8 @@
   \draw[usage] (v3.east) -- (u3) to[out=0,in=180] (r2.west);
   \draw[usage] (v4.east) -- (u4) to[out=0,in=180] (r2.west);
   \draw[usage] (v5.east) -- (u5) to[out=0,in=180] (r2.west);
-  \draw[usage] (v6.east) -- (u6) to[out=0,in=180] (r2.west);
-
-  
+  \draw[usage] (v6.east) -- (u6) to[out=0,in=180] (r1.west);
+  \draw[usage] (v6.east) -- (u7) to[out=0,in=180] (r2.west);
 	
 \end{tikzpicture}
 
