@@ -11,9 +11,10 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{caption}% http://ctan.org/pkg/caption
-\captionsetup[table]{justification=raggedright, singlelinecheck=off}
+%\captionsetup[table]{justification=raggedright, singlelinecheck=off}
 \usepackage{amsthm}
 \usepackage{nameref}
+\usepackage{wrapfig}
 \theoremstyle{definition}
 \usepackage{pgf}
 \newcommand{\inputtikz}[1]{\input{tikz/#1}}
@@ -214,18 +215,25 @@ We also have the following precedence constraints: sanding the door before paint
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish.
 Each activity can have a different \emph{duration}.
-They define the duration for each of the activities in whole hours, because this makes it easier to schedule.
-The total schedule is made in the \emph{time horizon}, where each hour is mapped to one step in the time horizon.
+They define the duration for each of the activities in whole hours, because this makes it easier to schedule. \TODO{they, the project manager?}
+The total schedule is made in the \emph{time horizon}, where each hour is mapped to one step in the time horizon. \TODO{ref table}
 For simplicity's sake, we assume that they know the exact duration for each activity:
 
-\begin{tabular}{ll}
-sanding the door&3 hours\\
-sanding the fence&2 hours\\
-painting the door&2 hours\\
-painting the fence&1 hour\\
-painting the wall&5 hours\\
-cleaning the painting brushes&1 hour\\
-\end{tabular}
+\begin{wraptable}{r}{.38\textwidth}
+	\centering
+	\begin{tabular}{l|l}
+		{Activity} & {Duration} \\
+		\hline
+		sanding the door & 3 hours\\
+		sanding the fence & 2 hours\\
+		painting the door & 2 hours\\
+		painting the fence & 1 hour\\
+		painting the wall & 5 hours\\
+		cleaning up & 1 hour\\
+		\hline
+	\end{tabular}
+	\caption{Activity durations}
+\end{wraptable}
 
 Normally there are enough tools available for everyone to work with.
 Unfortunately, the crew has a very limited amount of tools this time around.
@@ -334,6 +342,9 @@ In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, whe
 	\caption{Two possible schedules for the running example. }
 	\label{fig:feasible_schedule}
 \end{figure}
+
+\TODO{MAN O MAN O MAN waar is nou het hele "oh shit nee wat hebben we gedaan, als we naar de resources kijken kan schedule A helemaal niet" aka neem de lezer mee in je verhaal en laat hem eerst denken van "ja ja ja idd idd" en schud hem dan wakker omdat we al 10 minuten bezig zijn met een schedule die eigenlijk helemaal niet uitvoerbaar is gebleven???????????????????????????????????????
+??????????????????????????????????????????????????????????????? Le Mick est very sad}
 
 A \emph{feasible schedule} is denoted as $S_f$ and takes in account both the precedence and the resource constraints.
 The schedule from Figure \ref{fig:time_feasible_schedule} is also represented in Figure \ref{fig:feasible_schedule} as Schedule A.
