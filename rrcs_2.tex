@@ -13,6 +13,7 @@
 \usepackage{caption}% http://ctan.org/pkg/caption
 \captionsetup[table]{justification=raggedright, singlelinecheck=off}
 \usepackage{amsthm}
+\usepackage{nameref}
 \theoremstyle{definition}
 \usepackage{pgf}
 \newcommand{\inputtikz}[1]{\input{tikz/#1}}
@@ -61,14 +62,43 @@
 
 \section{Scope and purpose}
 
-In this paper we will discus the resource constraint project scheduling problem in practical applications.
-Scheduling is a very common problem in many day-to-day applications, because many situations require a suitable schedule to define the order in which to perform different tasks.
-Making a schedule proves to be a more complex process than one might expect, especially when complicating factors arise such as limited resources or a set deadline.
-These factors can be taken into account to some extent by the resource constraint project scheduling problem.
-Some other complicating factors may occur in practical applications, such as the possibility of break down of resources, delays or a growing set of tasks.
-The scheduling problem is therefore, although it is quite common, one of the more complex problems in computer science.
+% Algemene introductie op scheduling
+Every day, there are certain tasks we have to complete. 
+Finding a suitable schedule to do all of these activities may sometimes be trivial. 
+In other cases however, this may not be the case. 
+If you have ever found yourself working on a project you will know that it is not always easy to plan all the activities, especially when there are for example multiple people involved. 
+The problem of finding a suitable schedule is often encountered in our modern lives. 
+Larger versions of scheduling problems are often found in business applications where immense sets of tasks have to be scheduled in, ideally, the best way possible. 
 
-This paper will deal with the scheduling problem, some complicating factors and the approximation of a solution to this problem in continuous applications.
+%	Praktijkvoorbeeld 1: Trein repareer schema's
+An example of a real life scheduling problem is that of train maintenance scheduling. 
+The trains that are utilized by a Dutch railway company need to undergo regular maintenance. 
+This happens in special service bays who might be specialised in maintaining specific parts of a train. 
+There are for example service bays that specialize in treating the electrical wiring or in maintaining the wheels.
+In scheduling the maintenance of these trains, there are several constraints that need to be satisfied by a schedule before it can be considered to be `good'. 
+It is for example desirable to minimize the time that a train is in maintenance to maximize the use of the trains and the service bays as well. 
+There is a limited amount of service bays and some jobs can only be performed in specific service bays. 
+These demands on the schedule makes finding a suitable schedule in reasonable time a complex task. 
+
+% Praktijkvoorbeeld 2: Airport
+Another practical problem is the scheduling of plane flights and servicing them in between. 
+For airport scheduling we have to think about refueling, baggage handling, boarding and disembarking among many other activities.
+The order in which these activities have to be performed are important as well as the limited availability of for example plane refueling teams and other staff. 
+
+% Name of the scheduling problem: 
+This paper deals with a type of scheduling problem called the \emph{Resource Constrained Project Scheduling Problem} (RCPSP). 
+This model is flexible enough to give for example an accurate enough representation of for example the train and airport scheduling problems. 
+What we mean by accurate enough is that a solution to the model can be used as a schedule in practice. 
+Specific extensions to the RCPSP can be made to better accomodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
+Chapter \ref{text:RCPSP} does name two possible extensions for the interested reader. \TODO{check dit, niet zomaar weghalen deze todo}
+
+% Schedules vinden is moeilijk
+Practical applications of scheduling show us that there are additional requirements that a schedule needs to fulfill. 
+Finding an optimal schedule is proved to be undoable in polynomial time. 
+We will discuss an approximation method that attempts to find a schedule that usable in practice. 
+The particular technique is called \emph{Precedence Contraint Posting} (PCP) and can be run in polynomial time. 
+
+\begin{comment} Deze tekst weergeeft eigenlijk een beetje de structuur van de paper . Het is misschien wel handig om 
 In almost all practical application, an approximation is used to retrieve a schedule.
 Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
 For a continuous environment, this quick solution is key to keep up with the constant changes.
@@ -77,13 +107,12 @@ An approximation method will be discussed in light of the practical applications
 For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
 Simple temporal networks are a form of graph representations using nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
 One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
+\end{comment}
 
-The purpose of this paper is to inform the reader on the topic of resource constraint scheduling in continuous applications.
-The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
-Although the reader is presumed to have prerequisite knowledge about for example set theory, graph theory, algorithmics and complexity theory, most in-depth information aims to be complete and clear.
-
-%		-Wat staat waar?
-In  chapter \ref{text:problem_background} \emph{Problem Background} we will first go deeper in to the resource constraint scheduling problem.
+%	Structuur van de paper
+\TODO{fix this when we are done??}
+A detailed explanation of what the RCPSP precisely entails is given in chapter \ref{text:RCPSP}. 
+Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
 We will also look into the complexity \ref{text:complex} of the problem, showing why an approximation is needed for practical applications.
@@ -99,9 +128,13 @@ Combining these two methods gives us a flexible way of approximating a resource 
 Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
 This gives us a robust and effective solution for scheduling in many practical applications.
 
+% Purpose of this paper and intended audience
+The purpose of this paper is to inform the reader on the topic of resource constrained project scheduling in continuous applications.
+\TODO{continuous NA-AH}
+The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
+Although the reader should be familiar with some scientific notation and theories to understand everything completely, the basic ideas described in this paper aim to be complete and clearly explained for everyone. 
 
 \newpage
-
 
 \section{Problem background}
 \label{text:problem_background}
@@ -121,18 +154,6 @@ This is a simple form of scheduling, in the examples we will discuss further on 
 Such as for example the precedence constraint, in which one task needs to be finished before the other can start.
 These extra constraints place more demands on the schedule for it to be feasible.
 
-%		-Examples form real life.
-An example of a real life application of the resource constraint project scheduling problem is train maintenance scheduling.
-In scheduling the maintenance of trains, there are several factors which need to be taken into calculation.
-For instance, the trains should not be out of service due to maintenance for too long of a period.
-Also, there is limited space for trains to be serviced in the maintenance depot and not in every service bay all jobs can be performed.
-There are service bays that maintain the electrical wiring or specialize in maintaining the wheels.
-These factors make scheduling in an efficient way a complex task.
-
-The same problems can be seen in other maintenance applications and also, for example, airport scheduling.
-Airport scheduling has even more complicating factors, such as refueling, baggage handling, boarding and disembarking. \TODO{more complicating -> bigger problem, not a more complex problem in the sense of this paper}
-These are some complex examples to show that the problem has many difficult applications, but there exist simpler applications which require similar methods.
-In the next section we will show a simple example using painters and some painting tasks, in which these complicating factors are represented and is still easily comprehensible when reading.
 
 %		-What is RCPSP and how can it solve them.
 %		-Why imporant.
@@ -524,7 +545,8 @@ As seen in the previous section, solving an STP provides us with a time-feasable
  - Continuous planning aanstippen in future work \\
  - Bronvermeldingen moeten er echt in, probeer het te doen terwijl je schrijft \\
  - PCP Mag iets duidelijker naar voren komen in hoofdstuk 'schedule construction' 3.2 wordt dus PCP \\
- - Goeie presentatie ;D!
+ - Goeie presentatie ;D! \\
+ - Laat ergens weten dat we ervanuit gaan dat we de makespan willen minimaliseren en dat daardoor het een logische aanpak lijkt om uit te gaan van een basis schedule geconstrueerd door de earliest start time techniek. \\
  }
 
 \newpage

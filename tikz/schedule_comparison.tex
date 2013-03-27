@@ -24,13 +24,13 @@
 		\draw[capacity, shorten <=0cm] (0,1) -- (6,1);
     \draw[axis] (0,0) -- (0,2) node[yaxisnode] {$r_1$ usage};
 
-    \node (v1) [activity, invalid, minimum width=3cm] at (0,1) {$v_1$};
-    \node (v2) [activity, minimum width=2cm] at (0,0) {$v_2$};
+    \node (v1) [activity, minimum width=3cm] at (0,0) {$v_1$};
+    \node (v2) [activity, invalid, minimum width=2cm] at (0,1) {$v_2$};
 		\node (v6) [activity, minimum width=1cm] at (5,0) {$v_6$};
 		
-    \draw[dotted] (v1.south east) -- ++(0,-1) node[anchor=north] {$t_3$};
+    \draw[dotted] (v2.south east) -- ++(0,-1) node[anchor=north] {$t_2$};
     \node [anchor=north west] at (0,0) {$t_0$};
-    \node [anchor=north] at (2,0) {$t_2$};
+    \node [anchor=north] at (3,0) {$t_3$};
     \node [anchor=north] at (5,0) {$t_5$};
 		\node [anchor=north] at (6,0) {$t_6$};
   \end{scope}
