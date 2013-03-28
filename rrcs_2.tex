@@ -21,7 +21,7 @@
 
 \inputtikz{preamble}
 
-\title{Resource Constrained Project Scheduling for continuous applications using Precedence Constraint Posting.}
+\title{Resource Constrained Project Scheduling: an Approach}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -61,7 +61,7 @@
 \newpage
 
 
-\section{Scope and purpose}
+\section{Introduction}
 
 % Algemene introductie op scheduling
 Every day, there are certain tasks we have to complete. 
@@ -110,6 +110,7 @@ One must note that this simpler representation does not allow for all scheduling
 \end{comment}
 
 %	Structuur van de paper
+\subsection{Organization}
 \TODO{fix this when we are done??}
 A detailed explanation of what the RCPSP precisely entails is given in chapter \ref{text:RCPSP}. 
 Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
@@ -127,12 +128,6 @@ The workings of precedence constraint posting will also be explained using the e
 Combining these two methods gives us a flexible way of approximating a resource constraint project scheduling problem.
 Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
 This gives us a robust and effective solution for scheduling in many practical applications.
-
-% Purpose of this paper and intended audience
-The purpose of this paper is to inform the reader on the topic of resource constrained project scheduling in continuous applications.
-\TODO{continuous NA-AH}
-The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
-Although the reader should be familiar with some scientific notation and theories to understand everything completely, the basic ideas described in this paper aim to be complete and clearly explained for everyone. 
 
 \newpage
 
@@ -389,7 +384,7 @@ And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ wit
 
 Find:
 A feasible schedule $S_f = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
-Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
+Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E$ $(\start{i} + \dur{i} \leq \start{j})$.
 And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
 
