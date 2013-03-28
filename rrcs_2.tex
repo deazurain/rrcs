@@ -190,7 +190,7 @@ In for example the painting project, it makes sense to express the duration of t
 A period in the painting project would then equal one hour. 
 In another project a period might equal one day or one minute, it all depends on the context of the project. 
 These time periods provide a simple way of dealing with arbitrary time steps. 
-The periods can be linearly laid out on a so called time horizon. 
+The periods can be linearly layed out on a so called time horizon. 
 The length of this time horizon is equal to the deadline of the project. 
 This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
@@ -240,23 +240,21 @@ The painting project manager specifies the duration for each of the activities i
 The activity durations for the painting project are summarized in Table \ref{table:activity_durations}. 
 The manager would like to plan the activities on whole hours. 
 This means that the periods in the time horizon have a length of one hour. 
-To save on traveling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
+To save on travelling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
 The maximum time that the painters can spend on a project in a single day is 10 hours. 
 This means that the project has a real deadline and that it is set to 10 periods. 
 
 Normally there are enough tools available for everyone to work with.
-Unfortunately, the crew\footnote{The crew could be seen as a resource by itself. We will however assume that there are enough workmen available so that we do not have to take them in account as a limited resource. } has a very limited amount of tools.
+Unfortunately, the crew\footnote{The crew could be seen as a resource by itself. We will however assume that there are enough worksmen available so that we do not have to take them in account as a limited resource. } has a very limited amount of tools this time around.
 There are two painting brushes available and only one sanding machine. 
 This makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
 The painting brushes and the sanding machines are the resources of this project. 
 
 We will assume that the painters greatly appreciate their privacy and prefer to work alone on an activity. This means that the sanding and painting activities will each require at most one sanding machine or painting brush at a time. 
 The cleanup activity however requires all of the tools at once. 
-The manager of the painting project wants to find a schedule that is feasible. 
-In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities.
 
-This example sums up the most important aspects of an RCPSP and it is clear to see that this type of scheduling is needed frequently.
-Before we explore the subject further, we will first define the notations used in the RCPSP.
+The manager of the painting project wants to find a schedule that is feasible. 
+In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities. 
 
 \subsection{Notation}
 \label{text:RCPSP_notation}
@@ -417,7 +415,7 @@ In the next section we will describe this heuristic algorithm.
 As we have shown in the above, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
 In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
 In this chapter we will introduce this approximation, using the \emph{Simple Temporal Problem}, or STP.
-STPs are represented with a Simple Temporal Network or STN, which is a graph that represents the activities and precedence constraint with nodes and edges respectively.
+STPs are represented with a \emph{Simple Temporal Network} or STN \cite{dechter91}, which is a graph that represents the activities and precedence constraint with nodes and edges respectively.
 To represent an RCPSP with an STP more correctly the resource constraints must be represented as well. 
 This is done using \emph{Precedence Constraint Posting} (PCP), a method which allows for posting constraints that the prevent the exceeding of the capacities of resources.
 The STP is a problem for which a polynomial algorithm is known, thus it is a problem that can be solved in a more timely manner than the original RCPSP.
@@ -436,7 +434,6 @@ Then we show how PCP is used to make a schedule which complies with the resource
 \label{text:STN}
 To introduce the STP we will use an example which we will than represent using an STN.
 
-\subsubsection{Example}
 \begin{example}
 \label{exmp:stn}
 Consider the following events which may occur on a typical work day:
