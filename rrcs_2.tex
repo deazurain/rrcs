@@ -749,6 +749,12 @@ To generate the schedule from the distance matrix we will only look at the value
 The absolute value of the negative value in the distance matrix will represent the starting time for each $s_i \in V$.
 For the running example we will get the following schedule $S = \{3, 3, 5, 0, 6\}$.
 
+In this schedule every precedence constraint is met, because every sanding activity is finished before the painting activity for each activity. 
+Also the all the painting and sanding is finished before the cleaning is done.
+The resource constraints are also met, because the sanding machine isn't used by two activities at the same time.
+The same holds for the two painting brushes, because the brushes aren't used by three activities at the same time.
+This concludes that the schedule we created is feasible.
+
 \newpage
  
 \section{Conclusion}
