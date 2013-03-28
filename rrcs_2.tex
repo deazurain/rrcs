@@ -153,7 +153,7 @@ Take for example the painting of a fence, the activity ``sand the fence surface"
 
 In some practical applications it is useful to have a deadline for the entire schedule. 
 If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a schedule which can realize this. 
-In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met and the project is finished befor the deadline.
+In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met and the project is finished before the deadline.
 The project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activities. 
 
 \TODO{dit is een raar stukje, valt uit de toon}
@@ -535,6 +535,7 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 \end{figure}
 
 \subsubsection{Tightening the bounds}
+\label{text:floyd}
 The distance matrix is a convenient way to represent the distance graph and ultimately the STN because there is an algorithm to compute the new bounds of the time windows of the edges. 
 
 This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
@@ -553,16 +554,16 @@ How does this lead to valid constraints? Why shortest paths?
 	\caption{The distance matrix after applying the Floyd-Warshall algorithm on Figure \ref{fig:distance_matrix}}
 \end{figure}
 
-\subsection{Reduction to STN}
-The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to \TODO{Example}.
+\subsection{Reduction from RCPSP to STN}
+The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to Example \ref{exmp:running}.
 
 The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
 These time points are then connected with a directed edge from $s_i$ to $e_i$ with time window $[\dur{i}, \dur{i}]$. 
 Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_i$ respectively and the time window associated with the edge that connects these two nodes forces the time between the two time points to be exactly the duration of the activity $v_i$.
 
-Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
+Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of an RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
-Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
+Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN. 
 
 \begin{figure}[h]
 	\makebox[\textwidth]{
@@ -617,35 +618,28 @@ Using the method outlined in this section we are able to describe Example \ref{e
 						(e6) 		edge [dashed] node 		{$[0, \infty]$} 			(s7);		\end{tikzpicture}
 	}
 	\caption{In this figure, the temporal aspect of the running example is reduced to an STN. Each pair of nodes $(s_i, e_i)$ represents the start and end time of an activity $v_i$. The dotted edges represent precedence constraints and the solid edges emulate activity durations.}
+	\label{fig:stn}
 \end{figure}
 
-\TODO{
-		-Het is dus geen goeie/volledige reductie
-		-Algemene/formele reductie Reductiedefinitie
-	}
+The STN in Figure \ref{fig:stn} can be represented as a distance graph and ultimately as a distance matrix using the method described in Section \ref{text:STN}. The $16$ by $16$ distance matrix generated for this STN can be found in Appendix A. Applying the Floyd-Warshall algorithm to this matrix, as explained in Section \ref{text:floyd}, yields the matrix found in Appendix B. This matrix contains the tightened bounds for all the time points in the STN in Figure \ref{fig:stn} in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in this STN are satisfied.
 
 \subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a time-feasable schedule. 
+As seen in the previous section, solving an STP provides us with a set time-feasable schedules. 
 This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
 In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) is used. 
 
 \subsubsection{Minimizing the Makespan}
-The STN as constructed in the previous section assigns bounds to the time points in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in the original STP are satisfied.
-Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN.
-
-According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example will look as follows:
-\TODO{Insert ESTA time-feasable solution here}
-
-\subsubsection{Contention Peak Detection}
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}.
+Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN. According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example can be found in Figure \ref{fig:resource_graph}.
 
 \begin{figure}[h]
 	\centering
 	\inputtikz{schedule_infeasible_profile}
-	\caption{The resource profile of an resource-infeasible schedule for the running example. }
+	\caption{A time-feasable schedule for the running example along with the the resource profiles.}
 	\label{fig:resource_graph}
 \end{figure}
+
+\begin{comment}
 \TODO{wat is handiger voor het uitleggen, infeasible profile alleen of de vergelijking van de schedules?}
 \begin{figure}[h]
 	\centering
@@ -653,13 +647,20 @@ Now that we have got a time-feasable schedule for the running example, it is tim
 	\caption{Two different schedules for the running example and their resource profiles. }
 	\label{fig:resource_graph}
 \end{figure}
+\end{comment}
+
+\subsubsection{Contention Peak Detection}
+Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \todo{reference}.
+
+In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasable schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
 
 \subsubsection{Conflict Extraction}
-Once contention peaks are identified, an algorithm is able to select the most critical contention peak (for example where the resource capacity excedence is the highest). This contention peak contains a set of activities of which the combined resource usage exceeds the capacity of the resource. In order to reduce the load on a resource, two activities in this set need to be scheduled after each other instead of in parallel. Two activities $(v_i,v_j)$ that belong to the same contention peak are called a \emph{conflict}. 
+Once contention peaks are identified, an algorithm is able to select the most critical contention peak (for example where the resource capacity is exceeded the most). This contention peak contains a set of activities of which the combined resource usage exceeds the capacity of the resource. In order to reduce the load on a resource, two activities in this set can be scheduled after each other instead of in parallel. Two activities $(v_i,v_j)$ that belong to the same contention peak are called a \emph{conflict}.
+
+The goal is now to identify a pair of resources in the contention peak in such a way that they resolve the contention peak if these activities are scheduled after each other. There are many different methods for determining this pair \TODO{reference}, in the running example, the contention peak consists of only two activities, namely $v_1$ and $v_2$.
 
 \subsubsection{Conflict Resolution}
-En hoe leg je de constraint aan?
-
+When a conflict is identified, a precedence is added between
 
 \TODO{
 	-Temporal lower bound for each activity can be computed via the shortest path algorithm
@@ -719,7 +720,10 @@ Although the results may not be optimal or sometimes might not even be found by 
 \bibliographystyle{plainnat}
 \bibliography{references}
 
-\section{Appendix}
+\section{Appendices}
+
+\subsection{Appendix A}
+\label{appendix:a}
 \label{text:appendix}
 The distance matrix, which is also the input for the Floyd Warshall algorithm:\\
 \begin{tabular}{c | cccccccccccccccc}
@@ -743,6 +747,8 @@ $e_6$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\textbf{-1}$
 $e_7$	&$\textbf{0}$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\textbf{0}$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\infty$	&$\textbf{0}$\\
 \end{tabular}
 
+\subsection{Appendix B}
+\label{appendix:b}
 The result of the Floyd Warshall algorithm:\\
 \begin{tabular}{c | cccccccccccccccc}
 	&$s_0$	&$s_1$ &$s_2$ &$s_3$ &$s_4$ &$s_5$ &$s_6$ &$s_7$ &$e_0$ &$e_1$ &$e_2$ &$e_3$ &$e_4$ &$e_5$ &$e_6$ &$e_7$\\
