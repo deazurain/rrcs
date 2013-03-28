@@ -760,7 +760,7 @@ After solving the distance matrix a schedule needs to be generated from the dist
 
 To generate the schedule from the distance matrix we will only look at the values between $s_0$ and every $s_i \in V$.
 The absolute value of the negative value in the distance matrix will represent the starting time for each $s_i \in V$.
-For the running example we will get the following schedule $S = (3, 3, 5, 0, 6)$.
+For the running example we will get the following schedule $S = (0,0,3,3,5,0,6)$.
 
 In this schedule every precedence constraint is met, because every sanding activity is finished before the painting activity for each activity. 
 Also the all the painting and sanding is finished before the cleaning is done.
