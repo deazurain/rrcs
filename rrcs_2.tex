@@ -34,6 +34,11 @@
 \pagestyle{empty}
 
 
+% long footnote section fixes
+\dimen\footins=40\baselineskip\relax
+\raggedbottom
+\addtolength{\topskip}{0pt plus 10pt}
+\interfootnotelinepenalty=10000
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 \newtheorem{example}{Example}[section]
@@ -130,39 +135,38 @@ This gives us a robust and effective solution for scheduling in many practical a
 This chapter provides an overview of what the RCPSP is along with an example that we use to demonstrate ideas and concepts throughout the entire paper. 
 In Section \ref{text:RCPSP_description} we introduce the components that are used in describing the RCPSP. 
 After we are familiar with the components we can describe our running example which is done in Section \ref{text:running_example_description}. 
-The notation that we will use to write denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. 
+The notation that we will use to denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. 
 In Section \ref{text:running_example_definition} we give a short description of the running example using the notation that has been explained in the previous Section. 
 This is followed by Section \ref{text:RCPSP_definition} where a short formal definition of the RCPSP is given. 
 This chapter concludes with a note on the complexity of the RCPSP. 
 
 \subsection{Problem Introduction}
 \label{text:RCPSP_description}
-The practical examples given in the introduction provide an idea about the uses of resource constrained project scheduling, but what is it exactly?
-The terminology to describe resource constrained project scheduling is and how its problem is built up is introduced in this section.
+The practical examples given in the introduction provides an idea about the uses of resource constrained project scheduling, but what is it exactly?
+The terminology to describe resource constrained project scheduling and how its problem is constructed is introduced in this section.
 
 % activities
 Every scheduling problem has a set of \emph{activities} of some sort and this is no different for the RCPSP. 
 These activities may also be referred to as jobs or tasks but we will adhere to describing them as activities. 
-Examples of activities are sanding the surface of a fence or painting a fence. 
+Examples of activities are ``sanding the surface of a fence'' or ``painting a fence''. 
 The activities of a project are specified in the RCPSP instance of that project along with the \emph{duration} of each activity. 
 % duration
 The duration of an activity is usually an estimate of the actual time required to complete the activity because the exact duration is not known beforehand. 
 A painter might visit the fence to estimate how long it will take him to sand the fence and how much time he will have to spend painting it. 
 
 % precedence relation
-Sometimes activities are dependent on eachother. 
+Some activities are dependent of each other. 
 Looking back to the painting project activities, the fence has to be sanded before it can be properly painted. 
-This precedence relation between the activities ``sand fence'' and ``paint fence'' is also part of the project description and is often described as a \emph{precedence constraint}. 
+This precedence relation between the activities ``sand fence'' and ``paint fence'' is also part of the project description and is described as a \emph{precedence constraint}. 
 
 % resources
 Precedence constraints are just one of the two types of constraints that can be used in the basic RCPSP. 
 The other constraint type is concerned with \emph{resources}. 
 We extend the painting project to show what a resource is in the RCPSP. 
-Lets say that there are now two people working on the painting project. 
+Lets say that there are two people working on the painting project. 
 However, there is also more work; there is a door that has to be painted as well. 
-The problem is that there is only one painting brush available. The painting brushes are a resource. 
-The reason for explicitly defining these resources is because they are limited; 
-there is only one painting brush available. 
+The problem is that there is only one painting brush available. The painting brush is a resource. 
+The reason for explicitly defining this resource is because there is limited number of it; there is only one painting brush available. 
 We describe this limit as the capacity of the resource. 
 The activities ``paint fence'' and ``paint door'' cannot be executed simultaneously because they both depend on the availability of the painting brush. 
 In other words, doing these activities requires two painting brushes which exceeds the resource capacity, thus violating the \emph{resource constraint}. 
@@ -190,7 +194,9 @@ The periods can be linearly layed out on a so called time horizon.
 The length of this time horizon is equal to the deadline of the project. 
 This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
-The notation\footnote{The notation for the RCPSP terminology is presented in a different order than the explanation in this section on purpose. The authors felt that starting with the more easy to grasp concepts such as activities and resources felt more natural here. The notation section however benefits from a different order. } of the concepts explained here is given in Section \ref{text:RCPSP_notation}. But before that, we provide an example RCPSP instance that will be used throughout the paper. 
+The notation\footnote{The notation for the RCPSP terminology is presented in a different order than the explanation in this section on purpose. The authors felt that starting with the more easy to grasp concepts such as activities and resources felt more natural here.
+The notation section however benefits from a different order. } of the concepts explained here is given in Section \ref{text:RCPSP_notation}.
+But before we go to the notation, we will illustrate the RCPSP with an example that will be used throughout the paper. 
 
 \subsection{Running example}
 \label{text:running_example_description}
@@ -251,7 +257,7 @@ The manager of the painting project wants to find a schedule that is feasible.
 In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities. 
 
 \subsection{Notation}
-\label{text:definitions}
+\label{text:RCPSP_notation}
 The notation for the RCPSP used in this paper is introduced in this section. We explain the notation by means of the running example and several illustrations. The notation itself is heavily based on work by \citet{brucker99}. 
 
 The \emph{time horizon} is a mapping of real-world time to model-time. It is indicated by the so called time horizon $T \in \mathbb{N}$.
@@ -354,6 +360,7 @@ For example if you only paint one object in the running example at $t_1$, the av
 In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced trough capacity, the dotted line, and the sum of the usage on a given time, the height of the activities in the graph. 
 
 \subsection{Formal definition of the running example}
+\label{text:running_example_definition}
 
 In Example \ref{exmp:running} we define the formal definition of the \emph{Running Example} by using the definitions in subsection \ref{text:definitions}.
 \begin{example}
@@ -368,6 +375,7 @@ $\capa{1} = 2, \capa{2} = 1$
 
 
 \subsection{RCPSP formal definition}
+\label{text:RCPSP_definition}
 
 \begin{definition}
 Given:
