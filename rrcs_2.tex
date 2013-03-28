@@ -496,8 +496,8 @@ Where each edge $(t_i, t_j) \in E_{stn}$ has a $\mindelay{i}{j} \in \mathbb{N}$ 
 	\caption{A simple temporal network for Example \ref{exmp:stn}. In this example, the time zero node is called \emph{0}, and the events \emph{leaving home},  \emph{waiting at the bridge} and \emph{arrived at work} are denoted with nodes \emph{L}, \emph{B} and \emph{A} respectively.}
 \end{figure}
 
-The goal of this graph is to tighten the bounds of the time window for each time point, in such a way that if each time point is associated with a value that lies within its time window, the schedule is consistent. 
-This can be done using a distance graph and applying the all-paths-closest-pairs algorithm by Floyd and Warshall, which we will introduce next.
+The goal of this graph is to tighten the bounds of the time window for each constraint. Using that information, a time window for each time point can be computed. The bounds of the constraints need to be chosen such that if each time point is associated with a start time $s_i$ that lies within its time window, the resulting schedule $S_stn = (s_0,\dots, s_n)$ is consistent.
+The time window of the constraints can be tightened by using a distance graph and applying the all-paths-closest-pairs algorithm by Floyd and Warshall, which we will introduce next.
 
 \subsubsection{Distance Graph}
 The distance is a graph representation of the STN in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values.
@@ -691,22 +691,19 @@ Now that we have got a time-feasable schedule for the running example, it is tim
 In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasable schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
 
 \subsubsection{Conflict Extraction}
+\label{text:conflict}
 Once contention peaks are identified, an algorithm is able to select the most critical contention peak (for example where the resource capacity is exceeded the most). This contention peak contains a set of activities of which the combined resource usage exceeds the capacity of the resource. In order to reduce the load on a resource, two activities in this set can be scheduled after each other instead of in parallel. Two activities $(v_i,v_j)$ that belong to the same contention peak are called a \emph{conflict}.
 
 The goal is now to identify a pair of resources in the contention peak in such a way that they resolve the contention peak if these activities are scheduled after each other. There are many different methods for determining this pair \TODO{reference}, in the running example, the contention peak consists of only two activities, namely $v_1$ and $v_2$.
 
 \subsubsection{Conflict Resolution}
-When a conflict is identified, a precedence is added between
+When a conflict ${v_i, v_j}$ is identified, a precedence constraint is added from $v_i$ to $v_j$ only if there is no precedence constraint from $v_j$ to $v_i$ since this would create a cycle in the precede graph. This results in an unsolvable STN since a cycle implies that an activity needs to be executed before itself, which of course, is not possible.
 
-\TODO{
-	-Temporal lower bound for each activity can be computed via the shortest path algorithm
-		-Uitleggen huidige STN niet werkt (alleen temporal en niet resource feasable)
-		-Globale idee van resource leveling using PCP
-		-Algoritmw voor resource leveling (volgens ESTA en aan de hand van example)
-		-Algemeen en Formeel algoritme
-		}
+The conflict of the running example consists of $v_1$ and $v_2$ (Section \ref{text:conflict}), so a precedence constraint needs to be added to the STN in Figure \ref{fig:stn} from $e_1$ to $s_2$, meaning that the end of activity $v_1$ should precede the start of activity $v_2$. As described in Section \ref{text:stn_subsec}, this STN can be solved in the same way as the STN in Figure \ref{fig:stn}. This will yield another distance matrix with new bounds for the edges in the distance graph and ultimately new time intervals for the time points. If for each edge, a value within its time window is chosen, the newly added precedence constraint will be respected leading to the result that in every schedule, $v_1$ will precede $v_2$. Because these activities are scheduled after each other, the resource violation of resource $r_2$ in Figure \ref{fig:resource_graph} can no longer occur.
 
 \subsection{Final Schedule}
+The last question that remains is how one can deduce an actual schedule from an STN using the Earliest Start Time Algorithm
+
 
 \TODO{
 		-Hoe maak je van dat STN weer een schedule
