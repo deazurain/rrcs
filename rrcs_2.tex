@@ -258,8 +258,7 @@ This means that they want to finishes all activities in the least amount of time
 
 \subsection{Notation}
 \label{text:definitions}
-Trough this paper we will use a formal notation.
-This notation is explained trough images and the running example, to really understand how the RCPSP is defined in the formal definition.
+The notation for the RCPSP used in this paper is introduced in this section. We explain the notation trough images and the running example. The notation itself is based on work by \citet{brucker99}. 
 
 The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
 The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
@@ -330,8 +329,8 @@ In Figure \ref{fig:resource_graph} the usage of the running example is expressed
 A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
 In this schedule each activity $v_i \in V$ has a starting time $\start{i}$ which is defined in the schedule $S$.
 When we create a schedule for the running and we also take in account the precedence constraints, you could get the following schedule:
-\{0, 0, 3, 2, 0, 6\}.
-This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}.
+\{0, 0, 3, 2, 0, 6\}. \TODO{geen set maar een vector want volgorde is belangrijk}
+This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}. 
 
 The \emph{makespan} of a schedule $S$ is the number of periods required to finish the project using the schedule $S$. The makespan is notated as $\makespan{S} \in T$.
 In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, where the makespan is optimized to a minimum and all the precedence constraints hold.
