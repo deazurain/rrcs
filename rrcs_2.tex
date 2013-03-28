@@ -17,6 +17,7 @@
 \usepackage{wrapfig}
 \theoremstyle{definition}
 \usepackage{pgf}
+\usepackage{algorithm2e}
 \newcommand{\inputtikz}[1]{\input{tikz/#1}}
 
 \inputtikz{preamble}
@@ -42,6 +43,10 @@
 \newcommand{\usage}[2]{\ensuremath{usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
 \newcommand{\start}[1]{\ensuremath{start(v_{#1})}} %start time
 \newcommand{\makespan}[1]{\ensuremath{C_{max}(#1)}} %makespan
+
+\newcommand{\mindelay}[2]{\ensuremath{delay_{min}(t_{#1}, t_{#2})}} %minimum delay
+\newcommand{\maxdelay}[2]{\ensuremath{delay_{max}(t_{#1}, t_{#2})}} %maximum delay
+\newcommand{\weight}[2]{\ensuremath{weight(t_{#1}, t_{#2})}} %weight
 
 \newenvironment{definition}[1][Definition]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
@@ -408,17 +413,29 @@ The challenge now is to implement an algorithm that performs the same kind of re
 This can be done by regarding this problem as an STP and represent it using an STN.
 
 \subsubsection{Simple Temporal Network}
+\label{text:stn_subsec}
 The first step is to represent the example above as an STN. 
-The nodes in this graph correspond to the events in the story and a directed edge from node $n_i$ to $n_j$ indicates that the event represented by node $n_i$ has to occur before the event represented by node $n_j$.
+The nodes in this graph correspond to the events in the story and a directed edge from node $t_i$ to $t_j$ indicates that the event represented by node $t_i$ has to occur before the event represented by node $t_j$.
 These edges are called \emph{constraints}.
-Additionally, each edge $(n_i, n_j)$ has got a certain \emph{time window} associated with it, which indicates the minimum and maximum delay between the two events represented by time points $n_i$ and $n_j$. 
+Additionally, each edge $(t_i, t_j)$ has got a certain \emph{time window} associated with it, which indicates the minimum and maximum delay between the two events represented by time points $t_i$ and $t_j$. 
 Each node in this graph is called a \emph{time point}. 
 An additional time point is added and refers to \emph{time zero}.
 This node is connected to the node that represents the activity with the latest start time.
 A convenient time zero for this example is 8:00.
-The constraint graph for this example is shown below. 
+The constraint graph for this example is shown in Figure \ref{fig:stn_example}.
+
+\begin{definition}
+\label{text:stn_definition}
+An STN is a directed graph, denoted by $G_{stn} = (V_{stn}, E_{stn}^-)$, consisting of:
+\begin{itemize}
+\item A set of time points $V_{stn} = \{t_0, \ldots, t_n\}$, where $n = |V_{stn}|$.
+\item A set of edges $V_{stn} \subset E_{stn} \times E_{stn}$, where each edge $(t_i, t_j) \in V_{stn}$ represents a precedence constraint and $V_{stn}^-$ is a transitive reduction of $V$. 
+\end{itemize}
+Where each edge $(t_i, t_j) \in E_{stn}$ has a $\mindelay{i}{j} \in \mathbb{N}$ and a $\maxdelay{i}{j} \in \mathbb{N}$, representing the minimum and maximum delay between the two time points.
+\end{definition}
 
 \begin{figure}[h]
+	\label{fig:stn_example}
 	\centering
 	\begin{tikzpicture}[
 		->,
@@ -449,9 +466,26 @@ This can be done using a distance graph and applying the all-paths-closest-pairs
 \subsubsection{Distance Graph}
 The distance is a graph representation of the STN in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values.
 In order to reduce the STN to a distance matrix, the edges need to be given a fixed value, instead of a range of a values (as is the case with an STN). 
-In order to do so, all edges $e_i$ in the constraint graph are given the weight of the upper bound of the associated time window. 
+In order to do so, all edges $(t_i, t_j)$ in the constraint graph are given the weight of the upper bound of the associated time window. 
 Additionally, for each edge in the constraint graph, an additional edge is added in opposite direction with a weight equal to the negative lower bound of the time window associated with that edge. 
 Each edge now has one value as the weight instead of a range of values. 
+
+\begin{algorithm}[H]
+\label{alg:distance_graph}
+\SetAlgoLined
+$V_{dist} = V_{stn}$\;
+$E_{dist} = E_{stn}$\;
+\ForAll{$(t_i, t_j) \in E_{stn}$}{
+	$E_{dist} = E_{dist} \cup \{(t_j, t_i)\}$\;
+	$\weight{i}{j} = \maxdelay{i}{j}$\;
+	$\weight{j}{i} = \mindelay{j}{i}$\;
+}
+\caption{Algorithm for converting an STN into a distance graph}
+\end{algorithm}
+
+\begin{definition}
+The directional distance graph $G_{dist} = (V_{dist}, E_{dist})$ is generated from the graph $G_{stn}$ in Section \ref{text:stn_subsec} with Algorithm \ref{alg:distance_graph}
+\end{definition}
 
 \begin{figure}[h]
 	\centering
@@ -686,6 +720,7 @@ Although the results may not be optimal or sometimes might not even be found by 
 \bibliography{references}
 
 \section{Appendix}
+\label{text:appendix}
 The distance matrix, which is also the input for the Floyd Warshall algorithm:\\
 \begin{tabular}{c | cccccccccccccccc}
 	&$s_0$	&$s_1$ &$s_2$ &$s_3$ &$s_4$ &$s_5$ &$s_6$ &$s_7$ &$e_0$ &$e_1$ &$e_2$ &$e_3$ &$e_4$ &$e_5$ &$e_6$ &$e_7$\\
