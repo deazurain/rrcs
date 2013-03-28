@@ -177,15 +177,24 @@ For example, a constraint can be the fact that there is a limited number of one 
 }
 
 To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
+\TODO{ not true}
 
-\subsection{RCPSP in general}
-The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
-An activity is sometimes called a job, task or event in other work. 
-The activities are part of the input of a RCPSP and have a specified duration. 
-There are multiple types of constraints for activities of which one is precedence constraints. 
-Certain activities can only be executed after another activity has been completed. 
+\subsection{RCPSP in general \TODO{meh title}}
+The RCPSP concerns itself with finding a suitable schedule for a set of activities. 
+What the components of a RCPSP instantation are and what suitable actually implies will be explained in this section. 
+
+Every scheduling problem has a set of activities of some sort and this is no different for the RCPSP. 
+These activities may also be referred to as jobs or tasks but we will adhere to describing them as activities. 
+Part of a RCPSP instantation specifies every activity as well as a duration for every activity in the project. 
+This is usually an estimate of the actual time required to complete the activity because the exact duration is not known beforehand most of the time. 
 Take for example the painting of a fence. 
 The activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
+An experienced painter\TODO{is dit hoe je een iemand noemt die schildert?} can provide good estimates to the project manager of how long it will take to sand the fence and how much time he will have to spend painting it. 
+
+A RCPSP instantation can also specify certain constraints. 
+There are multiple types of constraints for activities of which one is precedence constraints. 
+Certain activities can only be executed after another activity has been completed. 
+
 Another type of constraint is concerned with resources. 
 Lets say there are two people working on a house painting project and there is only one painting brush available. 
 The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
