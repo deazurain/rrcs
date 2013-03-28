@@ -761,38 +761,34 @@ This concludes that the schedule we created is feasible.
 \section{Conclusion}
 
 We have seen that the resource constraint project scheduling problem is a common problem in everyday applications.
-These applications often operate in dynamic environments, which pose many external constraints on the schedules.
-\TODO{iets te vaag? We hebben het in de paper niet echt over dynamic environment}
-The common usage of the problem in dynamic environment requires a smart approach to the problem, especially with limited resources and time.
-To cope with these constraints and problems, some techniques are applied to provide with a more flexible and robust schedule.
-Flexibility is key in providing a schedule that can function in a dynamic environment, handling the uncertainties which may occur.
-
-We first explored the resource constrained scheduling problem and its applications. \TODO{haha hier stond weer constraint :p}
+We first explored the resource constrained project scheduling problem and its everyday applications.
 This gave an insight in the problems that one can encounter in practical applications, as well as the complexity of the problem itself.
-Due to the complexity of the problem it is not possible to quickly give an optimal solution for a schedule. \TODO{mag iets specifieker dus because RCPSP is in NP-hard ofzo}
-A quick scheduler is needed in practical applications in order to keep up with the pace of the schedule execution. 
-Approximation techniques are used to create such schedulers.
+To get an even better feel for the problem itself, an example was introduced and the formal definition and notations explained.
+
+We have also seen that the problem is complex and is therefore not easily solved, it is an NP-hard problem.
+The common usage of the problem in many practical applications requires a quicker solution to the problem, especially with limited resources and time to create the schedule.
+To cope with the constraints and limitations, an approximation technique is used to deliver a quicker solution to the scheduling problem, whilst surrendering optimality.
 
 The approximation method we discussed is called PCP and uses simple temporal networks to represent the activities, precedence constraints, resource constraints and deadline given by the original problem. 
 PCP uses an algorithm to solve the STP in reasonable time. 
 The solution to the STP provides a schedule of which a resource profile is constructed. 
 PCP then smartly determines what activities cause peaks exceeding the resource capacity. 
 If such activities peaks are found, it adds additional temporal constraints to the STN to flatten the peaks. 
-This process is repeated untill there are no more resource limit exceeding peaks. 
+This process is repeated until there are no more resource limit exceeding peaks. 
 It is very unlikely that the solution obtained by using PCP happens to be optimal. 
 However, the approach does a good job because the generated schedules can be used in practical applications. 
 
-The PCP method offers a way to quickly create an effective schedule for large problem instances. 
-The paper has shown how these techniques can be used to give an effective approximation of the resource constraint project scheduling problem.
-Although the results may not be optimal or sometimes might not even be found by this approximation, the quick results makes it an eligible solution for these application. \TODO{even opnieuw een laatste alinea componeren}
+This paper has shown why there is a need for an approximation to the resource constrained project scheduling problem.
+In everyday applications schedules need to be created and this approximation method gives the tools to do so in a timely manner.
+Although the schedule will mostly not be optimal, it will give the planner a feasible schedule if this is possible, in a shorter time than the original problem could be solved.
 
 \newpage
 \bibliographystyle{plainnat}
 \bibliography{references}
 
-\section{Appendices}
+\section*{Appendices}
 
-\subsection{Appendix A}
+\subsection*{Appendix A}
 \label{appendix:a}
 \label{text:appendix}
 The distance matrix, which is also the input for the Floyd Warshall algorithm:\\
