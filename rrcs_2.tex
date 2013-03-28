@@ -278,7 +278,7 @@ The real-time length of a period can be arbitrarily chosen and changed without a
 
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
-In the running example we have six activities: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$. 
+In the running example we have six activities: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the brushes $v_6$. 
 Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ with $n = 6$ for the running example.
 These activities are represented in Figure \ref{fig:activity_graph} as blocks.
 
@@ -334,7 +334,7 @@ In Figure \ref{fig:resource_graph} the usage of the running example is expressed
 A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
 In this schedule each activity $v_i \in V$ has a starting time $\start{i}$ which is defined in the schedule $S$.
 When we create a schedule for the running and we also take in account the precedence constraints, you could get the following schedule:
-\{0, 0, 3, 2, 0, 6\}. \TODO{geen set maar een vector want volgorde is belangrijk}
+(0, 0, 3, 2, 0, 6). 
 This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}. 
 
 The \emph{makespan} of a schedule $S$ is the number of periods required to finish the project using the schedule $S$. The makespan is notated as $\makespan{S} \in T$.
@@ -347,16 +347,14 @@ In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, whe
 	\label{fig:feasible_schedule}
 \end{figure}
 
-\TODO{MAN O MAN O MAN waar is nou het hele "oh shit nee wat hebben we gedaan, als we naar de resources kijken kan schedule A helemaal niet" aka neem de lezer mee in je verhaal en laat hem eerst denken van "ja ja ja idd idd" en schud hem dan wakker omdat we al 10 minuten bezig zijn met een schedule die eigenlijk helemaal niet uitvoerbaar is gebleven???????????????????????????????????????
-??????????????????????????????????????????????????????????????? Le Mick est very sad}
-
 A \emph{feasible schedule} is denoted as $S_f$ and takes in account both the precedence and the resource constraints.
 The schedule from Figure \ref{fig:time_feasible_schedule} is also represented in Figure \ref{fig:feasible_schedule} as Schedule A.
-In Figure \ref{fig:feasible_schedule} you can see the capacity of the resources, denoted by the dotted line, and the usage of resources at a certain time, denoted by the height of the activities in the graph.
+In Figure \ref{fig:feasible_schedule} one can see the capacity of the resources, denoted by the dotted line, and the usage of resources at a certain time, denoted by the height of the activities in the graph.
 This makes it easy to see that the capacity of $r_1$ (the sanding machine) is exceeded from $t_0$ till $t_2$, because they can't sand the fence and the door at the same time.
 This means that Schedule A is a time feasible schedule, but not a feasible schedule.
 An example of a feasible schedule is shown in Figure \ref{fig:feasible_schedule}, Schedule B.
 
+\TODO{av(...) verwijderen uit deze tekst!}
 The \emph{availability} of an activity $v_i \in V$ at a time $t_j \in T$ is specified by a function $\av{i}{j} \in \mathbb{N}$.
 For example if you only paint one object in the running example at $t_1$, the availability of $r_2$ is $\av{2}{1} = 1$ because we have two painting brushes and only one is used.
 In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced trough capacity, the dotted line, and the sum of the usage on a given time, the height of the activities in the graph. 
