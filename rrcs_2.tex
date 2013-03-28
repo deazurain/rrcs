@@ -66,11 +66,20 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-\TODO{rewrite when paper finished}
+In many everyday applications there are tasks to schedule.
+From choosing to go to the bank or the shopping center first to selecting which train to repair when in a maintenance depot.
+These small and large scheduling problems can be related to the resource constrained project scheduling problem.
+This problem represents one of the more complex problems known in computer science, an NP-hard problem.
+Therefore the use of scheduling algorithms is an intensive and time consuming process.
+For the numerous everyday applications this process needs to be done in a more timely manner.
+In this paper we will explain how precedence constraint posting can be used to represent the resource constraint problem with an simple temporal problem.
+Because the simple temporal problem is solvable in polynomial time, this gives a quicker solution to the original problem.
+Although the solution is generated more quickly than in the original form, the approximation does mostly not give an optimal solution.
+Therefore this approach to resource constrained project scheduling is an effective solution for everyday applications, it is not a method for generating the most optimal schedule possible.
 \end{abstract}
 
 
-\newpage
+
 
 
 \section{Introduction}
@@ -108,9 +117,8 @@ Extensions to the RCPSP can be made to better accommodate for a specific problem
 
 %	Structuur van de paper
 \subsection{Organization}
-\TODO{fix this when we are done}
 A detailed explanation of the RCPSP is given in chapter \ref{text:RCPSP}. 
-Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
+Chapter \ref{text:RCPSP} we will dive in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
 We will also look into the complexity \ref{text:complex} of the problem, showing why an approximation is needed for practical applications.
@@ -126,7 +134,7 @@ Combining these two methods gives us a flexible way of approximating a resource 
 Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
 This gives us a robust and effective solution for scheduling in many practical applications.
 
-\newpage
+
 
 \section{RCPSP}
 \label{text:RCPSP}
@@ -190,7 +198,7 @@ In for example the painting project, it makes sense to express the duration of t
 A period in the painting project would then equal one hour. 
 In another project a period might equal one day or one minute, it all depends on the context of the project. 
 These time periods provide a simple way of dealing with arbitrary time steps. 
-The periods can be linearly layed out on a so called time horizon. 
+The periods can be linearly laid out on a so called time horizon. 
 The length of this time horizon is equal to the deadline of the project. 
 This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
@@ -240,7 +248,7 @@ The painting project manager specifies the duration for each of the activities i
 The activity durations for the painting project are summarized in Table \ref{table:activity_durations}. 
 The manager would like to plan the activities on whole hours. 
 This means that the periods in the time horizon have a length of one hour. 
-To save on travelling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
+To save on traveling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
 The maximum time that the painters can spend on a project in a single day is 10 hours. 
 This means that the project has a real deadline and that it is set to 10 periods. 
 
@@ -402,7 +410,7 @@ This is why we have chosen for an heuristic algorithm, which mostly trade-offs i
 In the next section we will describe this heuristic algorithm.
 
 
-\newpage
+
 
 
 \section{Schedule construction}
@@ -696,9 +704,9 @@ The STN in Figure \ref{fig:stn} can be represented as a distance graph and ultim
 
 \subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a set time-feasable schedules. 
+As seen in the previous section, solving an STP provides us with a set time-feasible schedules. 
 This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
-In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) \cite{policella07} is used. 
+In order to make the time-feasible solution also comply with the resource capacity, a method called \emph{Precedence Constraint Posting} (PCP) \cite{policella07} is used. 
 
 \subsubsection{Minimizing the Makespan}
 Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN. According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities also occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example can be found in Figure \ref{fig:resource_graph}.
@@ -706,7 +714,7 @@ Since a solution assigns actual values (instead of bounds) to each time point, i
 \begin{figure}[h]
 	\centering
 	\inputtikz{schedule_infeasible_profile}
-	\caption{A time-feasable schedule for the running example along with the the resource profiles.}
+	\caption{A time-feasible schedule for the running example along with the the resource profiles.}
 	\label{fig:resource_graph}
 \end{figure}
 
@@ -721,9 +729,9 @@ Since a solution assigns actual values (instead of bounds) to each time point, i
 \end{comment}
 
 \subsubsection{Contention Peak Detection}
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \cite{lombardi10}.
+Now that we have got a time-feasible schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \cite{lombardi10}.
 
-In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasable schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
+In the time-feasible schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasible schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
 
 \subsubsection{Conflict Extraction}
 \label{text:conflict}
@@ -746,7 +754,7 @@ After solving the distance matrix a schedule needs to be generated from the dist
 
 To generate the schedule from the distance matrix we will only look at the values between $s_0$ and every $s_i \in V$.
 The absolute value of the negative value in the distance matrix will represent the starting time for each $s_i \in V$.
-For the running example we will get the following schedule $S = (3, 3, 5, 0, 6)$.
+For the running example we will get the following schedule $S = (0,0,3,3,5,0,6)$.
 
 In this schedule every precedence constraint is met, because every sanding activity is finished before the painting activity for each activity. 
 Also the all the painting and sanding is finished before the cleaning is done.
@@ -754,7 +762,7 @@ The resource constraints are also met, because the sanding machine isn't used by
 The same holds for the two painting brushes, because the brushes aren't used by three activities at the same time.
 This concludes that the schedule we created is feasible.
 
-\newpage
+
  
 \section{Conclusion}
 
@@ -780,7 +788,7 @@ This paper has shown why there is a need for an approximation to the resource co
 In everyday applications schedules need to be created and this approximation method gives the tools to do so in a timely manner.
 Although the schedule will mostly not be optimal, it will give the planner a feasible schedule if this is possible, in a shorter time than the original problem could be solved.
 
-\newpage
+
 \bibliographystyle{plainnat}
 \bibliography{references}
 
