@@ -392,17 +392,17 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 
 \subsection{Complexity of the RCPSP}
 \label{text:complex}
-The RCPSP belongs to the class of \emph{NP-complete} problems as is proven in \TODO{Reference a paper where this is proven}.
-This means that increases processing power do not notably speed up the generation of solutions to the problem.
-An exact algorithm for the RCPSP problem isn't possible in polynomial time.
+it has been proven that RCPSP belongs to the class of \emph{NP-complete} problems.
+This means that increased processing power does not notably speed up the generation of solutions to the problem.
+An exact algorithm for the RCPSP problem in polynomial time is not known.
 
-Another approach in finding solutions for the RCPSP is a heuristic algorithm.
-A heuristic algorithm can find solutions for the RCPSP problem and does notably speed up the generation of solutions to the problem when the processing power increases.
-To achieve this heuristic algorithm trades completeness, optimality, accuracy, and/or precision for speed.
-This means for example that an heuristic algorithm sometimes will not find all the possible solutions or that an heuristic algorithm sometimes doesn't give you the most optimal solution.
+Another approach in finding solutions for the RCPSP is an heuristic algorithm.
+An heuristic algorithm can find solutions for the RCPSP problem and does notably speed up the generation of solutions to the problem when the processing power increases.
+To achieve this heuristic algorithm trade-offs need to be made in completeness, optimality, accuracy, and/or precision for speed.
+This means for example that an heuristic algorithm will mostly not find all the possible solutions or does not give you the most optimal solution.
 
-For an RCPSP with a large set of activities, resources and constraints an exact solution often takes too long to find a solution.
-This is why we have chosen for a heuristic algorithm, which mostly trade-offs in completion.
+For an RCPSP with a large set of activities, resources and constraints an exact solution often takes too long to find a schedule.
+This is why we have chosen for an heuristic algorithm, which mostly trade-offs in completion.
 In the next section we will describe this heuristic algorithm.
 
 
