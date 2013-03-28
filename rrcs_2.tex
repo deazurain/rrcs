@@ -742,22 +742,13 @@ The conflict of the running example consists of $v_1$ and $v_2$ (Section \ref{te
 The last question that remains is how one can deduce an actual schedule from an STN using the Earliest Start Time Algorithm
 
 
-\TODO{
-		-Hoe maak je van dat STN weer een schedule
-		-Hoe voldoet het schedule (aan alle constraints)
-}
+When the precedence constraint from the conflict resolution is added we can use Algorithm \ref{alg:floyd} from Floyd and Warshall to solve the distance matrix.
+For the running example we solved the distance matrix in Appendix \ref{appendix:c}.
+After solving the distance matrix a schedule needs to be generated from the distance matrix.
 
-\subsection{Algorithm}
-
-\newpage
-
-\TODO{
- - Continuous planning aanstippen in future work \\
- - Bronvermeldingen moeten er echt in, probeer het te doen terwijl je schrijft \\
- - PCP Mag iets duidelijker naar voren komen in hoofdstuk 'schedule construction' 3.2 wordt dus PCP \\
- - Goeie presentatie ;D! \\
- - Laat ergens weten dat we ervanuit gaan dat we de makespan willen minimaliseren en dat daardoor het een logische aanpak lijkt om uit te gaan van een basis schedule geconstrueerd door de earliest start time techniek. \\
- }
+To generate the schedule from the distance matrix we will only look at the values between $s_0$ and every $s_i \in V$.
+The absolute value of the negative value in the distance matrix will represent the starting time for each $s_i \in V$.
+For the running example we will get the following schedule $S = \{3, 3, 5, 0, 6\}$.
 
 \newpage
  
@@ -842,6 +833,30 @@ $e_4$	&$-3$	&$1$	&$-3$	&$4$	&$-1$	&$1$	&$6$	&$7$	&$-3$	&$4$	&$-1$	&$6$	&$0$	&$6$
 $e_5$	&$-5$	&$-1$	&$1$	&$2$	&$3$	&$-5$	&$4$	&$5$	&$-5$	&$2$	&$3$	&$4$	&$4$	&$0$	&$5$	&$5$\\
 $e_6$	&$-6$	&$-6$	&$-4$	&$-3$	&$-2$	&$-6$	&$-1$	&$4$	&$-6$	&$-3$	&$-2$	&$-1$	&$-1$	&$-1$	&$0$	&$4$\\
 $e_7$	&$-6$	&$-6$	&$-4$	&$-3$	&$-2$	&$-6$	&$-1$	&$0$	&$-6$	&$-3$	&$-2$	&$-1$	&$-1$	&$-1$	&$0$	&$0$\\
+\end{tabular}
+
+\subsection{Appendix C}
+\label{appendix:c}
+The result of the Floyd Warshall algorithm with the extra precedence constraint:\\
+\begin{tabular}{c | cccccccccccccccc}
+	&$s_0$	&$s_1$ &$s_2$ &$s_3$ &$s_4$ &$s_5$ &$s_6$ &$s_7$ &$e_0$ &$e_1$ &$e_2$ &$e_3$ &$e_4$ &$e_5$ &$e_6$ &$e_7$\\
+\hline
+$s_0$	&$0$	&$3$	&$6$	&$7$	&$8$	&$4$	&$9$	&$10$	&$0$	&$6$	&$8$	&$9$	&$9$	&$9$	&$10$	&$10$	\\
+$s_1$	&$0$	&$0$	&$6$	&$7$	&$8$	&$4$	&$9$	&$10$	&$0$	&$3$	&$8$	&$9$	&$9$	&$9$	&$10$	&$10$	\\
+$s_2$	&$-3$	&$-3$	&$0$	&$4$	&$5$	&$1$	&$6$	&$7$	&$-3$	&$0$	&$2$	&$6$	&$6$	&$6$	&$7$	&$7$\\
+$s_3$	&$-3$	&$-3$	&$3$	&$0$	&$5$	&$1$	&$6$	&$7$	&$-3$	&$0$	&$5$	&$2$	&$6$	&$6$	&$7$	&$7$\\
+$s_4$	&$-5$	&$-5$	&$-2$	&$2$	&$0$	&$-1$	&$4$	&$5$	&$-5$	&$-2$	&$0$	&$4$	&$1$	&$4$	&$5$	&$5$\\
+$s_5$	&$0$	&$3$	&$6$	&$7$	&$8$	&$0$	&$9$	&$10$	&$0$	&$6$	&$8$	&$9$	&$9$	&$5$	&$10$	&$10$	\\
+$s_6$	&$-6$	&$-6$	&$-3$	&$-2$	&$-1$	&$-5$	&$0$	&$4$	&$-6$	&$-3$	&$-1$	&$0$	&$0$	&$0$	&$1$	&$4$\\
+$s_7$	&$-7$	&$-7$	&$-4$	&$-3$	&$-2$	&$-6$	&$-1$	&$0$	&$-7$	&$-4$	&$-2$	&$-1$	&$-1$	&$-1$	&$0$	&$0$\\
+$e_0$	&$0$	&$3$	&$6$	&$7$	&$8$	&$4$	&$9$	&$10$	&$0$	&$6$	&$8$	&$9$	&$9$	&$9$	&$10$	&$10$	\\
+$e_1$	&$-3$	&$-3$	&$3$	&$4$	&$5$	&$1$	&$6$	&$7$	&$-3$	&$0$	&$5$	&$6$	&$6$	&$6$	&$7$	&$7$\\
+$e_2$	&$-5$	&$-5$	&$-2$	&$2$	&$3$	&$-1$	&$4$	&$5$	&$-5$	&$-2$	&$0$	&$4$	&$4$	&$4$	&$5$	&$5$\\
+$e_3$	&$-5$	&$-5$	&$1$	&$-2$	&$3$	&$-1$	&$4$	&$5$	&$-5$	&$-2$	&$3$	&$0$	&$4$	&$4$	&$5$	&$5$\\
+$e_4$	&$-6$	&$-6$	&$-3$	&$1$	&$-1$	&$-2$	&$3$	&$4$	&$-6$	&$-3$	&$-1$	&$3$	&$0$	&$3$	&$4$	&$4$\\
+$e_5$	&$-5$	&$-2$	&$1$	&$2$	&$3$	&$-5$	&$4$	&$5$	&$-5$	&$1$	&$3$	&$4$	&$4$	&$0$	&$5$	&$5$\\
+$e_6$	&$-7$	&$-7$	&$-4$	&$-3$	&$-2$	&$-6$	&$-1$	&$3$	&$-7$	&$-4$	&$-2$	&$-1$	&$-1$	&$-1$	&$0$	&$3$\\
+$e_7$	&$-7$	&$-7$	&$-4$	&$-3$	&$-2$	&$-6$	&$-1$	&$0$	&$-7$	&$-4$	&$-2$	&$-1$	&$-1$	&$-1$	&$0$	&$0$\\
 \end{tabular}
 
 \end{document}
