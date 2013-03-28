@@ -274,35 +274,37 @@ The real-time length of a period can be arbitrarily chosen and changed without a
 	\label{fig:activity_graph}
 \end{figure}
 
-\TODO{HIER IS MICK GEBLEVEN, DE REST VAN NOTATION ETC MOET NOG NAGEKEKEN OWORDEN}
-
-\emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
-This is a set of activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
-In the running example we have six activities: sanding the the door $v_1$, sanding the fence $v_2$,  painting the door $v_3$, painting the fence $v_4$, painting the wall $v_5$ and cleaning the painting brushes $v_6$. 
+All the activities of a project are notated as $V = \{v_1, \ldots, v_n\}$.
+This is a set that contains all the activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
+In the running example we have six activities: $v_1$: sand door, $v_2$: sand fence, etc. Figure \ref{usage} shows the complete assignment of $v_i$'s to the activities. 
 Which gives us the total set of activities $V = \{v_1, \ldots, v_6\}$ with $n = 6$ for the running example.
 These activities are represented in Figure \ref{fig:activity_graph} as blocks.
 
-The \emph{duration} for each activity $v_i \in V$ is specified by $\dur{i} \in \mathbb{N}$.
-In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$. 
+The duration for each activity $v_i \in V$ is specified by a function $\dur{i} \in \mathbb{N}$.
+In the running example the activities have the following duration: $\dur{1} = 3, \dur{2} = 2, \dur{3} = 2, \dur{4} = 1, \dur{5} = 5, \dur{6} = 1$ as can also be seen in Figure \ref{usage}. 
 The duration of each activity in the running example is represented by the length of the block in Figure \ref{fig:activity_graph}.
 
 The \emph{extended activity set} is specified by $W = V \cup \{v_0, v_{n+1}\}$.
-Which consists of the activity set $V$ and incorporates a unique dummy beginning activity $v_0$ and a unique dummy ending activity $v_{n+1}$. 
-These dummy activities have a duration of $0$ periods.
+Which consists of the activity set $V$ with two additional \emph{dummy activities}: a unique dummy beginning activity $v_0$ and a unique dummy ending activity $v_{n+1}$. 
+These dummy activities have a duration of $0$ periods. 
+They can be of use for example in algorithms as starting values. 
 For the running example we have a set $W = \{v_0, \ldots v_7\}$.
 Figure \ref{fig:activity_graph} shows $W$ for the running example.
-In the figure $v_0$ and $v_7$ are filled with a shade of gray, because they have a duration of $0$ instead of a duration relative to the width. 
+In the figure $v_0$ and $v_7$ are filled with a shade of gray to emphasize that their width does not reflect their duration. 
 
-\emph{Precedence constraints} are specified by a set $E \subseteq \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
-This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
-The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
+The precedence constraints are specified by a minimal set $E \subseteq V \times V$. 
+This means that a precedence relation between two activities $v_i$ and $v_j$ is notated as an ordered pair $(v_i, v_j)$ where $v_j$ can be started only after $v_i$ is finished. 
+These pairs $(v_i, v_j)$ are the elements of $E$.
+Note that the set $E$ is the minimal set required to define the ordering of all the activities. 
+The running example has several precedence constraints between the activities, which make up the following set $\{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Precedence constraints for the dummy activities $v_0$ and $v_7$ are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity.
-Figure \ref{fig:activity_graph} shows the precedence constraints for the running example, represented as arrows between the nodes.
-The precedence constraints in Figure \ref{fig:activity_graph} are reduced to a minimum, because you can reduce for example $(v_0,v_6), (v_0, v_5), (v_5, v_6)$ to $(v_0, v_5), (v_5, v_6)$.
+Figure \ref{fig:activity_graph} shows the precedence constraints for the running example including dummy activities, represented as arrows between the nodes.
+The precedence constraints for the dummy activities are limited to constraints from $v_0$ to $v_1$, $v_2$ and $v_5$ and from $v_6$ to $v_7$. 
+To see why $E$ is reffered to as a minimum set, look at the missing constraint $(v_0, v_3)$ in Figure \ref{fig:activity_graph}. 
+This constraint is not required because it can be transitively deduced.
 
-The \emph{constraints graph} is specified by a directed graph $G = (V, E)$.
-It consists of the activities $V$, which are represented as nodes, and the precedence constraints $E$, which are represented as connections between nodes.
-The constraints graph for the running example is represented in Figure \ref{fig:activity_graph}.
+The graph from Figure \ref{fig:activity_graph} is called a \emph{constraint graph}. It is specified by a directed graph $G = (V, E)$.
+The graph consists of a set of activities $V$, which are represented as nodes, and a set of precedence constraints $E$, which are represented as directed edges the nodes.
 
 \begin{figure}[h]
 	\centering
