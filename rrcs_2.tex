@@ -64,55 +64,40 @@
 \section{Introduction}
 
 % Algemene introductie op scheduling
-Every day, there are certain tasks we have to complete. 
+Every day, there are several tasks we have to complete, like going for groceries, visiting the bank and going to work.
+And every day we make a schedule in what order to perform these tasks.
 Finding a suitable schedule to do all of these activities may sometimes be trivial. 
-In other cases however, this may not be the case. 
-If you have ever found yourself working on a project you will know that it is not always easy to plan all the activities, especially when there are for example multiple people involved. 
-The problem of finding a suitable schedule is often encountered in our modern lives. 
-Larger versions of scheduling problems are often found in business applications where immense sets of tasks have to be scheduled in, ideally, the best way possible. 
+In other cases however, making a schedule may not be as simple, for instance when some activities have to be done at the same time, or you need a car which is not available at that moment. 
+If you have ever found yourself working on a project you will know that it is not always easy to plan all the activities, for instance when there are multiple people involved. 
+The problem of finding a suitable schedule is often encountered in our modern lives.
+Larger versions of scheduling problems are often found in business applications where immense sets of tasks have to be scheduled in, ideally, the best way possible.
 
 %	Praktijkvoorbeeld 1: Trein repareer schema's
 An example of a real life scheduling problem is that of train maintenance scheduling. 
-The trains that are utilized by a Dutch railway company need to undergo regular maintenance. 
-This happens in special service bays who might be specialised in maintaining specific parts of a train. 
+The trains that are utilized by the major Dutch railway company need to undergo regular maintenance. 
+This happens in special service bays who might be specialized in maintaining specific parts of a train. 
 There are for example service bays that specialize in treating the electrical wiring or in maintaining the wheels.
-In scheduling the maintenance of these trains, there are several constraints that need to be satisfied by a schedule before it can be considered to be `good'. 
-It is for example desirable to minimize the time that a train is in maintenance to maximize the use of the trains and the service bays as well. 
-There is a limited amount of service bays and some jobs can only be performed in specific service bays. 
+In scheduling the maintenance of these trains, there are several constraints that need to be satisfied and objectives set by the planner before a schedule can be considered to be `good'. 
+It is for example desirable to minimize the time that a train is in maintenance to maximize the use of the trains, this is an objective set by the planner.
+But there is a legal obligation to perform maintenance regularly to ensure passenger safety, this is a constraints. 
 These demands on the schedule makes finding a suitable schedule in reasonable time a complex task. 
 
 % Praktijkvoorbeeld 2: Airport
 Another practical problem is the scheduling of plane flights and servicing them in between. 
 For airport scheduling we have to think about refueling, baggage handling, boarding and disembarking among many other activities.
 The order in which these activities have to be performed are important as well as the limited availability of for example plane refueling teams and other staff. 
+The airlines wish to utilize the aircrafts at maximum capacity, but must keep in mind the safety and regulations that limit their possibilities to do so.
 
 % Name of the scheduling problem: 
 This paper deals with a type of scheduling problem called the \emph{Resource Constrained Project Scheduling Problem} (RCPSP). 
-This model is flexible enough to give for example an accurate enough representation of for example the train and airport scheduling problems. 
-What we mean by accurate enough is that a solution to the model can be used as a schedule in practice. 
-Specific extensions to the RCPSP can be made to better accomodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
-
-% Schedules vinden is moeilijk
-Practical applications of scheduling show us that there are additional requirements that a schedule needs to fulfill. 
-Finding an optimal schedule is proved to be undoable in polynomial time. 
-We will discuss an approximation method that attempts to find a schedule that usable in practice. 
-The particular technique is called \emph{Precedence Contraint Posting} (PCP) and can be run in polynomial time. 
-
-\begin{comment} Deze tekst weergeeft eigenlijk een beetje de structuur van de paper . Het is misschien wel handig om 
-In almost all practical application, an approximation is used to retrieve a schedule.
-Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
-For a continuous environment, this quick solution is key to keep up with the constant changes.
-
-An approximation method will be discussed in light of the practical applications of the scheduling problem.
-For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
-Simple temporal networks are a form of graph representations using nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
-One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
-\end{comment}
+This model is flexible enough to give an reasonably accurate representation of for example the train and airport scheduling problems. 
+What we mean by reasonably accurate is that a solution to the model can be used as a schedule in practice, but not every scheduling problem can be translated to a RCPSP.
+Extensions to the RCPSP can be made to better accommodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
 
 %	Structuur van de paper
 \subsection{Organization}
 \TODO{fix this when we are done??}
-A detailed explanation of what the RCPSP precisely entails is given in chapter \ref{text:RCPSP}. 
+A detailed explanation of the RCPSP is given in chapter \ref{text:RCPSP}. 
 Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
