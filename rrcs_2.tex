@@ -34,6 +34,11 @@
 \pagestyle{empty}
 
 
+% long footnote section fixes
+\dimen\footins=40\baselineskip\relax
+\raggedbottom
+\addtolength{\topskip}{0pt plus 10pt}
+\interfootnotelinepenalty=10000
 
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
 \newtheorem{example}{Example}[section]
