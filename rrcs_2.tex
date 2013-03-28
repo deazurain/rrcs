@@ -131,48 +131,73 @@ This chapter concludes with a note on the complexity of the RCPSP.
 \subsection{Problem Introduction}
 \label{text:RCPSP_description}
 The practical examples given in the introduction provide an idea about the uses of resource constrained project scheduling, but what is it exactly?
-The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
-To understand what this exactly means, this Section will explain what activities, resources and constraints are to the RCPSP. 
+We have mentioned that Section \ref{text:RCPSP} provides the information required to understand Section \ref{text:schedule} where we discuss an approach for finding a feasible schedule for a RCPSP instance. 
+To understand what this exactly means, this Section will explain things like activities, constraints and schedules. 
 
-Activities, also called tasks or jobs, are the tasks that need to be executed or jobs that need to be performed.
-These activities are the elements that need to be scheduled in the first place.
-Resources are the machines or personnel or equipment needed to perform a specific activity.
-Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
+% activities
+Every scheduling problem has a set of \emph{activities} of some sort and this is no different for the RCPSP. 
+These activities may also be referred to as jobs or tasks but we will adhere to describing them as activities. 
+Examples of activities are sanding the surface of a fence or painting a fence. 
+The activities of a project are specified in the RCPSP instance of a project along with the duration of each activity. 
+% duration
+The \emph{duration} of an activity is usually an estimate of the actual time required to complete the activity because the exact duration is not known beforehand. 
+A painter might visit the fence to estimate how long it will take him to sand the fence and how much time he will have to spend painting it. 
 
-Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
-A constraint can be the fact that there is a limited number of one type of resource available (\emph{resource constraint}).
-Lets say there are two people working on a house painting project and there is only one painting brush available. 
-The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
-Another constraint can be that one specific activity needs to be finished before another specific activity can be performed (\emph{precedence constraint}).
-Take for example the painting of a fence, the activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
+% precedence relation
+Sometimes activities are dependent on eachother. 
+Looking back to the painting project activities, the fence has to be sanded before it can be properly painted. 
+This precedence relation between the activities ``sand fence'' and ``paint fence'' is also part of the project description and is often described as a \emph{precedence constraint}. 
 
+% resource constraints
+Precedence constraints are just one of the two types of constraints that can be used in the basic RCPSP. 
+The other constraint type is concerned with resources. 
+We extend the painting project to demonstrate the use of these \emph{resource constraints}. 
+Lets say that there are now two people working on the painting project. 
+However, there is also more work; there is a door that has to be painted as well. 
+The problem is that there is only one painting brush available. 
+The activities ``paint fence'' and ``paint door'' cannot be executed simultaneously because they both depend on the availability of the painting brush. 
+In this example the painting brush would be modelled as a resource. 
+
+% schedule
+The activities are the elements that need to be scheduled. 
+A schedule is nothing more than a lists of the starting times for each activity. 
+Such an assignment of starting times can be feasible or infeasible. 
+A schedule is called feasible when it satisfies the precedence constraints as well as the resource constraints. 
+
+% deadline
 In some practical applications it is useful to have a deadline for the entire schedule. 
-If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a schedule which can realize this. 
-In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met and the project is finished befor the deadline.
-The project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activities. 
+In the case of the painting project, we might be doing the repainting of a house that is going to be sold. 
+This means that all the activities in the project must be completed before the date on which the house is going for sale. 
+The project manager might want to consider buying an extra painting brush if we fail to find a schedule that completes before the deadline passes. 
+Even if a project does not have a real deadline, we can still express that by saying that the project has a deadline of infinitely far in the future. 
 
-\TODO{dit is een raar stukje, valt uit de toon}
-A project is scheduled on a so called time horizon.
-This time horizon defines the periods over which the activities can be scheduled.
-Lets say that the house painting manager expresses the duration of activities in hours.
-It might make sense to schedule the activities on whole hours.
+% time mapping
+It is useful to define the duration and start times of activities in terms of periods. 
+In for example the painting project, it makes sense to express the duration of the activities in hours. 
+A period in the painting project would then equal one hour. 
+In another project a period might equal one day or one minute, it all depends on the context of the project. 
+These time periods provide a simple way of dealing with arbitrary time steps. 
+The periods can be linearly layed out on a so called time horizon. 
+The length of this time horizon is equal to the deadline of the project. 
+This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
-The aspects of the RCPSP will be discussed in detail while introducing a running example and introducing a formal notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
+The notation\footnote{The notation for the RCPSP terminology is presented in a different order than the explanation in this section on purpose. The authors felt that starting with the more easy to grasp concepts such as activities and resources felt more natural here. The notation section however benefits from a different order. } of the concepts explained here is given in Section \ref{text:RCPSP_notation}. But before that, we provide an example RCPSP instance that will be used throughout the paper. 
 
 \subsection{Running example}
 \label{text:running_example_description}
-In this paper we will use a simple running example based on a painting job to show you what the RCPSP problem is.
-After we explained the RCPSP, we will use this running example to explain the schedule construction in Section \ref{text:schedule}.
+This section gives a description of an example RCPSP instance that we will use throughout the paper. 
+We will often refer to this example as the \emph{running example}. 
 
-For the running example we are looking into a painting company which has several projects to do.
-One of these projects is painting some parts of a house, which is a simple example of a real RCPSP problem.
-The problem consists of workers that need to finish three painting jobs: a door, a fence and a wall.
-Because the the door and the fence are made of wood, both surfaces needs to be sanded first.
-These constraints are called \emph{precedence constraints}.
-Sanding is not necessary for the wall, because the wall is made of bricks.
-When the job is finished all painting brushes and the sanding machine needs to be cleaned and this can only be done when all the painting and sanding is finished.
-This gives us six \emph{activities}: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning the painting brushes.
-We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and all the painting and sanding activities needs to be done before cleaning the painting brushes.
+The running example is based on a project that is executed by a house renovation company. 
+The project is simplified for our purposes by making it smaller while maintaining the complexity of an actual RCPSP problem. 
+The project is concerned with repainting several parts of an old house. 
+The parts that need to be repainted are a door, a fence and a wall. 
+The door and the fence are made of wood. 
+This means that the surfaces of the door and the fence need to be sanded before they can be painted. 
+The wall can be repainted without sanding it. 
+When the job is finished all of the tools have to be cleaned. 
+This gives us six activities: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning up. 
+We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and doing all the painting and sanding activities before the cleanup activity. 
 
 Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish.
 Each activity can have a different \emph{duration}.
@@ -185,6 +210,14 @@ For simplicity's sake, we assume that they know the exact duration for each acti
 	\begin{tabular}{l|l}
 		{Activity} & {Duration} \\
 		\hline
+		
+		
+		
+		
+		
+		
+		
+		3
 		sanding the door & 3 hours\\
 		sanding the fence & 2 hours\\
 		painting the door & 2 hours\\
