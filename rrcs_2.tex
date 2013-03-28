@@ -478,7 +478,7 @@ $E_{dist} = E_{stn}$\;
 \ForAll{$(t_i, t_j) \in E_{stn}$}{
 	$E_{dist} = E_{dist} \cup \{(t_j, t_i)\}$\;
 	$\weight{i}{j} = \maxdelay{i}{j}$\;
-	$\weight{j}{i} = \mindelay{j}{i}$\;
+	$\weight{j}{i} = -\mindelay{j}{i}$\;
 }
 \caption{Algorithm for converting an STN into a distance graph}
 \end{algorithm}
