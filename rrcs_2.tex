@@ -190,7 +190,7 @@ In for example the painting project, it makes sense to express the duration of t
 A period in the painting project would then equal one hour. 
 In another project a period might equal one day or one minute, it all depends on the context of the project. 
 These time periods provide a simple way of dealing with arbitrary time steps. 
-The periods can be linearly layed out on a so called time horizon. 
+The periods can be linearly laid out on a so called time horizon. 
 The length of this time horizon is equal to the deadline of the project. 
 This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
@@ -240,21 +240,23 @@ The painting project manager specifies the duration for each of the activities i
 The activity durations for the painting project are summarized in Table \ref{table:activity_durations}. 
 The manager would like to plan the activities on whole hours. 
 This means that the periods in the time horizon have a length of one hour. 
-To save on travelling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
+To save on traveling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
 The maximum time that the painters can spend on a project in a single day is 10 hours. 
 This means that the project has a real deadline and that it is set to 10 periods. 
 
 Normally there are enough tools available for everyone to work with.
-Unfortunately, the crew\footnote{The crew could be seen as a resource by itself. We will however assume that there are enough worksmen available so that we do not have to take them in account as a limited resource. } has a very limited amount of tools this time around.
+Unfortunately, the crew\footnote{The crew could be seen as a resource by itself. We will however assume that there are enough workmen available so that we do not have to take them in account as a limited resource. } has a very limited amount of tools.
 There are two painting brushes available and only one sanding machine. 
 This makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
 The painting brushes and the sanding machines are the resources of this project. 
 
 We will assume that the painters greatly appreciate their privacy and prefer to work alone on an activity. This means that the sanding and painting activities will each require at most one sanding machine or painting brush at a time. 
 The cleanup activity however requires all of the tools at once. 
-
 The manager of the painting project wants to find a schedule that is feasible. 
-In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities. 
+In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities.
+
+This example sums up the most important aspects of an RCPSP and it is clear to see that this type of scheduling is needed frequently.
+Before we explore the subject further, we will first define the notations used in the RCPSP.
 
 \subsection{Notation}
 \label{text:RCPSP_notation}
