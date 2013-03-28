@@ -138,16 +138,15 @@ This chapter concludes with a note on the complexity of the RCPSP.
 \subsection{Problem Introduction}
 \label{text:RCPSP_description}
 The practical examples given in the introduction provide an idea about the uses of resource constrained project scheduling, but what is it exactly?
-We have mentioned that Section \ref{text:RCPSP} provides the information required to understand Section \ref{text:schedule} where we discuss an approach for finding a feasible schedule for a RCPSP instance. 
-To understand what this exactly means, this Section will explain things like activities, constraints and schedules. 
+The terminology to describe resource constrained project scheduling is and how its problem is built up is introduced in this section.
 
 % activities
 Every scheduling problem has a set of \emph{activities} of some sort and this is no different for the RCPSP. 
 These activities may also be referred to as jobs or tasks but we will adhere to describing them as activities. 
 Examples of activities are sanding the surface of a fence or painting a fence. 
-The activities of a project are specified in the RCPSP instance of a project along with the duration of each activity. 
+The activities of a project are specified in the RCPSP instance of that project along with the \emph{duration} of each activity. 
 % duration
-The \emph{duration} of an activity is usually an estimate of the actual time required to complete the activity because the exact duration is not known beforehand. 
+The duration of an activity is usually an estimate of the actual time required to complete the activity because the exact duration is not known beforehand. 
 A painter might visit the fence to estimate how long it will take him to sand the fence and how much time he will have to spend painting it. 
 
 % precedence relation
@@ -155,20 +154,23 @@ Sometimes activities are dependent on eachother.
 Looking back to the painting project activities, the fence has to be sanded before it can be properly painted. 
 This precedence relation between the activities ``sand fence'' and ``paint fence'' is also part of the project description and is often described as a \emph{precedence constraint}. 
 
-% resource constraints
+% resources
 Precedence constraints are just one of the two types of constraints that can be used in the basic RCPSP. 
-The other constraint type is concerned with resources. 
-We extend the painting project to demonstrate the use of these \emph{resource constraints}. 
+The other constraint type is concerned with \emph{resources}. 
+We extend the painting project to show what a resource is in the RCPSP. 
 Lets say that there are now two people working on the painting project. 
 However, there is also more work; there is a door that has to be painted as well. 
-The problem is that there is only one painting brush available. 
+The problem is that there is only one painting brush available. The painting brushes are a resource. 
+The reason for explicitly defining these resources is because they are limited; 
+there is only one painting brush available. 
+We describe this limit as the capacity of the resource. 
 The activities ``paint fence'' and ``paint door'' cannot be executed simultaneously because they both depend on the availability of the painting brush. 
-In this example the painting brush would be modelled as a resource. 
+In other words, doing these activities requires two painting brushes which exceeds the resource capacity, thus violating the \emph{resource constraint}. 
 
 % schedule
 The activities are the elements that need to be scheduled. 
-A schedule is nothing more than a lists of the starting times for each activity. 
-Such an assignment of starting times can be feasible or infeasible. 
+A \emph{schedule} is nothing more than a lists of the starting times for each activity. 
+Such an assignment of starting times can be \emph{feasible} or \emph{infeasible}. 
 A schedule is called feasible when it satisfies the precedence constraints as well as the resource constraints. 
 
 % deadline
@@ -206,25 +208,12 @@ When the job is finished all of the tools have to be cleaned.
 This gives us six activities: sanding the the door, sanding the fence,  painting the door, painting the fence, painting the wall and cleaning up. 
 We also have the following precedence constraints: sanding the door before painting the door, sanding the fence before painting the fence and doing all the painting and sanding activities before the cleanup activity. 
 
-Because the size of each surface in the painting jobs differs, not each activity takes the same amount of time to finish.
-Each activity can have a different \emph{duration}.
-They define the duration for each of the activities in whole hours, because this makes it easier to schedule. \TODO{they, the project manager?}
-The total schedule is made in the \emph{time horizon}, where each hour is mapped to one step in the time horizon. \TODO{ref table}
-For simplicity's sake, we assume that they know the exact duration for each activity:
-
-\begin{wraptable}{r}{.38\textwidth}
+\begin{wraptable}{r}{.34\textwidth}
 	\centering
+	\vspace{-.6em}
 	\begin{tabular}{l|l}
 		{Activity} & {Duration} \\
 		\hline
-		
-		
-		
-		
-		
-		
-		
-		3
 		sanding the door & 3 hours\\
 		sanding the fence & 2 hours\\
 		painting the door & 2 hours\\
@@ -233,37 +222,42 @@ For simplicity's sake, we assume that they know the exact duration for each acti
 		cleaning up & 1 hour\\
 		\hline
 	\end{tabular}
+	\vspace{-.3em}
 	\caption{Activity durations}
+	\label{table:activity_durations}
+	\vspace{-.6em}
 \end{wraptable}
 
+It is to be expected that the time required to complete an activity is not the same for all the activities in the project. 
+Each activity can have a different estimated \emph{duration}.
+The painting project manager specifies the duration for each of the activities in whole hours, because the exact duration is not so critical. 
+The activity durations for the painting project are summarized in Table \ref{table:activity_durations}. 
+The manager would like to plan the activities on whole hours. 
+This means that the periods in the time horizon have a length of one hour. 
+To save on travelling costs, the manager wants to try and find a schedule where the painters have to visit the old house only once. 
+The maximum time that the painters can spend on a project in a single day is 10 hours. 
+This means that the project has a real deadline and that it is set to 10 periods. 
+
 Normally there are enough tools available for everyone to work with.
-Unfortunately, the crew has a very limited amount of tools this time around.
-These tools are often called \emph{resources}.
-So now they only have two painting brushes and one sanding machine, which makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
-These constraints are called \emph{resource constraints}.
-This shows us that the \emph{capacity} of painting surfaces at the same time is two and the capacity of sanding surfaces at the same time is one.
+Unfortunately, the crew\footnote{The crew could be seen as a resource by itself. We will however assume that there are enough worksmen available so that we do not have to take them in account as a limited resource. } has a very limited amount of tools this time around.
+There are two painting brushes available and only one sanding machine. 
+This makes it impossible to sand more than one surface at the same time and to paint more than two surfaces at the same time.
+The painting brushes and the sanding machines are the resources of this project. 
 
-Since every sanding job uses the sanding machine as a resource, the usage of sanding the door and sanding the fence is one sanding machine.
-Also every painting job uses the painting brush as a resource, so that painting the door, painting the fence and painting the wall all have a usage of one painting brush.
-There is only one activity left, cleaning the painting brushes, which will use both of the painting brushes resource.
-Because a sanding activity doesn't use a painting brush, a painting activity doesn't use a sanding machine and cleaning the painting brushes doesn't use a sanding machine all of the activities never use another resource.
+We will assume that the painters greatly appreciate their privacy and prefer to work alone on an activity. This means that the sanding and painting activities will each require at most one sanding machine or painting brush at a time. 
+The cleanup activity however requires all of the tools at once. 
 
-The painters want to make a \emph{schedule} to complete the project.
-They define a schedule by assigning a start time to each activity.
-One of the requirements for the schedule is that the sanding has to be finished before the painting.
-The other requirement is that the painting and the sanding both have to be finished before the cleaning.
-As last they also have to keep in mind that they have limited tools available and for example can't sand two surfaces at the same time.
-The painters want to make a schedule, where they define each starting time for the activities in such a way that the resulting schedule is feasible. 
-The painters also have a lot of other projects to be done, so the painter not only want a feasible schedule but also want to optimize the time in which they finish all the activities.
-This means that they want to finishes all activities in the least amount of time.
+The manager of the painting project wants to find a schedule that is feasible. 
+In other words, the manager wants a schedule that does not violate any of the precedence constraints, fits within the time horizon and at no point in time exceeds any of the the resource capacities. 
 
 \subsection{Notation}
 \label{text:definitions}
-The notation for the RCPSP used in this paper is introduced in this section. We explain the notation trough images and the running example. The notation itself is based on work by \citet{brucker99}. 
+The notation for the RCPSP used in this paper is introduced in this section. We explain the notation by means of the running example and several illustrations. The notation itself is heavily based on work by \citet{brucker99}. 
 
-The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
+The \emph{time horizon} is a mapping of real-world time to model-time. It is indicated by the so called time horizon $T \in \mathbb{N}$.
 The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
 The time period $t_j$ corresponds to the time interval $(t-1,t]$. 
+The real-time length of a period can be arbitrarily chosen and changed without affecting the underlying scheduling problem instance. 
 
 \begin{figure}[ht]
 	\centering
@@ -271,6 +265,8 @@ The time period $t_j$ corresponds to the time interval $(t-1,t]$.
 	\caption{Activity graph for the running example.}
 	\label{fig:activity_graph}
 \end{figure}
+
+\TODO{HIER IS MICK GEBLEVEN, DE REST VAN NOTATION ETC MOET NOG NAGEKEKEN OWORDEN}
 
 \emph{Activities} are specified by a set $V = \{v_1, \ldots, v_n\}$.
 This is a set of activities where the total amount of activities is $n = |V|$ and each element $v_i \in V$ from this set represents the i-th activity of the project.
