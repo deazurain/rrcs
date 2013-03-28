@@ -101,7 +101,7 @@ A detailed explanation of the RCPSP is given in chapter \ref{text:RCPSP}.
 Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
-We will also look into the complexity \ref{text:complex} of the problem, showing why an approximation is needed for practical applications.
+We will also look into the complexity \ref{text:RCPSP_complexity} of the problem, showing why an approximation is needed for practical applications.
 
 The following chapter, \ref{text:schedule} \emph{Schedule Construction}, will deal with the approximation of the solution.
 For the approximation, simple temporal networks \ref{text:STN} will be used, which provide with a simpler way of representing a schedule.
@@ -120,28 +120,19 @@ This gives us a robust and effective solution for scheduling in many practical a
 \label{text:RCPSP}
 
 %	What are scheduling problems?
-This chapter provides an overview of what the RCPSP is along with an example that we use to demonstrate ideas and concepts through the entire paper. 
-In Section \ref{text:RCPSP_description} we introduce the components that are used in describing a RCPSP instantation. After we are used to these components we can describe our running example which is done in Section  \ref{text:running_example_description}. The notation that we will use to write denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. In Section \ref{text:running_example_definition} we can give a short description using the notation that has been explained in the previous section. This is followed by section \ref{text:RCPSP_definition} where we give a short formal definition of the RCPSP. This chapter concludes with a note on the complexity of the RCPSP. 
-
-We will then give a running example, which will be used throughout this paper to make the problem more tangible.
-Using this example, we will illustrate the formal definition of the resource constraint project scheduling problem.
-With this formal definition and a good sense what the problem holds, the complexity of the problem will be discussed.
-
-Before we go into the examples and definitions, let us first see what resource constrained scheduling problems are.
-Scheduling problems are problems in which several activities need to be put into a schedule.
-For the execution of these activities, there is often a limited amount of resources available.
-The schedule is called feasible when there is a solution that puts all activities in the schedule in such a way that they are all executable by the resources needed and do not overlap with conflicting tasks.
-This is a simple form of scheduling in the examples, that we will discuss further on, more constraints will be added.
-Such as for example the precedence constraint, in which one task needs to be finished before the other can start.
-These extra constraints place more demands on the schedule for it to be feasible.
-
+This chapter provides an overview of what the RCPSP is along with an example that we use to demonstrate ideas and concepts throughout the entire paper. 
+In Section \ref{text:RCPSP_description} we introduce the components that are used in describing the RCPSP. 
+After we are familiar with the components we can describe our running example which is done in Section \ref{text:running_example_description}. 
+The notation that we will use to write denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. 
+In Section \ref{text:running_example_definition} we give a short description of the running example using the notation that has been explained in the previous Section. 
+This is followed by Section \ref{text:RCPSP_definition} where a short formal definition of the RCPSP is given. 
+This chapter concludes with a note on the complexity of the RCPSP. 
 
 \subsection{Problem Introduction}
-We now have an idea about the uses of resource constraint scheduling, but what is it exactly?
+\label{text:RCPSP_description}
+The practical examples given in the introduction provide an idea about the uses of resource constrained project scheduling, but what is it exactly?
 The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
-This optimization might be either the shortest processing time or the most efficient use of resources.
-In this paper we will focus on the shortest processing time.
-The scheduling problem consists of a few main elements: activities, resources and constraints.
+To understand what this exactly means, this Section will explain what activities, resources and constraints are to the RCPSP. 
 
 Activities, also called tasks or jobs, are the tasks that need to be executed or jobs that need to be performed.
 These activities are the elements that need to be scheduled in the first place.
@@ -169,6 +160,7 @@ It might make sense to schedule the activities on whole hours.
 The aspects of the RCPSP will be discussed in detail while introducing a running example and introducing a formal notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
 
 \subsection{Running example}
+\label{text:running_example_description}
 In this paper we will use a simple running example based on a painting job to show you what the RCPSP problem is.
 After we explained the RCPSP, we will use this running example to explain the schedule construction in Section \ref{text:schedule}.
 
@@ -226,8 +218,8 @@ The painters also have a lot of other projects to be done, so the painter not on
 This means that they want to finishes all activities in the least amount of time.
 
 \subsection{Notation}
-\label{text:definitions}
-The notation for the RCPSP used in this paper is introduced in this section. We explain the notation trough images and the running example. The notation itself is based on work by \citet{brucker99}. 
+\label{text:RCPSP_notation}
+The notation for the RCPSP used in this paper is introduced in this Section. We explain the notation trough images and the running example. The notation itself is based on work by \citet{brucker99}. 
 
 The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
 The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
@@ -270,7 +262,7 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/usage}
+	\inputtikz{usage}
 	\caption{Activities, resources and the relation between them for the running example.}
 	\label{fig:resource_graph}
 \end{figure}
@@ -290,8 +282,8 @@ In Figure \ref{fig:resource_graph} the usage of the running example is expressed
 
 \begin{figure}[h]
 	\centering
-	\inputtikz{time_feasible_schedule}
-	\caption{A time feasible schedule for the running example. }
+	\inputtikz{schedule_feasible}
+	\caption{A feasible schedule for the running example. }
 	\label{fig:time_feasible_schedule}
 \end{figure}
 
@@ -306,8 +298,8 @@ In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, whe
 
 \begin{figure}[h]
 	\centering
-	\inputtikz{schedule_comparison}
-	\caption{Two possible schedules for the running example. }
+	\inputtikz{schedule_feasible_profile}
+	\caption{Overview of the resource usage by activities over time. }
 	\label{fig:feasible_schedule}
 \end{figure}
 
@@ -326,8 +318,8 @@ For example if you only paint one object in the running example at $t_1$, the av
 In Figure \ref{fig:feasible_schedule} the availability of a resource can be deduced trough capacity, the dotted line, and the sum of the usage on a given time, the height of the activities in the graph. 
 
 \subsection{Formal definition of the running example}
-
-In Example \ref{exmp:running} we define the formal definition of the \emph{Running Example} by using the definitions in subsection \ref{text:definitions}.
+\label{text:running_example_definition}
+In Example \ref{exmp:running} we define the formal definition of the \emph{Running Example} by using the definitions in Section \ref{text:definitions}.
 \begin{example}
 \label{exmp:running}
 $V = \{v_1, \ldots, v_6\}$\\
@@ -340,7 +332,7 @@ $\capa{1} = 2, \capa{2} = 1$
 
 
 \subsection{RCPSP formal definition}
-
+\label{text:RCPSP_definition}
 \begin{definition}
 Given:
 A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E \subseteq  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
@@ -355,7 +347,7 @@ And no resource exceeds its capacity in usage at any time in the schedule, denot
 
 
 \subsection{Complexity of the RCPSP}
-\label{text:complex}
+\label{text:RCPSP_complexity}
 The RCPSP belongs to the class of \emph{NP-complete} problems as is proven in \TODO{Reference a paper where this is proven}.
 This means that increases processing power do not notably speed up the generation of solutions to the problem.
 An exact algorithm for the RCPSP problem isn't possible in polynomial time.
@@ -367,7 +359,7 @@ This means for example that an heuristic algorithm sometimes will not find all t
 
 For an RCPSP with a large set of activities, resources and constraints an exact solution often takes too long to find a solution.
 This is why we have chosen for a heuristic algorithm, which mostly trade-offs in completion.
-In the next section we will describe this heuristic algorithm.
+In the next Section we will describe this heuristic algorithm.
 
 
 \newpage
@@ -376,13 +368,12 @@ In the next section we will describe this heuristic algorithm.
 \section{Schedule construction}
 \label{text:schedule}
 
-As shown, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
+As we have shown in the above, the RCPSP is a complex problem, and to find an optimal solution exponential time is needed.
 In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
-In this chapter we will introduce this approximation, in the form of a \emph{Simple Temporal Network}, or STN.
-After which a reduction of the RCPSP to a STN is given.
-The STN graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
-We will then take a look at the resources and a method to post new activities and constraints to the created STN, using precedence constraint posting.
-The resulting schedule representation is flexible and robust, which makes it very useful for continuous applications.
+In this chapter we will introduce this approximation, using the \emph{Simple Temporal Problem}, or STP.
+STPs are represented with a graph, or Simple Temporal Network, which represents the activities and constraint with nodes and edges.
+The STP is a problem for which a polynomial algorithm is known, thus it is a problem that can be solved in a more timely manner than the original RCPSP.
+To represent an RCPSP with an STP,  \emph{Precedence Constraint Posting} (PCP) is used.
 
 %		-Wat gaan we benaderen (relevantie van STN)
 The use of an STN to approximate an RCPSP is specifically practical, while the STN allows us to save multiple starting times per activity.
@@ -417,7 +408,7 @@ Consider the following events which may occur on a typical work day:
 Questions we would now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
 Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
 Given the above constraints, it is not hard to discover that the only possible scenario is that I left home at 8:05 and waited only 5 minutes at the bridge.
-The challenge now is to implement an algorithm that performs the same kind of reasoning.  This can be done by regarding this problem as an STP and represent it using a STN.
+The challenge now is to implement an algorithm that performs the same kind of reasoning.  This can be done by regarding this problem as an STP and represent it using an STN.
 
 \subsubsection{Constraint Graph}
 The first step is to represent the example above as a \emph{constraint graph}. 
@@ -459,7 +450,7 @@ This can be done using a distance graph and applying the all-paths-closest-pairs
 \subsubsection{Distance Graph}
 The distance is a graph representation of the constraint graph in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values. In order to reduce the STN to a distance matrix, the edges need to be given a fixed value, instead of a range of a values (as is the case with an STN). 
 In order to do so, all edges $e_i$ in the constraint graph are given the weight of the upper bound of the associated time window. 
-Additionally, for each edge in the constraint graph, an additional edge is added whose weight is equal to the negative lower bound of the time window associated with that edge. 
+Additionally, for each edge in the constraint graph, an additional edge is added in opposite direction with a weight equal to the negative lower bound of the time window associated with that edge. 
 Each edge now has one value as the weight instead of a range of values. 
 
 \begin{figure}[h]
@@ -488,7 +479,7 @@ Each edge now has one value as the weight instead of a range of values.
 			 		edge [bend left]     	node {-5} 			(3);
 	        
 	\end{tikzpicture}
-	\caption{A constraint graph for Example \ref{exmp:stn}. In this example, the time zero node is called \emph{0}, and the events \emph{leaving home},  \emph{waiting at the bridge} and \emph{arrived at work} are denoted with nodes \emph{L}, \emph{B} and \emph{A} respectively.}
+	\caption{A distance graph for Example \ref{exmp:stn}, with edges that have only one value as weight.}
 \end{figure}
 
 \subsubsection{Distance Matrix}
@@ -509,11 +500,12 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 	\label{fig:distance_matrix}
 \end{figure}
 
-\subsubsection{Tightening the weights}
-The distance matrix is a 
+\subsubsection{Tightening the bounds}
+The distance matrix is a convenient way to represent the distance graph and ultimately the constraint graph because there is a very simple algorithm to compute the new bounds of the time windows of the edges. 
 
-The distance matrix representation
-Floyd-Warshall
+This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
+
+How does this lead to valid constraints? Why shortest paths?
 
 \begin{figure}[h]
 	\centering
@@ -527,7 +519,7 @@ Floyd-Warshall
 	\caption{The distance matrix after applying the Floyd-Warshall algorithm on Figure \ref{fig:distance_matrix}}
 \end{figure}
 
-\subsubsection{Reduction to STN}
+\subsection{Reduction to STN}
 The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to \TODO{Example}.
 
 The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
@@ -536,8 +528,7 @@ Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_
 
 Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
-Using the method outlined in this section we are able to describe Example \ref{exmp:running} as an STN.
-
+Using the method outlined in this Section we are able to describe Example \ref{exmp:running} as an STN.
 
 \begin{figure}[h]
 	\makebox[\textwidth]{
@@ -601,19 +592,35 @@ Using the method outlined in this section we are able to describe Example \ref{e
 
 \subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a time-feasable schedule. 
+As seen in the previous Section, solving an STP provides us with a time-feasable schedule. 
 This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
 In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) is used. 
 
 \subsubsection{Minimizing the Makespan}
-The STN as constructed in the previous section assigns bounds to the time points in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in the original STP are satisfied.
+The STN as constructed in the previous Section assigns bounds to the time points in such a way that if a value $\delta$ were the be assigned to each time point $t_i$ such that $\delta \in [lb(t_i), ub(t_i)]$, all constraints in the original STP are satisfied.
 Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN.
 
 According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example will look as follows:
 \TODO{Insert ESTA time-feasable solution here}
 
 \subsubsection{Contention Peak Detection}
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. 
+Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. This profile shows at which
+
+
+\begin{figure}[h]
+	\centering
+	\inputtikz{schedule_infeasible_profile}
+	\caption{The resource profile of an resource-infeasible schedule for the running example. }
+	\label{fig:resource_graph}
+\end{figure}
+\TODO{wat is handiger voor het uitleggen, infeasible profile alleen of de vergelijking van de schedules?}
+\begin{figure}[h]
+	\centering
+	\inputtikz{schedule_comparison}
+	\caption{Two different schedules for the running example and their resource profiles. }
+	\label{fig:resource_graph}
+\end{figure}
+
 
 
 Hoe detect je een contention peak

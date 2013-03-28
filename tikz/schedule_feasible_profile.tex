@@ -8,18 +8,7 @@
 
 \input{tikz/schedule_style.tikz}
 \begin{tikzpicture}[node distance=1, scale=1, every node/.style={transform shape}]
-	\begin{scope}[shift={(0,3.7)}]
-		\node at (3,0) {Feasible};
-		\node at (10.5,0) {Infeasible};
-	\end{scope}
-	
-	% no need for shifting this part
 	\input{tikz/schedule_feasible_profile.tikz}
-	
-	\begin{scope}[shift={(7.5,0)}]
-			\input{tikz/schedule_infeasible_profile.tikz}
-	\end{scope}
-
 \end{tikzpicture}
 
 %\end{document}
