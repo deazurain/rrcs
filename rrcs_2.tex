@@ -472,7 +472,6 @@ Where each edge $(t_i, t_j) \in E_{stn}$ has a $\mindelay{i}{j} \in \mathbb{N}$ 
 \end{definition}
 
 \begin{figure}[h]
-	\label{fig:stn_example}
 	\centering
 	\begin{tikzpicture}[
 		->,
@@ -495,6 +494,7 @@ Where each edge $(t_i, t_j) \in E_{stn}$ has a $\mindelay{i}{j} \in \mathbb{N}$ 
 	        
 	\end{tikzpicture}
 	\caption{A simple temporal network for Example \ref{exmp:stn}. In this example, the time zero node is called \emph{0}, and the events \emph{leaving home},  \emph{waiting at the bridge} and \emph{arrived at work} are denoted with nodes \emph{L}, \emph{B} and \emph{A} respectively.}
+	\label{fig:stn_example}
 \end{figure}
 
 The goal of this graph is to tighten the bounds of the time window for each constraint. Using that information, a time window for each time point can be computed. The bounds of the constraints need to be chosen such that if each time point is associated with a start time $s_i$ that lies within its time window, the resulting schedule $S_stn = (s_0,\dots, s_n)$ is consistent.
