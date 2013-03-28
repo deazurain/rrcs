@@ -21,7 +21,7 @@
 
 \inputtikz{preamble}
 
-\title{Resource Constrained Project Scheduling for continuous applications using Precedence Constraint Posting.}
+\title{Resource Constrained Project Scheduling: an Approach}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -61,57 +61,43 @@
 \newpage
 
 
-\section{Scope and purpose}
+\section{Introduction}
 
 % Algemene introductie op scheduling
-Every day, there are certain tasks we have to complete. 
+Every day, there are several tasks we have to complete, like going for groceries, visiting the bank and going to work.
+And every day we make a schedule in what order to perform these tasks.
 Finding a suitable schedule to do all of these activities may sometimes be trivial. 
-In other cases however, this may not be the case. 
-If you have ever found yourself working on a project you will know that it is not always easy to plan all the activities, especially when there are for example multiple people involved. 
-The problem of finding a suitable schedule is often encountered in our modern lives. 
-Larger versions of scheduling problems are often found in business applications where immense sets of tasks have to be scheduled in, ideally, the best way possible. 
+In other cases however, making a schedule may not be as simple, for instance when some activities have to be done at the same time, or you need a car which is not available at that moment. 
+If you have ever found yourself working on a project you will know that it is not always easy to plan all the activities, for instance when there are multiple people involved. 
+The problem of finding a suitable schedule is often encountered in our modern lives.
+Larger versions of scheduling problems are often found in business applications where immense sets of tasks have to be scheduled in, ideally, the best way possible.
 
 %	Praktijkvoorbeeld 1: Trein repareer schema's
 An example of a real life scheduling problem is that of train maintenance scheduling. 
-The trains that are utilized by a Dutch railway company need to undergo regular maintenance. 
-This happens in special service bays who might be specialised in maintaining specific parts of a train. 
+The trains that are utilized by the major Dutch railway company need to undergo regular maintenance. 
+This happens in special service bays who might be specialized in maintaining specific parts of a train. 
 There are for example service bays that specialize in treating the electrical wiring or in maintaining the wheels.
-In scheduling the maintenance of these trains, there are several constraints that need to be satisfied by a schedule before it can be considered to be `good'. 
-It is for example desirable to minimize the time that a train is in maintenance to maximize the use of the trains and the service bays as well. 
-There is a limited amount of service bays and some jobs can only be performed in specific service bays. 
+In scheduling the maintenance of these trains, there are several constraints that need to be satisfied and objectives set by the planner before a schedule can be considered to be `good'. 
+It is for example desirable to minimize the time that a train is in maintenance to maximize the use of the trains, this is an objective set by the planner.
+But there is a legal obligation to perform maintenance regularly to ensure passenger safety, this is a constraints. 
 These demands on the schedule makes finding a suitable schedule in reasonable time a complex task. 
 
 % Praktijkvoorbeeld 2: Airport
 Another practical problem is the scheduling of plane flights and servicing them in between. 
 For airport scheduling we have to think about refueling, baggage handling, boarding and disembarking among many other activities.
 The order in which these activities have to be performed are important as well as the limited availability of for example plane refueling teams and other staff. 
+The airlines wish to utilize the aircrafts at maximum capacity, but must keep in mind the safety and regulations that limit their possibilities to do so.
 
 % Name of the scheduling problem: 
 This paper deals with a type of scheduling problem called the \emph{Resource Constrained Project Scheduling Problem} (RCPSP). 
-This model is flexible enough to give for example an accurate enough representation of for example the train and airport scheduling problems. 
-What we mean by accurate enough is that a solution to the model can be used as a schedule in practice. 
-Specific extensions to the RCPSP can be made to better accomodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
-
-% Schedules vinden is moeilijk
-Practical applications of scheduling show us that there are additional requirements that a schedule needs to fulfill. 
-Finding an optimal schedule is proved to be undoable in polynomial time. 
-We will discuss an approximation method that attempts to find a schedule that usable in practice. 
-The particular technique is called \emph{Precedence Contraint Posting} (PCP) and can be run in polynomial time. 
-
-\begin{comment} Deze tekst weergeeft eigenlijk een beetje de structuur van de paper . Het is misschien wel handig om 
-In almost all practical application, an approximation is used to retrieve a schedule.
-Although these approximations do not deliver the optimal solution to a problem, they often give a good working schedule in less time than an optimal solution.
-For a continuous environment, this quick solution is key to keep up with the constant changes.
-
-An approximation method will be discussed in light of the practical applications of the scheduling problem.
-For the approximation simple temporal networks will be used, these allow to give a more simple representation of the complex scheduling problem.
-Simple temporal networks are a form of graph representations using nodes and edges to represent the tasks, resources and constraints in the original scheduling problem.
-One must note that this simpler representation does not allow for all scheduling problems to be represented correctly, therefore some solutions which are in fact feasible, might not be found using the approximation.
-\end{comment}
+This model is flexible enough to give an reasonably accurate representation of for example the train and airport scheduling problems. 
+What we mean by reasonably accurate is that a solution to the model can be used as a schedule in practice, but not every scheduling problem can be translated to a RCPSP.
+Extensions to the RCPSP can be made to better accommodate for a specific problem but a detailed description of known extensions is beyond the scope of this paper.
 
 %	Structuur van de paper
-\TODO{fix this when we are done??}
-A detailed explanation of what the RCPSP precisely entails is given in chapter \ref{text:RCPSP}. 
+\subsection{Organization}
+\TODO{fix this when we are done}
+A detailed explanation of the RCPSP is given in chapter \ref{text:RCPSP}. 
 Chapter \ref{text:problem_background} describes the R we will dive  go deeper in to the resource constraint scheduling problem.
 Here the different aspects of the resource constraint project scheduling problem will be discussed.
 An example of a scheduling problem will be given, along with an intuitive description and formal definitions of the problem.
@@ -128,41 +114,30 @@ Combining these two methods gives us a flexible way of approximating a resource 
 Concluding we will show that this combination provides us with a solution capable of scheduling complex problems in continuous environments.
 This gives us a robust and effective solution for scheduling in many practical applications.
 
-% Purpose of this paper and intended audience
-The purpose of this paper is to inform the reader on the topic of resource constrained project scheduling in continuous applications.
-\TODO{continuous NA-AH}
-The paper aims to be a good source of information on the topic of resource constraint scheduling and its link to the practical applications seen in daily life.
-Although the reader should be familiar with some scientific notation and theories to understand everything completely, the basic ideas described in this paper aim to be complete and clearly explained for everyone. 
-
 \newpage
 
-\section{Problem background \TODO{Misschien een andere titel omdat we STN's niet meer bespreken en alleen RCPSPen de running example uit de doeken doen}}
-\label{text:problem_background}
+\section{RCPSP}
 \label{text:RCPSP}
 
 %	What are scheduling problems?
 This chapter provides an overview of what the RCPSP is along with an example that we use to demonstrate ideas and concepts through the entire paper. 
 In Section \ref{text:RCPSP_description} we introduce the components that are used in describing a RCPSP instantation. After we are used to these components we can describe our running example which is done in Section  \ref{text:running_example_description}. The notation that we will use to write denote the components of the RCPSP is introduced using the running example in \ref{text:RCPSP_notation}. In Section \ref{text:running_example_definition} we can give a short description using the notation that has been explained in the previous section. This is followed by section \ref{text:RCPSP_definition} where we give a short formal definition of the RCPSP. This chapter concludes with a note on the complexity of the RCPSP. 
 
-\TODO{wat is het verhaal hier achter? Gaat het niet te diep in op RCPSP? Ik moet denk ik even pauze nemen}
-{\itshape
 We will then give a running example, which will be used throughout this paper to make the problem more tangible.
 Using this example, we will illustrate the formal definition of the resource constraint project scheduling problem.
 With this formal definition and a good sense what the problem holds, the complexity of the problem will be discussed.
 
-Before we go into the examples and definitions, let us first see what scheduling problems are.
+Before we go into the examples and definitions, let us first see what resource constrained scheduling problems are.
 Scheduling problems are problems in which several activities need to be put into a schedule.
 For the execution of these activities, there is often a limited amount of resources available.
 The schedule is called feasible when there is a solution that puts all activities in the schedule in such a way that they are all executable by the resources needed and do not overlap with conflicting tasks.
-This is a simple form of scheduling, in the examples we will discuss further on more constraints will be added.
+This is a simple form of scheduling in the examples, that we will discuss further on, more constraints will be added.
 Such as for example the precedence constraint, in which one task needs to be finished before the other can start.
 These extra constraints place more demands on the schedule for it to be feasible.
 
 
-%		-What is RCPSP and how can it solve them.
-%		-Why imporant.
-%		-Voorbeelden wat meer uitwerken. Intuitief verhaal.
-Now we have an idea about the uses of resource constraint scheduling, but what is it exactly?
+\subsection{Problem Introduction}
+We now have an idea about the uses of resource constraint scheduling, but what is it exactly?
 The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way.
 This optimization might be either the shortest processing time or the most efficient use of resources.
 In this paper we will focus on the shortest processing time.
@@ -172,30 +147,24 @@ Activities, also called tasks or jobs, are the tasks that need to be executed or
 These activities are the elements that need to be scheduled in the first place.
 Resources are the machines or personnel or equipment needed to perform a specific activity.
 Resources can often perform a specific function and have a maximum capacity of simultaneous activities.
+
 Constraints can be any number of limiting factors to which a specific activity, resource or entire schedule should hold.
-For example, a constraint can be the fact that there is a limited number of one type of resource available (\emph{resource constraint}), or that one specific activity needs to be finished before another specific activity can be performed (\emph{precedence constraint}).
-}
-
-To illustrate the RCPSP, we will give a simplified example of the problem in the following section, using painters as a subject.
-
-\subsection{RCPSP in general}
-The RCPSP concerns itself with finding start times for a set of activities so that the schedule is feasible and usually optimized in some way. 
-An activity is sometimes called a job, task or event in other work. 
-The activities are part of the input of a RCPSP and have a specified duration. 
-There are multiple types of constraints for activities of which one is precedence constraints. 
-Certain activities can only be executed after another activity has been completed. 
-Take for example the painting of a fence. 
-The activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
-Another type of constraint is concerned with resources. 
+A constraint can be the fact that there is a limited number of one type of resource available (\emph{resource constraint}).
 Lets say there are two people working on a house painting project and there is only one painting brush available. 
 The activities ``paint the fence'' and ``paint the door'' cannot be executed simultaneously because they both depend on the availability of the single painting brush. 
+Another constraint can be that one specific activity needs to be finished before another specific activity can be performed (\emph{precedence constraint}).
+Take for example the painting of a fence, the activity ``sand the fence surface" has to be completed before the activity ``paint the fence" can be executed. 
 
 In some practical applications it is useful to have a deadline for the entire schedule. 
-If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a feasible schedule. 
-In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met. 
-The house painting project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activies. 
+If for example the house painting project has to be done before a fixed date because the house will be sold, it would be good to know if there is a schedule which can realize this. 
+In other words, we would like to know if there exists a assignment of start times for all the activities so that the resource requirements and the time requirements are met and the project is finished befor the deadline.
+The project manager might want to consider buying an extra painting brush if such a schedule cannot be devised for the current resources and activities. 
 
-A project is scheduled on a so called time horizon. This time horizon defines the periods over which the activities can be scheduled. Lets say that the house painting manager expresses the duration of activities in hours. It might make sense to schedule the activities on whole hours.
+\TODO{dit is een raar stukje, valt uit de toon}
+A project is scheduled on a so called time horizon.
+This time horizon defines the periods over which the activities can be scheduled.
+Lets say that the house painting manager expresses the duration of activities in hours.
+It might make sense to schedule the activities on whole hours.
 
 The aspects of the RCPSP will be discussed in detail while introducing a running example and introducing a formal notation used in this paper now that we have provided a mental overview of what the RCPSP is. 
 
@@ -258,8 +227,7 @@ This means that they want to finishes all activities in the least amount of time
 
 \subsection{Notation}
 \label{text:definitions}
-Trough this paper we will use a formal notation.
-This notation is explained trough images and the running example, to really understand how the RCPSP is defined in the formal definition.
+The notation for the RCPSP used in this paper is introduced in this section. We explain the notation trough images and the running example. The notation itself is based on work by \citet{brucker99}. 
 
 The \emph{time horizon} is a mapping of real-world time to model-time is indicated by the so called time horizon $T \in \mathbb{N}$.
 The periods within the time horizon $t=1,2,3,\ldots,T$ are also notated as $t_j$ which means the $j$-th time period in the time horizon $T$. 
@@ -289,7 +257,7 @@ For the running example we have a set $W = \{v_0, \ldots v_7\}$.
 Figure \ref{fig:activity_graph} shows $W$ for the running example.
 In the figure $v_0$ and $v_7$ are filled with a shade of gray, because they have a duration of $0$ instead of a duration relative to the width. 
 
-\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
+\emph{Precedence constraints} are specified by a set $E \subseteq \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
 The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Precedence constraints for the dummy activities $v_0$ and $v_7$ are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity.
@@ -330,8 +298,8 @@ In Figure \ref{fig:resource_graph} the usage of the running example is expressed
 A \emph{schedule} is specified by a set $S = \{\start{1}, \ldots, \start{n}\}$.
 In this schedule each activity $v_i \in V$ has a starting time $\start{i}$ which is defined in the schedule $S$.
 When we create a schedule for the running and we also take in account the precedence constraints, you could get the following schedule:
-\{0, 0, 3, 2, 0, 6\}.
-This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}.
+\{0, 0, 3, 2, 0, 6\}. \TODO{geen set maar een vector want volgorde is belangrijk}
+This schedule is called a \emph{time feasible schedule} and is represented in Figure \ref{fig:time_feasible_schedule}. 
 
 The \emph{makespan} of a schedule $S$ is the number of periods required to finish the project using the schedule $S$. The makespan is notated as $\makespan{S} \in T$.
 In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, where the makespan is optimized to a minimum and all the precedence constraints hold.
@@ -375,13 +343,13 @@ $\capa{1} = 2, \capa{2} = 1$
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E \subseteq  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
 Find:
 A feasible schedule $S_f = \{s_1, \ldots s_n\}$, consisting of starting times for the activities in $V$.
-Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E (\start{i} + \dur{i} \leq \start{j})$.
+Where each precedence constraint in $E$ holds, denoted by $\forall (v_i, v_j) \in E$ $(\start{i} + \dur{i} \leq \start{j})$.
 And no resource exceeds its capacity in usage at any time in the schedule, denoted by $\forall r_i \in R, t_j \in T (0 \leq \av{i}{j})$.
 \end{definition}
 
@@ -523,7 +491,7 @@ Each edge now has one value as the weight instead of a range of values.
 \end{figure}
 
 \subsubsection{Distance Matrix}
-From the distance graph, a \emph{Distance Matrix} $D$ can be deduced. A distance matrix can be viewed as a numerical notation of a directed graph and can be used as the input for the all-pairs-shortest-paths algorithm. In this $n$ by $n$ matrix, where $n$ is the number of nodes in the original graph, the value at position $D_{i,j}$, where $i$ and $j$ denote the row and the column number respectively, is the weight of the edge from the node represented by $i$ to the node represented by $j$. 
+From the distance graph, a \emph{Distance Matrix} $D$ can be deduced. A distance matrix can be viewed as a numerical notation of a directed graph. In this $n$ by $n$ matrix, where $n$ is the number of nodes in the original graph, the value at position $D_{i,j}$, where $i$ and $j$ denote the row and the column number respectively, is the weight of the edge from the node represented by $i$ to the node represented by $j$. 
 
 The distance graph can be formatted as a distance matrix $D$ by filling a cell $D_{i,j}$ either with the weight of the edge if there is an edge from the node represented by row $i$ to the the node represented by row $j$ or $\infty$ if there is no edge from the node represented by row $i$ to the the node represented by row $j$.
 
@@ -540,12 +508,11 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 	\label{fig:distance_matrix}
 \end{figure}
 
-\subsubsection{Tightening the bounds}
-The distance matrix is a convenient way to represent the distance graph and ultimately the constraint graph because there is a very simple algorithm to compute the new bounds of the time windows of the edges. 
+\subsubsection{Tightening the weights}
+The distance matrix is a 
 
-This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
-
-How does this lead to valid constraints? Why shortest paths?
+The distance matrix representation
+Floyd-Warshall
 
 \begin{figure}[h]
 	\centering
@@ -662,6 +629,7 @@ According to the definition of the problem, we would like to minimize the makesp
 \end{figure}
 
 Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. 
+
 
 Hoe detect je een contention peak
 Pairwise Selection
