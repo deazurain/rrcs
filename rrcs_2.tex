@@ -292,7 +292,7 @@ For the running example we have a set $W = \{v_0, \ldots v_7\}$.
 Figure \ref{fig:activity_graph} shows $W$ for the running example.
 In the figure $v_0$ and $v_7$ are filled with a shade of gray, because they have a duration of $0$ instead of a duration relative to the width. 
 
-\emph{Precedence constraints} are specified by a set $E = \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
+\emph{Precedence constraints} are specified by a set $E \subseteq \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$
 This means that a precedence relation between activities $v_i$ and $v_j$, where $v_j$ can be started only after $v_i$ is finished, is represented as $(v_i, v_j) \in E$.
 The running example has several precedence constraints between the activities, which make up the following set $E = \{(v_1, v_3), (v_2, v_4), (v_3, v_6), (v_4, v_6), (v_5, v_6)\}$.
 Precedence constraints for the dummy activities $v_0$ and $v_7$ are added to ensure that the starting activity starts before every other activity and that every activity is completed before the ending activity.
@@ -378,7 +378,7 @@ $\capa{1} = 2, \capa{2} = 1$
 
 \begin{definition}
 Given:
-A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E =  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
+A set of activities $V = v_1, \ldots, v_n$, a set of resources $R = \{r_1, \ldots, r_m\}$ and a set of precedence constraints $E \subseteq  \{(v_i, v_j) | v_i \in V, v_j \in V, v_i \neq v_j\}$.
 Where each activity $v_i \in V$ has a duration $\dur{i} \in \mathbb{N}$ and each resource $r_j \in R$ has a capacity $\capa{j} \in \mathbb{N}$. 
 And each activity $v_i \in V$ can use the capacity of a resource $r_j \in R$ with usage $\usage{i}{j} \in \mathbb{N}$.
 
