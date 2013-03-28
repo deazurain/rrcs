@@ -462,10 +462,10 @@ The constraint graph for this example is shown in Figure \ref{fig:stn_example}.
 
 \begin{definition}
 \label{text:stn_definition}
-An STN is a directed graph, denoted by $G_{stn} = (V_{stn}, E_{stn}^-)$, consisting of:
+An STN is a directed graph, denoted by $G_{stn} = (V_{stn}, E_{stn})$, consisting of:
 \begin{itemize}
 \item A set of time points $V_{stn} = \{t_0, \ldots, t_n\}$, where $n = |V_{stn}|$.
-\item A set of edges $V_{stn} \subset E_{stn} \times E_{stn}$, where each edge $(t_i, t_j) \in V_{stn}$ represents a precedence constraint and $V_{stn}^-$ is a transitive reduction of $V$. 
+\item A set of edges $E_{stn} \subset V_{stn} \times V_{stn}$, where each edge $(t_i, t_j) \in E_{stn}$ represents a temporal constraint. 
 \end{itemize}
 Where each edge $(t_i, t_j) \in E_{stn}$ has a $\mindelay{i}{j} \in \mathbb{N}$ and a $\maxdelay{i}{j} \in \mathbb{N}$, representing the minimum and maximum delay between the two time points.
 \end{definition}
@@ -500,28 +500,12 @@ The goal of this graph is to tighten the bounds of the time window for each time
 This can be done using a distance graph and applying the all-paths-closest-pairs algorithm by Floyd and Warshall, which we will introduce next.
 
 \subsubsection{Distance Graph}
+\label{text:distance_graph}
 The distance is a graph representation of the STN in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values.
 In order to reduce the STN to a distance matrix, the edges need to be given a fixed value, instead of a range of a values (as is the case with an STN). 
 In order to do so, all edges $(t_i, t_j)$ in the constraint graph are given the weight of the upper bound of the associated time window. 
 Additionally, for each edge in the constraint graph, an additional edge is added in opposite direction with a weight equal to the negative lower bound of the time window associated with that edge. 
 Each edge now has one value as the weight instead of a range of values. 
-
-\begin{algorithm}[H]
-\label{alg:distance_graph}
-\SetAlgoLined
-$V_{dist} = V_{stn}$\;
-$E_{dist} = E_{stn}$\;
-\ForAll{$(t_i, t_j) \in E_{stn}$}{
-	$E_{dist} = E_{dist} \cup \{(t_j, t_i)\}$\;
-	$\weight{i}{j} = \maxdelay{i}{j}$\;
-	$\weight{j}{i} = -\mindelay{j}{i}$\;
-}
-\caption{Algorithm for converting an STN into a distance graph}
-\end{algorithm}
-
-\begin{definition}
-The directional distance graph $G_{dist} = (V_{dist}, E_{dist})$ is generated from the graph $G_{stn}$ in Section \ref{text:stn_subsec} with Algorithm \ref{alg:distance_graph}
-\end{definition}
 
 \begin{figure}[h]
 	\centering
@@ -552,6 +536,23 @@ The directional distance graph $G_{dist} = (V_{dist}, E_{dist})$ is generated fr
 	\caption{A distance graph for Example \ref{exmp:stn}, with edges that have only one value as weight.}
 \end{figure}
 
+\begin{algorithm}[H]
+\label{alg:distance_graph}
+\SetAlgoLined
+$V_{dist} = V_{stn}$\;
+$E_{dist} = E_{stn}$\;
+\ForAll{$(t_i, t_j) \in E_{stn}$}{
+	$E_{dist} = E_{dist} \cup \{(t_j, t_i)\}$\;
+	$\weight{i}{j} = \maxdelay{i}{j}$\;
+	$\weight{j}{i} = -\mindelay{j}{i}$\;
+}
+\caption{Algorithm for converting an STN into a distance graph}
+\end{algorithm}
+
+\begin{definition}
+The directional distance graph $G_{dist} = (V_{dist}, E_{dist})$ is generated from the graph $G_{stn}$ in Section \ref{text:stn_subsec} with Algorithm \ref{alg:distance_graph}.
+\end{definition}
+
 \subsubsection{Distance Matrix}
 From the distance graph, a \emph{Distance Matrix} $D$ can be deduced. A distance matrix can be viewed as a numerical notation of a directed graph. In this $n$ by $n$ matrix, where $n$ is the number of nodes in the original graph, the value at position $D_{i,j}$, where $i$ and $j$ denote the row and the column number respectively, is the weight of the edge from the node represented by $i$ to the node represented by $j$. 
 
@@ -570,13 +571,41 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 	\label{fig:distance_matrix}
 \end{figure}
 
+\begin{algorithm}[H]
+\label{alg:distance_matrix}
+\SetAlgoLined
+\ForAll{$(t_i, t_j) \in E_{dist}$}{
+	$D_{ij} = \weight{i}{j}$\;
+}
+\caption{Algorithm for converting a distance graph into a distance matrix}
+\end{algorithm}
+
+\begin{definition}
+The $|V|$ by $|V|$ distance matrix $D$ is generated from the distance graph $G_{dist}$ in Section \ref{text:distance_graph} with Algorithm \ref{alg:distance_matrix}.
+\end{definition}
+
 \subsubsection{Tightening the bounds}
 \label{text:floyd}
 The distance matrix is a convenient way to represent the distance graph and ultimately the STN because there is an algorithm to compute the new bounds of the time windows of the edges. 
 
-This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
+\begin{algorithm}[H]
+\label{alg:floyd}
+\SetAlgoLined
+\For{$k \to |V_{dist}|$}{
+	\For{$i \to |V_{dist}|$}{
+		\For{$j \to |V_{dist}|$}{
+			\If{$D_{ik} + D_{kj} < D_{ij}$}{
+				$D_{ij} = D_{ik} + D_{kj}$\;
+			}
+		}
+	}
+}
+\caption{Algorithm for computing the shortest distance between any pair of nodes in a graph by Floyd and Warshall. }
+\end{algorithm}
 
-How does this lead to valid constraints? Why shortest paths?
+This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm is shown in Algorithm \ref{alg:floyd} and was first published in 1962 by Floyd and Warshall \TODO{Reference}.
+The algorithm computes the shortest distance between any pair of nodes in a graph.
+For Example \ref{exmp:stn} the distance matrix is shown in Figure \ref{fig:stn_dist_matrix}.
 
 \begin{figure}[h]
 	\centering
@@ -588,7 +617,13 @@ How does this lead to valid constraints? Why shortest paths?
 	  \textbf{A} 	& -30			& \textbf{-25}	& -5 			& 0 \\
 	\end{tabular}
 	\caption{The distance matrix after applying the Floyd-Warshall algorithm on Figure \ref{fig:distance_matrix}}
+	\label{fig:stn_dist_matrix}
 \end{figure}
+
+The distance matrix shows us if their is a time feasible schedule found by the heuristic algorithm.
+When there aren't any other numbers then $0$ on the diagonal, the heuristic algorithm has found a time feasible solution.
+The absolute value of the negative numbers are showing us the lower bounds of the possible times between the two nodes.
+The positive numbers of the distance matrix are showing us the upper bounds of the possible times between the two nodes.
 
 \subsection{Reduction from RCPSP to STN}
 The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to Example \ref{exmp:running}.
