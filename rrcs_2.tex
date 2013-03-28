@@ -302,7 +302,7 @@ The constraints graph for the running example is represented in Figure \ref{fig:
 
 \begin{figure}[h]
 	\centering
-	\input{tikz/usage}
+	\inputtikz{usage}
 	\caption{Activities, resources and the relation between them for the running example.}
 	\label{fig:resource_graph}
 \end{figure}
@@ -322,8 +322,8 @@ In Figure \ref{fig:resource_graph} the usage of the running example is expressed
 
 \begin{figure}[h]
 	\centering
-	\inputtikz{time_feasible_schedule}
-	\caption{A time feasible schedule for the running example. }
+	\inputtikz{schedule_feasible}
+	\caption{A feasible schedule for the running example. }
 	\label{fig:time_feasible_schedule}
 \end{figure}
 
@@ -338,8 +338,8 @@ In Figure \ref{fig:time_feasible_schedule} we have a time feasible schedule, whe
 
 \begin{figure}[h]
 	\centering
-	\inputtikz{schedule_comparison}
-	\caption{Two possible schedules for the running example. }
+	\inputtikz{schedule_feasible_profile}
+	\caption{Overview of the resource usage by activities over time. }
 	\label{fig:feasible_schedule}
 \end{figure}
 
@@ -410,11 +410,10 @@ In the next section we will describe this heuristic algorithm.
 
 As shown, the RCPSP is a complex problem, to find an optimal solution exponential time is needed.
 In order to find a solution to the RCPSP in a more timely manner, we use an approximation.
-In this chapter we will introduce this approximation, in the form of a \emph{Simple Temporal Network}, or STN.
-After which a reduction of the RCPSP to a STN is given.
-The STN graph gives a representation of the scheduling problem, considering the activities, resources and constraints given in the original problem.
-We will then take a look at the resources and a method to post new activities and constraints to the created STN, using precedence constraint posting.
-The resulting schedule representation is flexible and robust, which makes it very useful for continuous applications.
+In this chapter we will introduce this approximation, using the \emph{Simple Temporal Problem}, or STP.
+STPs are represented with a graph, or Simple Temporal Network, which holds the 
+The STP is a problem for which a polynomial algorithm is known, thus it is a problem that can be solved in a more timely manner than the original RCPSP.
+To represent an RCPSP with an STP,  \emph{Precedence Constraint Posting} (PCP) is used.
 
 %		-Wat gaan we benaderen (relevantie van STN)
 The use of an STN to approximate an RCPSP is specifically practical, while the STN allows us to save multiple starting times per activity.
@@ -449,7 +448,7 @@ Consider the following events which may occur on a typical work day:
 Questions we would now like to ask ourselves are: ``is this information consistent?'' and ``At what time(s) could I have left my home such that the above story would be true?''. 
 Suppose I would have left at 8:10 and drove for 20 minutes and waited 5 minutes at the bridge, I would have arrived at work at 8:35, while I stated that I had arrived at work exactly at 8:30. 
 Given the above constraints, it is not hard to discover that the only possible scenario is that I left home at 8:05 and waited only 5 minutes at the bridge.
-The challenge now is to implement an algorithm that performs the same kind of reasoning.  This can be done by regarding this problem as an STP and represent it using a STN.
+The challenge now is to implement an algorithm that performs the same kind of reasoning.  This can be done by regarding this problem as an STP and represent it using an STN.
 
 \subsubsection{Constraint Graph}
 The first step is to represent the example above as a \emph{constraint graph}. 
@@ -489,9 +488,9 @@ The goal of this graph is to tighten the bounds of the time window for each time
 This can be done using a distance graph and applying the all-paths-closest-pairs algorithm, which we will introduce later.
 
 \subsubsection{Distance Graph}
-The distance is a graph representation of the constraint graph in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values. In order to reduce the STN to a distance matrix, the edges need to be given a fixed value, instead of a range of a values (as is the case with an STN).
-In order to do so, all edges $e_i$ in the constraint graph are given the weight of the upper bound of the associated time window.
-Additionally, for each edge in the constraint graph, an additional edge is added whose weight is equal to the negative lower bound of the time window associated with that edge. 
+The distance is a graph representation of the constraint graph in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values. In order to reduce the STN to a distance matrix, the edges need to be given a fixed value, instead of a range of a values (as is the case with an STN). 
+In order to do so, all edges $e_i$ in the constraint graph are given the weight of the upper bound of the associated time window. 
+Additionally, for each edge in the constraint graph, an additional edge is added in opposite direction with a weight equal to the negative lower bound of the time window associated with that edge. 
 Each edge now has one value as the weight instead of a range of values. 
 
 \begin{figure}[h]
@@ -520,7 +519,7 @@ Each edge now has one value as the weight instead of a range of values.
 			 		edge [bend left]     	node {-5} 			(3);
 	        
 	\end{tikzpicture}
-	\caption{A distance graph for Example \ref{exmp:stn}}
+	\caption{A distance graph for Example \ref{exmp:stn}, with edges that have only one value as weight.}
 \end{figure}
 
 \subsubsection{Distance Matrix}
