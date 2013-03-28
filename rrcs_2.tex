@@ -604,7 +604,7 @@ The distance matrix is a convenient way to represent the distance graph and ulti
 \caption{Algorithm for computing the shortest distance between any pair of nodes in a graph by Floyd and Warshall. }
 \end{algorithm}
 
-This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm is shown in Algorithm \ref{alg:floyd} and was first published in 1962 by Floyd and Warshall \TODO{Reference}.
+This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm \cite{dechter91} is shown in Algorithm \ref{alg:floyd} and was first published in 1962 by Floyd and Warshall.
 The algorithm computes the shortest distance between any pair of nodes in a graph.
 For Example \ref{exmp:stn} the distance matrix is shown in Figure \ref{fig:stn_dist_matrix}.
 
@@ -621,8 +621,9 @@ For Example \ref{exmp:stn} the distance matrix is shown in Figure \ref{fig:stn_d
 	\label{fig:stn_dist_matrix}
 \end{figure}
 
-The distance matrix shows us if their is a time feasible schedule found by the Floyd and Warshall algorithm.
-When there aren't any other numbers then $0$ on the diagonal, the algorithm has found a time feasible solution.
+The distance matrix shows if their is a time feasible schedule found by the Floyd-Warshall algorithm.
+If there entries on the diagonal of the matrix are all $0$, the algorithm has found a time feasible solution. 
+If there is a negative value on the diagonal of the distance matrix, a negative cycle is detected and the original STP is unsolvable \cite{dechter91}.
 The absolute value of the negative numbers are showing us the lower bounds of the possible times between the two nodes.
 The positive numbers of the distance matrix are showing us the upper bounds of the possible times between the two nodes.
 
@@ -699,10 +700,10 @@ The STN in Figure \ref{fig:stn} can be represented as a distance graph and ultim
 \label{text:PCP}
 As seen in the previous section, solving an STP provides us with a set time-feasable schedules. 
 This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
-In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) is used. 
+In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) \cite{policella07} is used. 
 
 \subsubsection{Minimizing the Makespan}
-Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN. According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example can be found in Figure \ref{fig:resource_graph}.
+Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN. According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities also occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example can be found in Figure \ref{fig:resource_graph}.
 
 \begin{figure}[h]
 	\centering
@@ -722,7 +723,7 @@ Since a solution assigns actual values (instead of bounds) to each time point, i
 \end{comment}
 
 \subsubsection{Contention Peak Detection}
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \TODO{reference}.
+Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \cite{lombardi10}.
 
 In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasable schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
 
@@ -730,7 +731,7 @@ In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention p
 \label{text:conflict}
 Once contention peaks are identified, an algorithm is able to select the most critical contention peak (for example where the resource capacity is exceeded the most). This contention peak contains a set of activities of which the combined resource usage exceeds the capacity of the resource. In order to reduce the load on a resource, two activities in this set can be scheduled after each other instead of in parallel. Two activities $(v_i,v_j)$ that belong to the same contention peak are called a \emph{conflict}.
 
-The goal is now to identify a pair of resources in the contention peak in such a way that they resolve the contention peak if these activities are scheduled after each other. There are many different methods for determining this pair \TODO{reference}, in the running example, the contention peak consists of only two activities, namely $v_1$ and $v_2$.
+The goal is now to identify a pair of resources in the contention peak in such a way that they resolve the contention peak if these activities are scheduled after each other. There are many different methods for determining this pair \cite{lombardi10}, in the running example, the contention peak consists of only two activities, namely $v_1$ and $v_2$.
 
 \subsubsection{Conflict Resolution}
 When a conflict ${v_i, v_j}$ is identified, a precedence constraint is added from $v_i$ to $v_j$ only if there is no precedence constraint from $v_j$ to $v_i$ since this would create a cycle in the precede graph. This results in an unsolvable STN since a cycle implies that an activity needs to be executed before itself, which of course, is not possible.
