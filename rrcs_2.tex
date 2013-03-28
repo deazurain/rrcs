@@ -444,7 +444,7 @@ The constraint graph for this example is shown below.
 \end{figure}
 
 The goal of this graph is to tighten the bounds of the time window for each time point, in such a way that if each time point is associated with a value that lies within its time window, the schedule is consistent. 
-This can be done using a distance graph and applying the all-paths-closest-pairs algorithm, which we will introduce later.
+This can be done using a distance graph and applying the all-paths-closest-pairs algorithm by Floyd and Warshall, which we will introduce next.
 
 \subsubsection{Distance Graph}
 The distance is a graph representation of the STN in which the semantics of the nodes remain the same, but all the edges have one value as the weight instead of a range of values.
@@ -501,7 +501,7 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 \end{figure}
 
 \subsubsection{Tightening the bounds}
-The distance matrix is a convenient way to represent the distance graph and ultimately the constraint graph because there is a very simple algorithm to compute the new bounds of the time windows of the edges. 
+The distance matrix is a convenient way to represent the distance graph and ultimately the STN because there is an algorithm to compute the new bounds of the time windows of the edges. 
 
 This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
 
