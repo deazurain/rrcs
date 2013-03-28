@@ -198,7 +198,7 @@ In for example the painting project, it makes sense to express the duration of t
 A period in the painting project would then equal one hour. 
 In another project a period might equal one day or one minute, it all depends on the context of the project. 
 These time periods provide a simple way of dealing with arbitrary time steps. 
-The periods can be linearly layed out on a so called time horizon. 
+The periods can be linearly laid out on a so called time horizon. 
 The length of this time horizon is equal to the deadline of the project. 
 This means that a schedule can be planned over an unlimited amount of periods if the deadline is infinitely far in the future. 
 
@@ -710,9 +710,9 @@ The STN in Figure \ref{fig:stn} can be represented as a distance graph and ultim
 
 \subsection{Precedence Constraint Posting}
 \label{text:PCP}
-As seen in the previous section, solving an STP provides us with a set time-feasable schedules. 
+As seen in the previous section, solving an STP provides us with a set time-feasible schedules. 
 This schedule does not take in consideration the resources that are used and it is possible that resources are overused (as is the case in \emph{Schedule A} in Figure \ref{fig:resource_graph}). 
-In order to make the time-feasable solution also comply with the resource capacity, a method called \emph{Precendence Constraint Posting} (PCP) \cite{policella07} is used. 
+In order to make the time-feasible solution also comply with the resource capacity, a method called \emph{Precedence Constraint Posting} (PCP) \cite{policella07} is used. 
 
 \subsubsection{Minimizing the Makespan}
 Since a solution assigns actual values (instead of bounds) to each time point, in order to obtain a solution, a value needs to be given to each time point $t_i$ in the STN. According to the definition of the problem, we would like to minimize the makespan of a project. The schedule in the STN that has the shortest makespan is the schedule that is created by assigning the lower bound of the time window of each time point and use that as a value. This ensures that each time point occurs as soon as possible, without violating the constraints in the STP. This means that all activities also occur as soon as possible, without violating the precedence constraints in the problem definition. The schedule for the running example can be found in Figure \ref{fig:resource_graph}.
@@ -720,7 +720,7 @@ Since a solution assigns actual values (instead of bounds) to each time point, i
 \begin{figure}[h]
 	\centering
 	\inputtikz{schedule_infeasible_profile}
-	\caption{A time-feasable schedule for the running example along with the the resource profiles.}
+	\caption{A time-feasible schedule for the running example along with the the resource profiles.}
 	\label{fig:resource_graph}
 \end{figure}
 
@@ -735,9 +735,9 @@ Since a solution assigns actual values (instead of bounds) to each time point, i
 \end{comment}
 
 \subsubsection{Contention Peak Detection}
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \cite{lombardi10}.
+Now that we have got a time-feasible schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. When viewing the resource profile, one can easily determine at what time the resource usage exceeds the capacity of the resource by identifying peaks that have a maximum that lies above the capacity of the resource. The set of activities whose simultaneous execution causes the resource usage to exceed its capacity is called a \emph{contention peak}. There are many methods of finding the exact sets, such as collecting sets of maximal peaks \cite{lombardi10}.
 
-In the time-feasable schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasable schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
+In the time-feasible schedule in Figure \ref{fig:resource_graph}, a contention peak of resource $r_1$ can be found at the interval [$t_0$,$t_2$] and is defined by the set $\{v_1,v_2\}$. Note that the resource profiles for a time-feasible schedule for a larger problem with more activities, constraints and resources can contain multiple contention peaks.
 
 \subsubsection{Conflict Extraction}
 \label{text:conflict}
