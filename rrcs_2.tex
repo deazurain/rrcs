@@ -519,7 +519,7 @@ How does this lead to valid constraints? Why shortest paths?
 	\caption{The distance matrix after applying the Floyd-Warshall algorithm on Figure \ref{fig:distance_matrix}}
 \end{figure}
 
-\subsubsection{Reduction to STN}
+\subsection{Reduction to STN}
 The notion of an STN as introduced in the previous paragraph can be used to represent the temporal (time related) aspect of the original RCPSP. Let us explain the reduction of the temporal (time-related) aspect of the problem to an STN according to \TODO{Example}.
 
 The first step of the reduction is taking an empty STN and adding two time points $s_i$ and $e_i$ for each activity $v_i$. 
@@ -529,7 +529,6 @@ Nodes $s_i$ and $e_i$ can be seen as the start node and end node of activity $v_
 Now that the activities are simulated in an STN, it is time to also incorporate the precedence constraints into the STN. This can be quite easily done if one thinks of a RCPSP precedence constraint as being an STN constraint with interval $[0,\infty]$. This means that if two time points $t_i$ and $t_j$ are connected by such an edge, it does not matter how large the interval between the two activities is, as long as it is some positive number. This will simulate the concept of a precedence constraint in an STN.
 
 Using the method outlined in this Section we are able to describe Example \ref{exmp:running} as an STN.
-
 
 \begin{figure}[h]
 	\makebox[\textwidth]{
@@ -605,6 +604,7 @@ According to the definition of the problem, we would like to minimize the makesp
 \TODO{Insert ESTA time-feasable solution here}
 
 \subsubsection{Contention Peak Detection}
+Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. For each resource, its usage can be plotted over time in a graph called the \emph{resource profile}. This profile shows at which
 
 
 \begin{figure}[h]
@@ -621,7 +621,6 @@ According to the definition of the problem, we would like to minimize the makesp
 	\label{fig:resource_graph}
 \end{figure}
 
-Now that we have got a time-feasable schedule for the running example, it is time to look at the resource usage. 
 
 
 Hoe detect je een contention peak
