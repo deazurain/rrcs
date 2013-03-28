@@ -508,11 +508,12 @@ The distance graph can be formatted as a distance matrix $D$ by filling a cell $
 	\label{fig:distance_matrix}
 \end{figure}
 
-\subsubsection{Tightening the weights}
-The distance matrix is a 
+-\subsubsection{Tightening the bounds}
+The distance matrix is a convenient way to represent the distance graph and ultimately the constraint graph because there is a very simple algorithm to compute the new bounds of the time windows of the edges. 
 
-The distance matrix representation
-Floyd-Warshall
+This algorithm is called the \emph{all-pairs-shortest-paths} (APSP) algorithm and was first published in 1962 by Floyd and Warshall \TODO{Reference}. The algorithm computes the shortest distance between any pair of nodes in a graph. 
+
+How does this lead to valid constraints? Why shortest paths?
 
 \begin{figure}[h]
 	\centering
