@@ -1,0 +1,110 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+\usepackage[dutch]{babel}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[numbers]{natbib}
+\usepackage{xcolor}
+% \usepackage[colorlinks,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\usepackage{mathrsfs}
+\usepackage{comment}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\usepackage{nameref}
+\usepackage{wrapfig}
+\usepackage{pgf}
+\usepackage{algorithm2e}
+
+\theoremstyle{definition}
+\providecommand{\SetAlgoLined}{\SetLine}
+\providecommand{\DontPrintSemicolon}{\dontprintsemicolon}
+\newcommand{\inputtikz}[1]{\input{tikz/#1}}
+\inputtikz{preamble}
+% long footnote section fixes
+\dimen\footins=40\baselineskip\relax
+\raggedbottom
+\addtolength{\topskip}{0pt plus 10pt}
+\interfootnotelinepenalty=10000
+\newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+% \newtheorem{example}{Example}[section]
+\newcommand{\res}[0]{\ensuremath{R}} %resources
+\newcommand{\av}[2]{\ensuremath{av(r_{#1}, t_{#2})}} %availability of resource #1 at time #2
+\newcommand{\capa}[1]{\ensuremath{cap(r_{#1})}} %capacity
+\newcommand{\dur}[1]{\ensuremath{dur(v_{#1})}} %durability
+\newcommand{\usage}[2]{\ensuremath{usage(v_{#1}, r_{#2})}} %usage of resource #2 by activity #1
+\newcommand{\start}[1]{\ensuremath{start(v_{#1})}} %start time
+\newcommand{\makespan}[1]{\ensuremath{C_{max}(#1)}} %makespan
+\newcommand{\mindelay}[2]{\ensuremath{delay_{min}(t_{#1}, t_{#2})}} %minimum delay
+\newcommand{\maxdelay}[2]{\ensuremath{delay_{max}(t_{#1}, t_{#2})}} %maximum delay
+\newcommand{\weight}[2]{\ensuremath{weight(t_{#1}, t_{#2})}} %weight
+% \newenvironment{definition}[1][Definition]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+% presentation theme
+\usetheme{Szeged}
+
+% lose the navigation buttons
+\setbeamertemplate{navigation symbols}{}
+
+% insert a local toc for each section
+\AtBeginSection[] {
+    \begin{frame}<beamer>
+        \frametitle{Overzicht}
+        \tableofcontents[currentsection,sectionstyle=show/hide,subsectionstyle=show/show/hide]
+    \end{frame}
+}
+
+% number figures
+\setbeamertemplate{caption}[numbered]
+
+\title[RCPS]{Resource Constrained Project Scheduling\\
+What is it and how can we approach it?}
+\author{Mick van Gelderen}
+\institute{TU Delft}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section*{Intro}
+\begin{frame}
+    \frametitle{Inleiding}
+    \begin{itemize}
+        \item Wie ben ik?
+        \item Wat is het onderwerp van de paper?
+        \item Met wie heb ik dat nog meer gedaan?
+        \item Anekdote uit eigen leven: druk druk, veel plannen bla bla. Dat kan zonder geavanceerd algoritme omdat er de probleem instantie niet zo groot is. 
+        \item Hoe plan je voor grote activiteiten? Voorbeeld trein onderhoud, voorbeeld luchthaven. 
+        \item Geef aan dat er bijzondere voorwaarden zijn waar een schema aan moet voldoen.  Vandaar onderzoek naar een benaderings methode voor  RCPSP want het probleem is NP-hard. 
+        \item Daar komen we allemaal op terug, nu eerst de precieze inhoud
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inhoud}
+    \tableofcontents
+\end{frame}
+
+
+\section{Activity graph}
+\begin{frame}
+	\frametitle{Test123}
+	\vspace{-1em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
+			\inputtikz{schedule_comparison}
+		}}
+		\vspace{-1em}
+		\caption{Activity graph for the running example.}
+		\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+
+\end{document}
