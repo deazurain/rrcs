@@ -97,7 +97,8 @@ What is it and how can we approach it?}
 \section{RCPSP}
 
 % briefly discuss the example project so that the specific examples become more natural
-\subsection{Example project}
+% \subsection{Example project}
+
 \begin{frame}
 	\begin{itemize}
 		\item Explain that we use an example to demonstrate the concepts of RCPSP
@@ -159,15 +160,16 @@ What is it and how can we approach it?}
 		\item Explain what capacity is
 		\item \mick{notation not necessary imo}
 		\item Briefly mention the term usage (the concept of usage should already be clear)
+		\item Make transition to the usage diagram, explain that there are more that the two mentioned activities in the project
 	\end{itemize}
 \end{frame}
 	
 % demonstrate how resources are linked to activities
 \begin{frame}
 	\frametitle{Resource usage}
-	\vspace{-1em}
+	\vspace{-.2em}
 	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
+		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
 			\inputtikz{usage}
 		}}
 		\vspace{-1em}
@@ -178,7 +180,26 @@ What is it and how can we approach it?}
 
 % explain schedules
 \subsection{Schedules}
+\begin{frame}
+	\frametitle{Schedules}
+	\begin{itemize}
+		\item What is a schedule
+		\item What is feasibility
+	\end{itemize}
+\end{frame}
 
+\begin{frame}
+	\frametitle{Feasible schedule}
+	\vspace{-1em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.38\paperwidth}{!}{
+			\inputtikz{schedule_feasible_profile}
+		}}
+		\vspace{-1.2em}
+		\caption{The relation between activities and resources}
+		\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
 
 \subsection{Summary}
 
