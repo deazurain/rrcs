@@ -29,6 +29,7 @@
 \addtolength{\topskip}{0pt plus 10pt}
 \interfootnotelinepenalty=10000
 \newcommand{\TODO}[1]{{\color{red}\textbf{TODO: #1}}}
+\newcommand{\mick}[1]{{\color{red}\emph{#1}}}
 % \newtheorem{example}{Example}[section]
 \newcommand{\res}[0]{\ensuremath{R}} %resources
 \newcommand{\av}[2]{\ensuremath{av(r_{#1}, t_{#2})}} %availability of resource #1 at time #2
@@ -52,8 +53,9 @@
 % insert a local toc for each section
 \AtBeginSection[] {
     \begin{frame}<beamer>
-        \frametitle{Overzicht}
-        \tableofcontents[currentsection,sectionstyle=show/hide,subsectionstyle=show/show/hide]
+        \frametitle{\insertsection~overzicht}
+
+        \tableofcontents[currentsection,sectionstyle=hide/hide,subsectionstyle=show/show/hide]
     \end{frame}
 }
 
@@ -91,20 +93,93 @@ What is it and how can we approach it?}
     \tableofcontents
 \end{frame}
 
+% explain the terminology and concepts of RCPSP
+\section{RCPSP}
 
-\section{Activity graph}
+% briefly discuss the example project so that the specific examples become more natural
+\subsection{Example project}
 \begin{frame}
-	\frametitle{Test123}
+	\begin{itemize}
+		\item Explain that we use an example to demonstrate the concepts of RCPSP
+		\item The example project is concerned with the repainting of a house
+		\item The paintwork is beginning to peel and needs to be redone
+		\item further details will be added during the presentation and a summary is given at the end of this section
+	\end{itemize}
+\end{frame}
+
+% explain activities
+\subsection{Activities}
+\begin{frame}
+	\begin{itemize}
+		\item Explain that an activity is a task or a job that needs to be done
+		\item Give example of an activity
+		\begin{itemize}
+			\item Sand a fence
+			\item Paint a fence
+		\end{itemize}
+		\item introduce notation for the set of activities
+		\item Duration
+		\item \mick{duration notation is not important i think}
+	\end{itemize}
+\end{frame}
+
+% explain precedence constraints
+\subsection{Precedence constraints}
+\begin{frame}
+	\frametitle{Precedence constraints}
+	\begin{itemize}
+		\item Explain that some activities have a certain order in which they should be executed. 
+		\item Take for example sand and paint. This relation is called a precedence constraint
+		\item Show graph of precedence constraints with activities
+	\end{itemize}
+\end{frame}
+
+% demonstrate precedence constraints through graph
+\begin{frame}
+	\frametitle{Activity graph}
 	\vspace{-1em}
 	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
-			\inputtikz{schedule_comparison}
+		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
+			\inputtikz{activity_graph}
 		}}
 		\vspace{-1em}
-		\caption{Activity graph for the running example.}
+		\caption{Activity graph}
 		\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
 
+% explain resource constraints
+\subsection{Resource constraints}
+\begin{frame}
+	\frametitle{Resource constraints}
+	\begin{itemize}
+		\item Explain what a resource is
+		\item Give painting brush example
+		\item introduce resource set notation
+		\item Explain what capacity is
+		\item \mick{notation not necessary imo}
+		\item Briefly mention the term usage (the concept of usage should already be clear)
+	\end{itemize}
+\end{frame}
+	
+% demonstrate how resources are linked to activities
+\begin{frame}
+	\frametitle{Resource usage}
+	\vspace{-1em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
+			\inputtikz{usage}
+		}}
+		\vspace{-1em}
+		\caption{The relation between activities and resources}
+		\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+% explain schedules
+\subsection{Schedules}
+
+
+\subsection{Summary}
 
 \end{document}
