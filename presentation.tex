@@ -63,8 +63,11 @@
 \setbeamertemplate{caption}[numbered]
 
 \title[RCPS]{Resource Constrained Project Scheduling\\
-What is it and how can we approach it?}
-\author{Mick van Gelderen}
+An Approach}
+\author{M. van Gelderen  \and
+    R.M. de Lange \and
+    B. Gris\`el \and
+    F. van Tienen}
 \institute{TU Delft}
 \date{\today}
 
@@ -78,19 +81,68 @@ What is it and how can we approach it?}
 \begin{frame}
     \frametitle{Inleiding}
     \begin{itemize}
-        \item Wie ben ik?
-        \item Wat is het onderwerp van de paper?
-        \item Met wie heb ik dat nog meer gedaan?
-        \item Anekdote uit eigen leven: druk druk, veel plannen bla bla. Dat kan zonder geavanceerd algoritme omdat er de probleem instantie niet zo groot is. 
-        \item Hoe plan je voor grote activiteiten? Voorbeeld trein onderhoud, voorbeeld luchthaven. 
-        \item Geef aan dat er bijzondere voorwaarden zijn waar een schema aan moet voldoen.  Vandaar onderzoek naar een benaderings methode voor  RCPSP want het probleem is NP-hard. 
-        \item Daar komen we allemaal op terug, nu eerst de precieze inhoud
+	\item Veel planningsproblemen in dagelijks leven
+        \item Kleine schaal
+        \item Grote schaal
+	\item Resource Constrained Project Scheduling Problem
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Inhoud}
     \tableofcontents
+\end{frame}
+
+\section{Voorbeeld: schildersproject}
+
+\subsection{Taken}
+\begin{frame}
+	\begin{itemize}
+		\item Deur schuren
+		\item Hek schuren
+		\item Muur verven
+		\item Deur verven
+		\item Hek verven
+		\item Opruimen
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Deur schuren (3 uur)
+		\item Hek schuren (2 uur)
+		\item Muur verven (5 uur)
+		\item Deur verven (2 uur)
+		\item Hek verven (1 uur)
+		\item Opruimen (1 uur)
+	\end{itemize}
+\end{frame}
+
+\subsection{Volgorde}
+\begin{frame}
+	\begin{itemize}
+		\item Volgorde is van belang: \emph{precedence constraints}
+		\item Eerst schuren, daarna verven
+		\item Eerst alle andere taken, daarna opruimen
+	\end{itemize}
+\end{frame}
+
+\subsection{Schema}
+\begin{frame}
+	\begin{itemize}
+		\item Plaatje invoegen
+	\end{itemize}
+\end{frame}
+
+\subsection{Probleem}
+\begin{frame}
+	\begin{itemize}
+		\item Schema werkt, wat gaat er dan toch fout?
+		\item Middelen, of \emph{resources}
+		\item De schilders hebben alleen:
+		\item 1 schuurmachine
+		\item 2 verfkwasten
+	\end{itemize}
 \end{frame}
 
 % explain the terminology and concepts of RCPSP
