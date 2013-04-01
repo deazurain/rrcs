@@ -187,7 +187,7 @@ An Approach}
 	\end{enumerate}
 	
 	\textbf{Gevraagd}\\
-	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt.
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt.
 \end{frame}
 
 \begin{frame}
@@ -198,7 +198,68 @@ An Approach}
 
 \begin{frame}
     	\frametitle{Simple Temporal Problem}
+	
+	\begin{itemize}
+		\item Omstreeks 1990 gepubliceerd
+		\item Is oplosbaar in polynomiale tijd
+	\end{itemize}
    	
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_precedence}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_weighted}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met twee bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_expanded}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf] + activiteiten uitsplitsen)
+	\begin{figure}[ht]
+		\inputtikz{stn}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf] + activiteiten uitsplitsen + dummy)
+	\begin{figure}[ht]
+		\inputtikz{stn_dummy}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	STN met de tight boundaries
 \end{frame}
 
 \begin{frame}
