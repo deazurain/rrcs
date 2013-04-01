@@ -45,6 +45,9 @@
 % \newenvironment{definition}[1][Definition]{\begin{trivlist}
 % \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 
+%\item<2-> laat dat item pas in deel 2 van een slide zien \item<3-6> tussen 3 en 6 etc
+%\section[Kort]{Lange naam} zorgt ervoor dat in de bovenbalk de korte gebruikt wordt en op de slides en toc de lange
+
 % presentation theme
 \usetheme{Szeged}
 
@@ -82,6 +85,78 @@ An Approach}
 \titlepage
 \end{frame}
 
+% Scenario (intuitief, plaatje)
+% Scenario (formeler, en wat willen we bereiken)
+% Hoe gaan we dit oplossen?
+% Om ons heen kijken => er zijn al mensen die een tijdsprobleem hebben opgelost in poly-tijd
+% Laten we eens kijken of we dat kunnen gebruiken (hoe werkt zo'n STN)
+% Ja want precedence constraints zijn om te schrijven naar STN constraints
+% Er is een algoritme om dit op te lossen => oplossing laten zien
+% Uit die oplossing een schema halen
+
+\section*{Scenario}
+
+\begin{frame}
+    \frametitle{Scenario}
+    PLAATJE VAN HUIS MET HEK EN DEUR HIER
+    
+    \begin{center}
+    	De deur, het hek en buitenmuren moeten worden geschilderd
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+    	Hoe doen we dit zo effici\"{e}nt mogelijk?
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Taken}
+    Wat er allemaal moet gebeuren:
+     \begin{itemize}
+    	\item Deur schilderen
+	\item Hek schilderen
+	\item Buitenmuren schilderen
+	\item<2-> Deur schuren
+	\item<2-> Hek schuren
+	\item<3-> Materiaal schoonmaken
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Taken}
+    Wat er allemaal moet gebeuren:
+     \begin{itemize}
+    	\item Deur schilderen (2 uur)
+	\item Hek schilderen (1 uur)
+	\item Buitenmuren schilderen (5 uur)
+	\item Deur schuren (3 uur)
+	\item Hek schuren (2 uur)
+	\item Opruimen (1 uur)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Taken}
+   	Er zijn een aantal voorwaarden:
+	\begin{enumerate}
+	    	\item Een oppervlak moet eerst geschuurd worden voordat het kan worden geschilderd
+		\item Opruimen doe je als laatste
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Taken en Relaties}
+	\vspace{-1em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
+			\inputtikz{activity_graph_simple}
+		}}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
 \section*{Intro}
 \begin{frame}
   \frametitle{Inleiding}
@@ -105,6 +180,7 @@ An Approach}
 
 \begin{frame}
 	\begin{itemize}
+	
 		\item Deur schuren
 		\item Hek schuren
 		\item<2-> Muur verven
@@ -194,7 +270,6 @@ An Approach}
 
 % explain the terminology and concepts of RCPSP
 \section{RCPSP}
-
 
 % explain resource constraints
 \subsection{Resource constraints}
