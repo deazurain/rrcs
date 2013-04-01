@@ -1,0 +1,13 @@
+
+\node (v1) [activity, sanding, minimum width=3cm] at (0,2) {$v_1$};
+\node (v2) [activity, sanding, minimum width=2cm] at (0,1) {$v_2$};
+\node (v3) [activity, painting, minimum width=2cm] at (3,2) {$v_3$};
+\node (v4) [activity, painting, minimum width=1cm] at (2,1) {$v_4$};
+\node (v5) [activity, painting, minimum width=5cm] at (0,0) {$v_5$};
+\node (v6) [activity, sandingpainting, minimum width=1cm] at (5,0) {$v_6$};
+
+\draw[dotted] (v2.south east) -- ++(0,-1) node[anchor=north] {$t_2$};
+\draw[dotted] (v4.south east) -- ++(0,-1) node[anchor=north] {$t_3$};
+\node [anchor=north west] at (0,0) {$t_0$};
+\node [anchor=north] at (5,0) {$t_5$};
+\node [anchor=north] at (6,0) {$t_6$};

@@ -1,5 +1,44 @@
+% luxe!
+\pgfdeclarepatternformonly{swnestripes} {
+	\pgfpoint{0cm}{0cm}
+}{
+	\pgfpoint{2cm}{2cm}
+}{
+	\pgfpoint{1cm}{1cm}
+}{
+		\pgfsetlinewidth{10pt}
+		\pgfpathmoveto{\pgfpoint{0cm}{0cm}}
+		\pgfpathlineto{\pgfpoint{2cm}{2cm}}
+		\pgfusepath{stroke}
+}
+
+% SICKE SHIT YEAA!
+\pgfdeclarepatterninherentlycolored{sandingpainting} {
+	\pgfpoint{0cm}{0cm}
+}{
+	\pgfpoint{4cm}{4cm}
+}{
+	\pgfpoint{2cm}{2cm}
+}{
+		\pgfsetlinewidth{10pt}
+		\pgfsetcolor{orange!28}
+		\pgfpathmoveto{\pgfpoint{0cm}{0cm}}
+		\pgfpathlineto{\pgfpoint{10cm}{10cm}}
+		\pgfpathclose%
+		\pgfusepath{stroke}
+		\pgfsetcolor{blue!14}
+		\pgfpathmoveto{\pgfpoint{1cm}{0cm}}
+		\pgfpathlineto{\pgfpoint{11cm}{10cm}}
+		\pgfpathclose%
+		\pgfusepath{stroke}
+}
+
 \tikzstyle{activity}=[rectangle, draw=black, anchor=south west, minimum height=1cm, minimum width=1cm]
-\tikzstyle{invalid}=[fill=black!8]
+\tikzstyle{sanding}=[pattern=swnestripes, pattern color=orange!28]
+\tikzstyle{painting}=[pattern=swnestripes, pattern color=blue!14]
+\tikzstyle{sandingpainting}=[pattern=sandingpainting]
+
+\tikzstyle{invalid}=[draw=red, ultra thick]
 \tikzstyle{axis}=[->,thick,>=stealth,shorten >=-.3cm,shorten <=-.3cm]
 \tikzstyle{yaxisnode}=[text depth=0pt, text height=2ex, rotate=90, yshift=3.7ex, anchor=north east]
 \tikzstyle{capacity}=[dashed,shorten >=-.3cm, shorten <=-.3cm]
