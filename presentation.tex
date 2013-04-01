@@ -236,6 +236,19 @@ An Approach}
 \end{frame}
 
 \begin{frame}
+	\frametitle{Probleem}
+	\textbf{Gegeven}
+	\begin{enumerate}
+		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur en verbruik per resource
+		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+		\item Een set $R$ van resources $\{r_1, \ldots, r_m\}$ met een bepaalde capaciteit
+	\end{enumerate}
+	
+	\textbf{Gevraagd}\\
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
+\end{frame}
+
+\begin{frame}
 	\begin{itemize}
 		\item \emph{Resource} Constrained Project Scheduling Problem
 		\item Capaciteit van de middelen meenemen in berekening
@@ -253,23 +266,11 @@ An Approach}
 	\end{itemize}
 \end{frame}
 
-% explain the terminology and concepts of RCPSP
-\section{RCPSP}
+% explain the terminology and concepts of PCP
+\section{PCP}
 
 % explain resource constraints
-\subsection{Resource constraints}
-\begin{frame}
-	\frametitle{Resource constraints}
-	\begin{itemize}
-		\item Explain what a resource is
-		\item Give painting brush example
-		\item introduce resource set notation
-		\item Explain what capacity is
-		\item \mick{notation not necessary imo}
-		\item Briefly mention the term usage (the concept of usage should already be clear)
-		\item Make transition to the usage diagram, explain that there are more that the two mentioned activities in the project
-	\end{itemize}
-\end{frame}
+\subsection{RCPSP}
 	
 % demonstrate how resources are linked to activities
 \begin{frame}
