@@ -1,0 +1,26 @@
+\begin{tikzpicture}[
+			->,
+			>=stealth',
+			shorten >=1pt,
+			auto,
+			node distance=2.4cm,
+			scale=0.8, 
+			every node/.style={transform shape},
+		     semithick
+		  ]
+		  \label{fig:reduced-stn}
+		
+		  \node[state] (s2) [thick] 	[]					{$v_2$};
+		  \node[state] (s1) [thick] 	[above of=s2]					{$v_1$};
+		  \node[state] (s3) 	[thick] 	[right of=s1]			{$v_3$};
+		  \node[state] (s4) 	[thick] 	[right of=s2]			{$v_4$};
+		  \node[state] (s5) 	[thick]	[below of=s2]					{$v_5$};
+		  \node[state] (s6)	[thick] 	[right of=s4]			{$v_6$};
+		     
+						
+		\path				(s1) 		edge [dashed] node 		{} 			(s3)
+						(s2) 		edge [dashed] node 		{} 			(s4)
+						(s3) 		edge [dashed] node 		{} 			(s6)
+						(s4) 		edge [dashed] node 		{} 			(s6)
+						(s5) 		edge [dashed] node 		{} 			(s6);
+\end{tikzpicture}

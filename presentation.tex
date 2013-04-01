@@ -185,7 +185,7 @@
 	\end{enumerate}
 	
 	\textbf{Gevraagd}\\
-	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt.
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt.
 \end{frame}
 
 \begin{frame}
@@ -196,13 +196,18 @@
 
 \begin{frame}
     	\frametitle{Simple Temporal Problem}
+	
+	\begin{itemize}
+		\item Omstreeks 1990 gepubliceerd
+		\item Is oplosbaar in polynomiale tijd
+	\end{itemize}
    	
 \end{frame}
 
 \section{Probleem}
 \subsection{Wat klopt er nog niet?}
 \begin{frame}
-\frametitle{Probleem}
+	\frametitle{Probleem}
 	\begin{itemize}
 		\item Volgorde van het schema klopt, wat gaat er dan toch fout?
 		\item<2->  De schilders hebben alleen:
@@ -210,6 +215,62 @@
 		\item<2-> 2 verfkwasten
 		\item<3-> Middelen, of \emph{resources}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_precedence}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_weighted}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met twee bolletjes als nodes + [0,inf])
+	\begin{figure}[ht]
+		\inputtikz{stn_expanded}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf] + activiteiten uitsplitsen)
+	\begin{figure}[ht]
+		\inputtikz{stn}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	Precendence Graph (met bolletjes als nodes + [0,inf] + activiteiten uitsplitsen + dummy)
+	\begin{figure}[ht]
+		\inputtikz{stn_dummy}
+		\vspace{-1em}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Hoe werkt het}
+	
+	STN met de tight boundaries
 \end{frame}
 
 \begin{frame}
@@ -226,15 +287,18 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{Middelen}
 	\begin{itemize}
 		\item Middelen zijn de gereedschappen voor het project
 		\item Nodig om de taken uit te voeren
 		\item Ze hebben een beschikbare capaciteit
+		\item \emph{Resource} Constrained Project Scheduling Problem
 	\end{itemize}
 \end{frame}
 
+\subsection{Resource Constrained Project Scheduling}
 \begin{frame}
-	\frametitle{Probleem}
+	\frametitle{Resource Constrained Project Scheduling}
 	\textbf{Gegeven}
 	\begin{enumerate}
 		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur en verbruik per resource
@@ -243,12 +307,11 @@
 	\end{enumerate}
 	
 	\textbf{Gevraagd}\\
-	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
 \end{frame}
 
 \begin{frame}
 	\begin{itemize}
-		\item \emph{Resource} Constrained Project Scheduling Problem
 		\item Capaciteit van de middelen meenemen in berekening
 		\item Berekenen van het optimale schema gaat in exponenti\"{e}le tijd
 		\item RCPSP is een NP-hard probleem
@@ -272,7 +335,6 @@
 \subsection{Hoe kunnen we dit oplossen?}
 \begin{frame}
 	\begin{itemize}
-		\item Dit is de essentie van RCPSP
 		\item In praktijk is een snellere beslissing nodig
 		\item Kunnen de middelen ook worden weergegeven in de STN?
 	\end{itemize}

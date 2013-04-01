@@ -1,0 +1,37 @@
+% Author: Mick van Gelderen
+% Created from http://www.texample.net/tikz/examples/class-diagram/ and other examples and resources. 
+
+%\documentclass{standalone}
+%\input{tikz}
+
+%\begin{document}
+
+\tikzstyle{precedence}=[->,>=stealth, draw=black!70, thick]
+
+
+	\begin{tikzpicture}[
+		->,
+		>=stealth',
+		shorten >=1pt,
+		auto,
+		node distance=0.8cm,
+	     semithick
+	  ]
+
+    \node[state] (v2) [] {$v_2$};
+    \node[state] (v1) [above=of v2] {$v_1$};
+    \node[state] (v3) [right=of v1] {$v_3$};
+    \node[state] (v4) [below=of v3] {$v_4$};
+    \node[state] (v5) [below=of v2] {$v_5$};
+    \node[state] (v6) [right=1.6cm of v4] {$v_6$};
+
+   \draw[precedence] (v1.east) to[out=0,in=180] node [fill=white, font=\small] {$[0,\infty]$} (v3.west);
+    \draw[precedence] (v2.east) to[out=0,in=180] node [fill=white, font=\small] {$[0,\infty]$} (v4.west);
+    \draw[precedence] (v3.east) to[out=0,in=180] node [fill=white, font=\small] {$[0,\infty]$} (v6.west);
+    \draw[precedence] (v4.east) to[out=0,in=180] node [fill=white, font=\small] {$[0,\infty]$} (v6.west);
+    % start bending from the projection v4 on the line y=v3.y
+    \draw[precedence] (v5.east) -- ($(v5)!(v4)!($(v5)+(1,0)$)$) to[out=0,in=180] node [fill=white] {$[0,\infty]$} (v6.west);
+        
+\end{tikzpicture}
+
+%\end{document}
