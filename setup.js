@@ -1,3 +1,11 @@
+/*
+Project the (left) part of your computer screen to a beamer using xrandr. 
+Useful when you have a fullscreen pdf with notes on the side and only want
+to show one halve of the presentation. 
+Sources 
+	http://zeekish.wordpress.com/2011/03/18/latex-beamer-presentation-on-dual-display-laptop-projector/
+	http://www.tug.org/pracjourn/2010-1/dohmen/dohmen.pdf
+*/
 var sys = require('sys');
 var exec = require('child_process').exec;
 var fs = require('fs');
