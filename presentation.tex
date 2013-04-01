@@ -56,13 +56,12 @@
 \setbeamertemplate{navigation symbols}{}
 
 % insert a local toc for each section
-\AtBeginSection[] {
-    \begin{frame}<beamer>
-        \frametitle{\insertsection~overzicht}
-
-        \tableofcontents[currentsection,sectionstyle=hide/hide,subsectionstyle=show/show/hide]
-    \end{frame}
-}
+%\AtBeginSection[] {
+%    \begin{frame}<beamer>
+%        \frametitle{\insertsection~overzicht}
+%        \tableofcontents[currentsection,sectionstyle=hide/hide,subsectionstyle=show/show/hide]
+%    \end{frame}
+%}
 
 % number figures
 \setbeamertemplate{caption}[numbered]
@@ -257,6 +256,20 @@ An Approach}
 	\end{itemize}
 \end{frame}
 
+% demonstrate how resources are linked to activities
+\begin{frame}
+	\frametitle{Resource gebruik}
+	\vspace{-.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
+			\inputtikz{usage}
+		}}
+		\vspace{-1em}
+		\caption{The relation between activities and resources}
+		\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
 \subsection{Hoe kunnen we dit oplossen?}
 \begin{frame}
 	\begin{itemize}
@@ -271,7 +284,7 @@ An Approach}
 
 % explain resource constraints
 
-\subsection{PCP}
+\subsection{Wat is PCP?}
 \begin{frame}
 	\frametitle{PCP}
 	\textbf{Precedence Constraint Posting}
@@ -326,20 +339,17 @@ An Approach}
 		\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
-	
-% demonstrate how resources are linked to activities
+
+\subsection{Is dit de oplossing?}
 \begin{frame}
-	\frametitle{Resource usage}
-	\vspace{-.2em}
-	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
-			\inputtikz{usage}
-		}}
-		\vspace{-1em}
-		\caption{The relation between activities and resources}
-		\label{fig:activity_graph}
-	\end{figure}
+	\frametitle{Is dit de oplossing?}
+	\begin{itemize}
+		\item Heuristic algoritme
+		\item<2-> Resource constraints naar time constraints
+		\item<3-> Compleetheid en optimaliteit voor snelheid
+	\end{itemize}
 \end{frame}
+	
 
 \subsection{Summary}
 
