@@ -96,6 +96,7 @@ An Approach}
 \section{Voorbeeld: schildersproject}
 
 \subsection{Taken}
+
 \begin{frame}
 	\begin{itemize}
 		\item Deur schuren
@@ -118,13 +119,37 @@ An Approach}
 	\end{itemize}
 \end{frame}
 
+\begin{frame}
+	\begin{itemize}
+		\item Taken zijn de onderdelen van het project
+		\item Deze taken moet gepland worden
+		\item Taken hebben een bepaalde duur
+	\end{itemize}
+\end{frame}
+
 \subsection{Volgorde}
 \begin{frame}
 	\begin{itemize}
-		\item Volgorde is van belang: \emph{precedence constraints}
 		\item Eerst schuren, daarna verven
 		\item Eerst alle andere taken, daarna opruimen
+		\item Volgorde is van belang
+		\item In RCPSP heet dat: \emph{precedence constraints}
 	\end{itemize}
+\end{frame}
+
+% demonstrate precedence constraints through graph
+\begin{frame}
+MISSCHIEN HIER EEN SIMPELERE GRAAF PLAATSEN?
+	\frametitle{Activity graph}
+	\vspace{-1em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
+			\inputtikz{activity_graph}
+		}}
+		\vspace{-1em}
+		\caption{Activity graph}
+		\label{fig:activity_graph}
+	\end{figure}
 \end{frame}
 
 \subsection{Schema}
@@ -134,7 +159,17 @@ An Approach}
 	\end{itemize}
 \end{frame}
 
-\subsection{Probleem}
+\section{Probleem}
+\begin{frame}
+	\begin{itemize}
+		\item Schema werkt, wat gaat er dan toch fout?
+		\item Middelen, of \emph{resources}
+		\item De schilders hebben alleen:
+		\item 1 schuurmachine
+		\item 2 verfkwasten
+	\end{itemize}
+\end{frame}
+
 \begin{frame}
 	\begin{itemize}
 		\item Schema werkt, wat gaat er dan toch fout?
@@ -148,58 +183,6 @@ An Approach}
 % explain the terminology and concepts of RCPSP
 \section{RCPSP}
 
-% briefly discuss the example project so that the specific examples become more natural
-% \subsection{Example project}
-
-\begin{frame}
-	\begin{itemize}
-		\item Explain that we use an example to demonstrate the concepts of RCPSP
-		\item The example project is concerned with the repainting of a house
-		\item The paintwork is beginning to peel and needs to be redone
-		\item further details will be added during the presentation and a summary is given at the end of this section
-	\end{itemize}
-\end{frame}
-
-% explain activities
-\subsection{Activities}
-\begin{frame}
-	\begin{itemize}
-		\item Explain that an activity is a task or a job that needs to be done
-		\item Give example of an activity
-		\begin{itemize}
-			\item Sand a fence
-			\item Paint a fence
-		\end{itemize}
-		\item introduce notation for the set of activities
-		\item Duration
-		\item \mick{duration notation is not important i think}
-	\end{itemize}
-\end{frame}
-
-% explain precedence constraints
-\subsection{Precedence constraints}
-\begin{frame}
-	\frametitle{Precedence constraints}
-	\begin{itemize}
-		\item Explain that some activities have a certain order in which they should be executed. 
-		\item Take for example sand and paint. This relation is called a precedence constraint
-		\item Show graph of precedence constraints with activities
-	\end{itemize}
-\end{frame}
-
-% demonstrate precedence constraints through graph
-\begin{frame}
-	\frametitle{Activity graph}
-	\vspace{-1em}
-	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph}
-		}}
-		\vspace{-1em}
-		\caption{Activity graph}
-		\label{fig:activity_graph}
-	\end{figure}
-\end{frame}
 
 % explain resource constraints
 \subsection{Resource constraints}
