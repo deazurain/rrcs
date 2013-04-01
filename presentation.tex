@@ -215,23 +215,41 @@ An Approach}
 \end{frame}
 
 \section{Probleem}
+\subsection{Wat klopt er nog niet?}
 \begin{frame}
+\frametitle{Probleem}
 	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
+		\item Volgorde van het schema klopt, wat gaat er dan toch fout?
+		\item<2->  De schilders hebben alleen:
+		\item<2-> 1 schuurmachine
+		\item<2-> 2 verfkwasten
+		\item<3-> Middelen, of \emph{resources}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
+		\item Middelen zijn de gereedschappen voor het project
+		\item Nodig om de taken uit te voeren
+		\item Ze hebben een beschikbare capaciteit
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item \emph{Resource} Constrained Project Scheduling Problem
+		\item Capaciteit van de middelen meenemen in berekening
+		\item Berekenen van het optimale schema gaat in exponenti\"{e}le tijd
+		\item RCPSP is een NP-hard probleem
+	\end{itemize}
+\end{frame}
+
+\subsection{Hoe kunnen we dit oplossen?}
+\begin{frame}
+	\begin{itemize}
+		\item Dit is de essentie van RCPSP
+		\item In praktijk is een snellere beslissing nodig
+		\item Kunnen de middelen ook worden weergegeven in de STN?
 	\end{itemize}
 \end{frame}
 
