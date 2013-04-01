@@ -270,7 +270,51 @@ An Approach}
 \section{PCP}
 
 % explain resource constraints
-\subsection{RCPSP}
+
+\subsection{PCP}
+\begin{frame}
+	\frametitle{PCP}
+	\textbf{Precedence Constraint Posting}
+	\begin{itemize}
+		\item<2-> Piek detectie in de resources
+		\item<3-> Conflict extractie
+		\item<4-> Conflict oplossing
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Piek detectie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict extractie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict oplossing}
+	\begin{itemize}
+		\item Activiteiten $v_2$ en $v_1$ gebruiken beide resource $r_1$ in de piek
+		\item Constraint tussen $v_1$ en $v_2$
+	\end{itemize}
+\end{frame}
 	
 % demonstrate how resources are linked to activities
 \begin{frame}
