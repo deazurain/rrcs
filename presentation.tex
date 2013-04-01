@@ -56,13 +56,12 @@
 \setbeamertemplate{navigation symbols}{}
 
 % insert a local toc for each section
-\AtBeginSection[] {
-    \begin{frame}<beamer>
-        \frametitle{\insertsection~overzicht}
-
-        \tableofcontents[currentsection,sectionstyle=hide/hide,subsectionstyle=show/show/hide]
-    \end{frame}
-}
+%\AtBeginSection[] {
+%    \begin{frame}<beamer>
+%        \frametitle{\insertsection~overzicht}
+%        \tableofcontents[currentsection,sectionstyle=hide/hide,subsectionstyle=show/show/hide]
+%    \end{frame}
+%}
 
 % number figures
 \setbeamertemplate{caption}[numbered]
@@ -71,8 +70,7 @@
 \setbeameroption{show notes}
 \setbeameroption{show notes on second screen=right}
 
-\title[RCPS]{Resource Constrained Project Scheduling\\
-An Approach}
+\title[RCPS]{An approach to Resource Constrained Project Scheduling}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -206,6 +204,19 @@ An Approach}
    	
 \end{frame}
 
+\section{Probleem}
+\subsection{Wat klopt er nog niet?}
+\begin{frame}
+	\frametitle{Probleem}
+	\begin{itemize}
+		\item Volgorde van het schema klopt, wat gaat er dan toch fout?
+		\item<2->  De schilders hebben alleen:
+		\item<2-> 1 schuurmachine
+		\item<2-> 2 verfkwasten
+		\item<3-> Middelen, of \emph{resources}
+	\end{itemize}
+\end{frame}
+
 \begin{frame}
     	\frametitle{Hoe werkt het}
 	
@@ -263,60 +274,53 @@ An Approach}
 \end{frame}
 
 \begin{frame}
-\frametitle{Schedule}
+\frametitle{Schema}
 	\vspace{-1.2em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
 			\inputtikz{schedule_infeasible_colored_profile}
 		}}
 		\vspace{-1.3em}
-		\caption{Activity graph}
+		\caption{Schema en resource gebruik}
 		%\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
 
-\section{Probleem}
 \begin{frame}
+	\frametitle{Middelen}
 	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
+		\item Middelen zijn de gereedschappen voor het project
+		\item Nodig om de taken uit te voeren
+		\item Ze hebben een beschikbare capaciteit
+		\item \emph{Resource} Constrained Project Scheduling Problem
 	\end{itemize}
 \end{frame}
 
+\subsection{Resource Constrained Project Scheduling}
 \begin{frame}
-	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
-	\end{itemize}
-\end{frame}
-
-% explain the terminology and concepts of RCPSP
-\section{RCPSP}
-
-% explain resource constraints
-\subsection{Resource constraints}
-\begin{frame}
-	\frametitle{Resource constraints}
-	\begin{itemize}
-		\item Explain what a resource is
-		\item Give painting brush example
-		\item introduce resource set notation
-		\item Explain what capacity is
-		\item \mick{notation not necessary imo}
-		\item Briefly mention the term usage (the concept of usage should already be clear)
-		\item Make transition to the usage diagram, explain that there are more that the two mentioned activities in the project
-	\end{itemize}
-\end{frame}
+	\frametitle{Resource Constrained Project Scheduling}
+	\textbf{Gegeven}
+	\begin{enumerate}
+		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur en verbruik per resource
+		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+		\item Een set $R$ van resources $\{r_1, \ldots, r_m\}$ met een bepaalde capaciteit
+	\end{enumerate}
 	
+	\textbf{Gevraagd}\\
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+		\item Capaciteit van de middelen meenemen in berekening
+		\item Berekenen van het optimale schema gaat in exponenti\"{e}le tijd
+		\item RCPSP is een NP-hard probleem
+	\end{itemize}
+\end{frame}
+
 % demonstrate how resources are linked to activities
 \begin{frame}
-	\frametitle{Resource usage}
+	\frametitle{Resource gebruik}
 	\vspace{-.2em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.7\paperwidth}{!}{
@@ -328,28 +332,86 @@ An Approach}
 	\end{figure}
 \end{frame}
 
-% explain schedules
-\subsection{Schedules}
+\subsection{Hoe kunnen we dit oplossen?}
 \begin{frame}
-	\frametitle{Schedules}
 	\begin{itemize}
-		\item What is a schedule
-		\item What is feasibility
+		\item In praktijk is een snellere beslissing nodig
+		\item Kunnen de middelen ook worden weergegeven in de STN?
+	\end{itemize}
+\end{frame}
+
+% explain the terminology and concepts of PCP
+\section{Precedence Constraint Posting}
+
+% explain resource constraints
+
+\subsection{Wat is PCP?}
+\begin{frame}
+	\frametitle{Precedence Constraint Posting}
+	\begin{itemize}
+		\item<2-> Piek detectie in de resources
+		\item<3-> Conflict extractie
+		\item<4-> Conflict oplossing
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Feasible schedule}
-	\vspace{-1em}
+	\frametitle{Piek detectie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict extractie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile_2}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict oplossing}
+	\begin{itemize}
+		\item Activiteiten $v_2$ en $v_1$ gebruiken beide resource $r_1$ in de piek
+		\item Twee activiteiten die de schuurmachine gebruiken
+		\item<2-> Constraint tussen $v_1$ en $v_2$
+		\item<2-> De deur voor het hek schuren
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Uiteindelijke schema}
+	\vspace{-0.2em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.38\paperwidth}{!}{
 			\inputtikz{schedule_feasible_profile}
 		}}
-		\vspace{-1.2em}
-		\caption{The relation between activities and resources}
 		\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
+
+\subsection{Is dit de oplossing?}
+\begin{frame}
+	\frametitle{Is dit de oplossing?}
+	\begin{itemize}
+		\item Heuristic algoritme
+		\item<2-> Resource constraints naar time constraints
+		\item<3-> Compleetheid en optimaliteit voor snelheid
+	\end{itemize}
+\end{frame}
+	
 
 \subsection{Summary}
 
