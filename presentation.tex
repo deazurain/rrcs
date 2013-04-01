@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\usepackage{etex}
 \usepackage[latin1]{inputenc}
 \usepackage[dutch]{babel}
 
@@ -151,11 +152,26 @@ An Approach}
 	\vspace{-1em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph_simple}
+			\inputtikz{precendence_graph}
 		}}
 		\vspace{-1em}
 	\end{figure}
 \end{frame}
+
+\begin{frame}
+    	\frametitle{Doel}
+   	Gegeven
+	\begin{enumerate}
+		\item Een set $V$ van activiteiten $\{v_1,\dots,v_n\}$ met een tijdsduur $dur(v_i)$
+		\item Een set $E$ precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+	\end{enumerate}
+	
+	Gevraagd
+	Een schema waarin voor elke activiteit in $V$ een starttijd is aangewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt.
+\end{frame}
+
+
+
 
 \section*{Intro}
 \begin{frame}
@@ -219,19 +235,6 @@ An Approach}
 	\end{itemize}
 \end{frame}
 
-% demonstrate precedence constraints through graph
-\begin{frame}
-	\frametitle{Activity graph}
-	\vspace{-1em}
-	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph_simple}
-		}}
-		\vspace{-1em}
-		\caption{Activity graph}
-		\label{fig:activity_graph}
-	\end{figure}
-\end{frame}
 
 \subsection{Schema}
 \begin{frame}
