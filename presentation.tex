@@ -17,6 +17,7 @@
 \usepackage{wrapfig}
 \usepackage{pgf}
 \usepackage{algorithm2e}
+\usepackage{pgfpages}
 
 \theoremstyle{definition}
 \providecommand{\SetAlgoLined}{\SetLine}
@@ -65,7 +66,11 @@
 % number figures
 \setbeamertemplate{caption}[numbered]
 
-\title[RCPSP]{Resource Constrained Project Scheduling\\
+% notes
+\setbeameroption{show notes}
+\setbeameroption{show notes on second screen=right}
+
+\title[RCPS]{Resource Constrained Project Scheduling\\
 An Approach}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
@@ -154,13 +159,14 @@ An Approach}
 
 \section*{Intro}
 \begin{frame}
-    \frametitle{Inleiding}
-    \begin{itemize}
-	\item Veel planningsproblemen in dagelijks leven
-        \item Kleine schaal
-        \item Grote schaal
-	\item Resource Constrained Project Scheduling Problem
-    \end{itemize}
+  \frametitle{Inleiding}
+  \begin{itemize}
+		\item Veel planningsproblemen in dagelijks leven
+		\note{bla }
+		\item Kleine schaal
+		\item Grote schaal
+		\item Resource Constrained Project Scheduling Problem
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -230,7 +236,12 @@ An Approach}
 \subsection{Schema}
 \begin{frame}
 	\begin{itemize}
-		\item Plaatje invoegen
+		\begin{figure}[ht]
+			\centering
+			\input{tikz/schedule_infeasible_colored_profile}
+			\caption{Een schema voor het schildersproject}
+			\label{fig:activity_graph}
+		\end{figure}
 	\end{itemize}
 \end{frame}
 
@@ -257,7 +268,6 @@ An Approach}
 
 % explain the terminology and concepts of RCPSP
 \section{RCPSP}
-
 
 % explain resource constraints
 \subsection{Resource constraints}

@@ -25,6 +25,13 @@
 
 \begin{figure}[ht]
 	\centering
+	\input{tikz/schedule_infeasible_colored}
+	\caption{Infeasible schedule colored}
+	\label{fig:activity_graph}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
 	\input{tikz/schedule_feasible_profile}
 	\caption{Feasible schedule with resource profile}
 	\label{fig:activity_graph}
@@ -39,8 +46,17 @@
 
 \begin{figure}[ht]
 	\centering
+	\input{tikz/schedule_infeasible_colored_profile}
+	\caption{Infeasible schedule with resource profile}
+	\label{fig:activity_graph}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
 	\makebox[\textwidth][c]{
-		\input{tikz/schedule_comparison}
+		\resizebox{\textwidth}{!}{
+			\input{tikz/schedule_comparison}
+		}
 	}
 	\caption{Resource feasibility demonstration}
 	\label{fig:activity_graph}
