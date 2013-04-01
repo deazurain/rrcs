@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\usepackage{etex}
 \usepackage[latin1]{inputenc}
 \usepackage[dutch]{babel}
 
@@ -85,6 +86,23 @@ An Approach}
 \titlepage
 \end{frame}
 
+\section*{Intro}
+\begin{frame}
+  \frametitle{Inleiding}
+  \begin{itemize}
+		\item Veel planningsproblemen in dagelijks leven
+		\note{bla }
+		\item Kleine schaal
+		\item Grote schaal
+		\item Resource Constrained Project Scheduling Problem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inhoud}
+    \tableofcontents
+\end{frame}
+
 % Scenario (intuitief, plaatje)
 % Scenario (formeler, en wat willen we bereiken)
 % Hoe gaan we dit oplossen?
@@ -94,7 +112,7 @@ An Approach}
 % Er is een algoritme om dit op te lossen => oplossing laten zien
 % Uit die oplossing een schema halen
 
-\section*{Scenario}
+\section{Scenario}
 
 \begin{frame}
     \frametitle{Scenario}
@@ -111,6 +129,7 @@ An Approach}
     \end{center}
 \end{frame}
 
+\subsection{Taken}
 \begin{frame}
     \frametitle{Taken}
     Wat er allemaal moet gebeuren:
@@ -133,7 +152,7 @@ An Approach}
 	\item Buitenmuren schilderen (5 uur)
 	\item Deur schuren (3 uur)
 	\item Hek schuren (2 uur)
-	\item Opruimen (1 uur)
+	\item Materiaal schoonmaken (1 uur)
     \end{itemize}
 \end{frame}
 
@@ -142,147 +161,158 @@ An Approach}
    	Er zijn een aantal voorwaarden:
 	\begin{enumerate}
 	    	\item Een oppervlak moet eerst geschuurd worden voordat het kan worden geschilderd
-		\item Opruimen doe je als laatste
+		\item Materiaal schoonmaken doe je als laatste
 	\end{enumerate}
 \end{frame}
 
+\subsection{Taken en Relaties}
 \begin{frame}
 	\frametitle{Taken en Relaties}
 	\vspace{-1em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph_simple}
+			\inputtikz{precendence_graph}
 		}}
 		\vspace{-1em}
 	\end{figure}
 \end{frame}
 
-\section*{Intro}
+\subsection{Doel}
 \begin{frame}
-  \frametitle{Inleiding}
-  \begin{itemize}
-		\item Veel planningsproblemen in dagelijks leven
-		\note{bla }
-		\item Kleine schaal
-		\item Grote schaal
-		\item Resource Constrained Project Scheduling Problem
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Inhoud}
-    \tableofcontents
-\end{frame}
-
-\section[Schildersproject]{Voorbeeld: schildersproject}
-
-\subsection{Taken}
-
-\begin{frame}
-	\begin{itemize}
+    	\frametitle{Doel}
+   	\textbf{Gegeven}
+	\begin{enumerate}
+		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur
+		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+	\end{enumerate}
 	
-		\item Deur schuren
-		\item Hek schuren
-		\item<2-> Muur verven
-		\item<2-> Deur verven
-		\item<2-> Hek verven
-		\item<3-> Opruimen
-	\end{itemize}
+	\textbf{Gevraagd}\\
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt.
 \end{frame}
 
 \begin{frame}
+	\begin{center}
+		Is er een probleem wat hier op lijkt? Heeft iemand een soortgelijk probleem al opgelost?
+	\end{center}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{Simple Temporal Problem}
+   	
+\end{frame}
+
+\section{Probleem}
+\subsection{Wat klopt er nog niet?}
+\begin{frame}
+\frametitle{Probleem}
 	\begin{itemize}
-		\item Deur schuren (3 uur)
-		\item Hek schuren (2 uur)
-		\item<2-> Muur verven (5 uur)
-		\item<2-> Deur verven (2 uur)
-		\item<2-> Hek verven (1 uur)
-		\item<3-> Opruimen (1 uur)
+		\item Volgorde van het schema klopt, wat gaat er dan toch fout?
+		\item<2->  De schilders hebben alleen:
+		\item<2-> 1 schuurmachine
+		\item<2-> 2 verfkwasten
+		\item<3-> Middelen, of \emph{resources}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\begin{itemize}
-		\item Taken zijn de onderdelen van het project
-		\item Deze taken moet gepland worden
-		\item Taken hebben een bepaalde duur
-	\end{itemize}
-\end{frame}
-
-\subsection{Volgorde}
-\begin{frame}
-	\begin{itemize}
-		\item Eerst schuren, daarna verven
-		\item Eerst alle andere taken, daarna opruimen
-		\item Volgorde is van belang
-		\item In RCPSP heet dat: \emph{precedence constraints}
-	\end{itemize}
-\end{frame}
-
-% demonstrate precedence constraints through graph
-\begin{frame}
-	\frametitle{Activity graph}
-	\vspace{-1em}
-	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph_simple}
-		}}
-		\vspace{-1em}
-		\caption{Activity graph}
-		\label{fig:activity_graph}
-	\end{figure}
-\end{frame}
-
-\subsection{Schema}
-\begin{frame}
-\frametitle{Schedule}
+\frametitle{Schema}
 	\vspace{-1.2em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
 			\inputtikz{schedule_infeasible_colored_profile}
 		}}
 		\vspace{-1.3em}
-		\caption{Activity graph}
+		\caption{Schema zonder en met resource constraints}
 		%\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
 
-\section{Probleem}
 \begin{frame}
 	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
+		\item Middelen zijn de gereedschappen voor het project
+		\item Nodig om de taken uit te voeren
+		\item Ze hebben een beschikbare capaciteit
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
+	\frametitle{Probleem}
+	\textbf{Gegeven}
+	\begin{enumerate}
+		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur en verbruik per resource
+		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+		\item Een set $R$ van resources $\{r_1, \ldots, r_m\}$ met een bepaalde capaciteit
+	\end{enumerate}
+	
+	\textbf{Gevraagd}\\
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precendence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
+\end{frame}
+
+\begin{frame}
 	\begin{itemize}
-		\item Schema werkt, wat gaat er dan toch fout?
-		\item Middelen, of \emph{resources}
-		\item De schilders hebben alleen:
-		\item 1 schuurmachine
-		\item 2 verfkwasten
+		\item \emph{Resource} Constrained Project Scheduling Problem
+		\item Capaciteit van de middelen meenemen in berekening
+		\item Berekenen van het optimale schema gaat in exponenti\"{e}le tijd
+		\item RCPSP is een NP-hard probleem
 	\end{itemize}
 \end{frame}
 
-% explain the terminology and concepts of RCPSP
-\section{RCPSP}
+\subsection{Hoe kunnen we dit oplossen?}
+\begin{frame}
+	\begin{itemize}
+		\item Dit is de essentie van RCPSP
+		\item In praktijk is een snellere beslissing nodig
+		\item Kunnen de middelen ook worden weergegeven in de STN?
+	\end{itemize}
+\end{frame}
+
+% explain the terminology and concepts of PCP
+\section{PCP}
 
 % explain resource constraints
-\subsection{Resource constraints}
+
+\subsection{PCP}
 \begin{frame}
-	\frametitle{Resource constraints}
+	\frametitle{PCP}
+	\textbf{Precedence Constraint Posting}
 	\begin{itemize}
-		\item Explain what a resource is
-		\item Give painting brush example
-		\item introduce resource set notation
-		\item Explain what capacity is
-		\item \mick{notation not necessary imo}
-		\item Briefly mention the term usage (the concept of usage should already be clear)
-		\item Make transition to the usage diagram, explain that there are more that the two mentioned activities in the project
+		\item<2-> Piek detectie in de resources
+		\item<3-> Conflict extractie
+		\item<4-> Conflict oplossing
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Piek detectie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict extractie}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema zonder en met resource constraints}
+		%\label{fig:activity_graph}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Conflict oplossing}
+	\begin{itemize}
+		\item Activiteiten $v_2$ en $v_1$ gebruiken beide resource $r_1$ in de piek
+		\item Constraint tussen $v_1$ en $v_2$
 	\end{itemize}
 \end{frame}
 	
