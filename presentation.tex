@@ -93,7 +93,7 @@ An Approach}
     \tableofcontents
 \end{frame}
 
-\section{Voorbeeld: schildersproject}
+\section[Schildersproject]{Voorbeeld: schildersproject}
 
 \subsection{Taken}
 
@@ -112,10 +112,10 @@ An Approach}
 	\begin{itemize}
 		\item Deur schuren (3 uur)
 		\item Hek schuren (2 uur)
-		\item Muur verven (5 uur)
-		\item Deur verven (2 uur)
-		\item Hek verven (1 uur)
-		\item Opruimen (1 uur)
+		\item<2-> Muur verven (5 uur)
+		\item<2-> Deur verven (2 uur)
+		\item<2-> Hek verven (1 uur)
+		\item<3-> Opruimen (1 uur)
 	\end{itemize}
 \end{frame}
 
@@ -139,12 +139,11 @@ An Approach}
 
 % demonstrate precedence constraints through graph
 \begin{frame}
-MISSCHIEN HIER EEN SIMPELERE GRAAF PLAATSEN?
 	\frametitle{Activity graph}
 	\vspace{-1em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.8\paperwidth}{!}{
-			\inputtikz{activity_graph}
+			\inputtikz{activity_graph_simple}
 		}}
 		\vspace{-1em}
 		\caption{Activity graph}
