@@ -86,6 +86,23 @@ An Approach}
 \titlepage
 \end{frame}
 
+\section*{Intro}
+\begin{frame}
+  \frametitle{Inleiding}
+  \begin{itemize}
+		\item Veel planningsproblemen in dagelijks leven
+		\note{bla }
+		\item Kleine schaal
+		\item Grote schaal
+		\item Resource Constrained Project Scheduling Problem
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inhoud}
+    \tableofcontents
+\end{frame}
+
 % Scenario (intuitief, plaatje)
 % Scenario (formeler, en wat willen we bereiken)
 % Hoe gaan we dit oplossen?
@@ -95,7 +112,7 @@ An Approach}
 % Er is een algoritme om dit op te lossen => oplossing laten zien
 % Uit die oplossing een schema halen
 
-\section*{Scenario}
+\section{Scenario}
 
 \begin{frame}
     \frametitle{Scenario}
@@ -112,6 +129,7 @@ An Approach}
     \end{center}
 \end{frame}
 
+\subsection{Taken}
 \begin{frame}
     \frametitle{Taken}
     Wat er allemaal moet gebeuren:
@@ -134,7 +152,7 @@ An Approach}
 	\item Buitenmuren schilderen (5 uur)
 	\item Deur schuren (3 uur)
 	\item Hek schuren (2 uur)
-	\item Opruimen (1 uur)
+	\item Materiaal schoonmaken (1 uur)
     \end{itemize}
 \end{frame}
 
@@ -143,10 +161,11 @@ An Approach}
    	Er zijn een aantal voorwaarden:
 	\begin{enumerate}
 	    	\item Een oppervlak moet eerst geschuurd worden voordat het kan worden geschilderd
-		\item Opruimen doe je als laatste
+		\item Materiaal schoonmaken doe je als laatste
 	\end{enumerate}
 \end{frame}
 
+\subsection{Taken en Relaties}
 \begin{frame}
 	\frametitle{Taken en Relaties}
 	\vspace{-1em}
@@ -158,6 +177,7 @@ An Approach}
 	\end{figure}
 \end{frame}
 
+\subsection{Doel}
 \begin{frame}
     	\frametitle{Doel}
    	\textbf{Gegeven}
@@ -181,71 +201,6 @@ An Approach}
    	
 \end{frame}
 
-
-\section*{Intro}
-\begin{frame}
-  \frametitle{Inleiding}
-  \begin{itemize}
-		\item Veel planningsproblemen in dagelijks leven
-		\note{bla }
-		\item Kleine schaal
-		\item Grote schaal
-		\item Resource Constrained Project Scheduling Problem
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Inhoud}
-    \tableofcontents
-\end{frame}
-
-\section[Schildersproject]{Voorbeeld: schildersproject}
-
-\subsection{Taken}
-
-\begin{frame}
-	\begin{itemize}
-	
-		\item Deur schuren
-		\item Hek schuren
-		\item<2-> Muur verven
-		\item<2-> Deur verven
-		\item<2-> Hek verven
-		\item<3-> Opruimen
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{itemize}
-		\item Deur schuren (3 uur)
-		\item Hek schuren (2 uur)
-		\item<2-> Muur verven (5 uur)
-		\item<2-> Deur verven (2 uur)
-		\item<2-> Hek verven (1 uur)
-		\item<3-> Opruimen (1 uur)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{itemize}
-		\item Taken zijn de onderdelen van het project
-		\item Deze taken moet gepland worden
-		\item Taken hebben een bepaalde duur
-	\end{itemize}
-\end{frame}
-
-\subsection{Volgorde}
-\begin{frame}
-	\begin{itemize}
-		\item Eerst schuren, daarna verven
-		\item Eerst alle andere taken, daarna opruimen
-		\item Volgorde is van belang
-		\item In RCPSP heet dat: \emph{precedence constraints}
-	\end{itemize}
-\end{frame}
-
-
-\subsection{Schema}
 \begin{frame}
 \frametitle{Schedule}
 	\vspace{-1.2em}
