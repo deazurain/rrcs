@@ -114,17 +114,11 @@
 
 \begin{frame}
     \frametitle{Scenario}
-    PLAATJE VAN HUIS MET HEK EN DEUR HIER
-    
-    \begin{center}
-    	De deur, het hek en buitenmuren moeten worden geschilderd
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \begin{center}
-    	Hoe doen we dit zo effici\"{e}nt mogelijk?
-    \end{center}
+    \begin{itemize}
+    	\item We gaan een huis schilderen
+    	\item De deur, het hek en buitenmuren moeten worden geschilderd
+    	\item Hoe doen we dit zo effici\"{e}nt mogelijk?
+    \end{itemize}
 \end{frame}
 
 \subsection{Taken}
@@ -158,8 +152,8 @@
     	\frametitle{Taken}
    	Er zijn een aantal voorwaarden:
 	\begin{enumerate}
-	    	\item Een oppervlak moet eerst geschuurd worden voordat het kan worden geschilderd
-		\item Materiaal schoonmaken doe je als laatste
+	    	\item Houten oppervlak moet eerst geschuurd, daarna geschilderd
+		\item Materiaal schoonmaken als laatste
 	\end{enumerate}
 \end{frame}
 
@@ -172,6 +166,7 @@
 			\inputtikz{precendence_graph}
 		}}
 		\vspace{-1em}
+		\caption{Volgorde van de taken}
 	\end{figure}
 \end{frame}
 
@@ -185,15 +180,16 @@
 	\end{enumerate}
 	
 	\textbf{Gevraagd}\\
-	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt.
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle volgorde relaties in $E$ voldaan wordt.
 \end{frame}
 
 \begin{frame}
 	\begin{center}
-		Is er een probleem wat hier op lijkt? Heeft iemand een soortgelijk probleem al opgelost?
+		Is een soortgelijk probleem al opgelost?
 	\end{center}
 \end{frame}
 
+\subsection{Simple Temporal Problem}
 \begin{frame}
     	\frametitle{Simple Temporal Problem}
 	
@@ -210,6 +206,7 @@
 	\begin{figure}[ht]
 		\inputtikz{stn_precedence}
 		\vspace{-1em}
+		\caption{Volgorde vastgelegd in graaf}
 	\end{figure}
 \end{frame}
 
@@ -229,6 +226,7 @@
 	\begin{figure}[ht]
 		\inputtikz{stn_weighted}
 		\vspace{-1em}
+		\caption{Gewichten toegevoegd}
 	\end{figure}
 \end{frame}
 
@@ -238,6 +236,7 @@
 	\begin{figure}[ht]
 		\inputtikz{stn_expanded}
 		\vspace{-1em}
+		\caption{Extra knoop per taak}
 	\end{figure}
 \end{frame}
 
@@ -247,6 +246,7 @@
 	\begin{figure}[ht]
 		\inputtikz{stn}
 		\vspace{-1em}
+		\caption{Gewichten voor duur van de taken}
 	\end{figure}
 \end{frame}
 
@@ -254,21 +254,20 @@
     	\frametitle{Hoe werkt het}
 	
 	\begin{figure}[ht]
-		\inputtikz{stn_dummy}
+		\makebox[\textwidth][c]{\resizebox{1\paperwidth}{!}{
+			\inputtikz{stn_dummy}
+		}}
 		\vspace{-1em}
+		\caption{Dummy start en eind toegevoegd}
 	\end{figure}
 \end{frame}
 
 \begin{frame}
     	\frametitle{Hoe werkt het}
-	
-	STN met de tight boundaries
-\end{frame}
-
-\begin{frame}
-    	\frametitle{Hoe werkt het}
-	
-	Schema eruit halen met starttijden
+	\begin{itemize}
+		\item STN met de tight boundaries
+		\item Schema eruit halen met starttijden
+	\end{itemize}
 \end{frame}
 
 \section{Probleem}
@@ -276,7 +275,7 @@
 \begin{frame}
 	\frametitle{Probleem}
 	\begin{itemize}
-		\item Volgorde van het schema klopt, wat gaat er dan toch fout?
+		\item Volgorde van het schema klopt nu, wat gaat er dan toch fout?
 		\item<2->  De schilders hebben alleen:
 		\item<2-> 1 schuurmachine
 		\item<2-> 2 verfkwasten
@@ -321,14 +320,6 @@
 	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
 \end{frame}
 
-\begin{frame}
-	\begin{itemize}
-		\item Capaciteit van de middelen meenemen in berekening
-		\item Berekenen van het optimale schema gaat in exponenti\"{e}le tijd
-		\item RCPSP is een NP-hard probleem
-	\end{itemize}
-\end{frame}
-
 % demonstrate how resources are linked to activities
 \begin{frame}
 	\frametitle{Resource gebruik}
@@ -338,14 +329,19 @@
 			\inputtikz{usage_nl}
 		}}
 		\vspace{-1em}
-		\caption{The relation between activities and resources}
+		\caption{De relatie tussen taken en middelen}
 		\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
 
+
 \subsection{Hoe kunnen we dit oplossen?}
 \begin{frame}
+	\frametitle{Hoe kunnen we dit oplossen?}
 	\begin{itemize}
+		\item Capaciteit van de middelen in berekening
+		\item Optimale schema in exponenti\"{e}le tijd
+		\item RCPSP is een NP-hard probleem
 		\item In praktijk is een snellere beslissing nodig
 		\item Kunnen de middelen ook worden weergegeven in de STN?
 	\end{itemize}
@@ -356,13 +352,13 @@
 
 % explain resource constraints
 
-\subsection{Wat is PCP?}
+\subsection{Hoe werkt PCP?}
 \begin{frame}
 	\frametitle{Precedence Constraint Posting}
 	\begin{itemize}
-		\item<2-> Piek detectie in de resources
-		\item<3-> Conflict extractie
-		\item<4-> Conflict oplossing
+		\item Piek detectie in de resources
+		\item Conflict extractie
+		\item Conflict oplossing
 	\end{itemize}
 \end{frame}
 
@@ -374,7 +370,7 @@
 			\inputtikz{schedule_infeasible_colored_profile}
 		}}
 		\vspace{-1.3em}
-		\caption{Schema zonder en met resource constraints}
+		\caption{Conflict in het schema}
 		%\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
@@ -387,7 +383,7 @@
 			\inputtikz{schedule_infeasible_colored_profile_2}
 		}}
 		\vspace{-1.3em}
-		\caption{Schema zonder en met resource constraints}
+		\caption{Twee taken die voor conflict zorgen}
 		%\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
@@ -397,19 +393,21 @@
 	\begin{itemize}
 		\item Activiteiten $v_2$ en $v_1$ gebruiken beide resource $r_1$ in de piek
 		\item Twee activiteiten die de schuurmachine gebruiken
-		\item<2-> Constraint tussen $v_1$ en $v_2$
-		\item<2-> De deur voor het hek schuren
+		\item<2-> Volgorde: $v_1$ voor $v_2$
+		\item<2-> Oftewel: eerst deur dan hek schuren
 	\end{itemize}
 \end{frame}
 
+\subsection{Resultaat}
 \begin{frame}
-	\frametitle{Uiteindelijke schema}
+	\frametitle{Resultaat}
 	\vspace{-0.2em}
 	\begin{figure}[ht]
 		\makebox[\textwidth][c]{\resizebox{.38\paperwidth}{!}{
 			\inputtikz{schedule_feasible_profile}
 		}}
-		\label{fig:activity_graph}
+		\vspace{-1.3em}
+		\caption{Een uiteindelijk juist schema}
 	\end{figure}
 \end{frame}
 
@@ -417,13 +415,16 @@
 \begin{frame}
 	\frametitle{Is dit de oplossing?}
 	\begin{itemize}
-		\item Heuristic algoritme
-		\item<2-> Resource constraints naar time constraints
-		\item<3-> Compleetheid en optimaliteit voor snelheid
+		\item Heuristisch algoritme
+		\item Resource constraints naar tijd constraints
+		\item Compleetheid en optimaliteit inruilen voor snelheid
 	\end{itemize}
 \end{frame}
 	
 
-\subsection{Summary}
+\section{Demo}
+\begin{frame}
+	\frametitle{Demo}
+\end{frame}
 
 \end{document}
