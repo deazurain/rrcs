@@ -364,10 +364,25 @@ Probleem is \textbf{moeilijk}!}
 		\item Capaciteit van de middelen in berekening
 		\item Optimale schema in exponenti\"{e}le tijd
 		\item RCPSP is een NP-hard probleem
-		\item In praktijk is een snellere beslissing nodig
-		\item Kunnen de middelen ook worden weergegeven in de STN?
 	\end{itemize}
 	\note{
+We gaan naar een \textbf{voorbeeld}.}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Voorbeeld}
+	\begin{itemize}
+		\item 1 planner
+		\item 6-10 verschillende resources
+		\item 30 treinen
+		\item 20-30 taken
+		\item<2-> 1 week plannen geeft \textbf{$600! \approx 1,27 * 10^1408$} mogelijkheden
+		\item<3-> In praktijk is een snellere beslissing nodig
+		\item<3-> Kunnen de middelen ook worden weergegeven in de STN?
+	\end{itemize}
+	\note{
+6-10 resource types, 30 treinen, 20-30 taken\\
+
 Manier om probleem te reduceren naar STN.}
 \end{frame}
 
@@ -461,9 +476,11 @@ Zelfde manier als STN!}
 		\item Heuristisch algoritme
 		\item Resource constraints naar tijd constraints
 		\item Compleetheid en optimaliteit inruilen voor snelheid
+		\item<2-> \textbf{There is no free lunch in computer science}
 	\end{itemize}
 	\note{
-Er bestaat geen oplossing tenzij P=NP!}
+Er bestaat geen oplossing tenzij P=NP!\\
+\textbf{There is no free lunch in computer science}}
 \end{frame}
 	
 
