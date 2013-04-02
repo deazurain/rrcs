@@ -89,11 +89,13 @@
   \frametitle{Inleiding}
   \begin{itemize}
 		\item Veel planningsproblemen in dagelijks leven
-		\note{bla }
 		\item Kleine schaal
 		\item Grote schaal
 		\item Resource Constrained Project Scheduling Problem
   \end{itemize}
+  \note{
+Schemas van treinen\\
+Schemas van vlieguitgen}
 \end{frame}
 
 \begin{frame}
@@ -133,6 +135,10 @@
 	\item<2-> Hek schuren
 	\item<3-> Materiaal schoonmaken en opruimen
     \end{itemize}
+  \note{
+Zijn de \textbf{activiteiten}.\\
+Deur en hek van hout, geschuurd worden.\\
+Alles schoonmaken.}
 \end{frame}
 
 \begin{frame}
@@ -155,6 +161,8 @@
 	    	\item Houten oppervlak moet geschuurd worden voordat het kan worden geschilderd
 		\item Materiaal schoonmaken moet als laatste
 	\end{enumerate}
+	\note{
+Zijn de \textbf{precedence constraints}.}
 \end{frame}
 
 \subsection{Taken en Relaties}
@@ -168,7 +176,11 @@
 		\vspace{-1em}
 		\caption{Volgorde van de taken}
 	\end{figure}
-	\note{Dit zijn Precedence Relaties}
+	\note{
+Is een gereduceerde graaf.\\
+Geen lijn tussen schuren en opruimen.\\
+Worden ook precedence relaties genoemd.
+}
 \end{frame}
 
 \subsection{Doel}
@@ -325,6 +337,8 @@
 		\item<2-> 2 verfkwasten
 		\item<3-> Middelen, of \emph{resources}
 	\end{itemize}
+	\note{
+Er zijn niet genoeg \textbf{resources}.}
 \end{frame}
 
 \begin{frame}
@@ -338,6 +352,8 @@
 		\caption{Schema en resource gebruik}
 		%\label{fig:activity_graph}
 	\end{figure}
+	\note{
+De \textbf{deur} en het \textbf{hek} tegelijk schuren.}
 \end{frame}
 
 \begin{frame}
@@ -362,6 +378,9 @@
 	
 	\textbf{Gevraagd}\\
 	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt en een resource op geen enkel tijdstip over zijn capaciteit heen gaat.
+	\note{
+Taken hebben een \textbf{verbruik}.\\
+\textbf{Capaciteit} van resources niet overschrijden.}
 \end{frame}
 
 % demonstrate how resources are linked to activities
@@ -376,6 +395,9 @@
 		\caption{De relatie tussen taken en resources}
 		\label{fig:activity_graph}
 	\end{figure}
+	\note{
+Simpel probleem heeft ingewikkelde graaf.\\
+Probleem is \textbf{moeilijk}!}
 \end{frame}
 
 
@@ -389,6 +411,8 @@
 		\item In praktijk is een snellere beslissing nodig
 		\item Kunnen de middelen ook worden weergegeven in de STN?
 	\end{itemize}
+	\note{
+Manier om probleem te reduceren naar STN.}
 \end{frame}
 
 % explain the terminology and concepts of PCP
@@ -404,6 +428,14 @@
 		\item Conflict extractie
 		\item Conflict oplossing
 	\end{itemize}
+	\note{
+Een mogelijke manier is PCP.\\
+Verschillende stappen:\\
+\begin{itemize}
+	\item Piek detectie in de resources
+	\item Conflict extractie
+	\item Conflict oplossing
+\end{itemize}}
 \end{frame}
 
 \begin{frame}
@@ -417,6 +449,9 @@
 		\caption{Conflict in het schema}
 		%\label{fig:activity_graph}
 	\end{figure}
+	\note{
+Piek bij de \textbf{schuurmachine}.\\
+Tussen \textbf{0 en 2}.}
 \end{frame}
 
 \begin{frame}
@@ -430,6 +465,9 @@
 		\caption{Twee taken die voor conflict zorgen}
 		%\label{fig:activity_graph}
 	\end{figure}
+	\note{
+Twee activities, \textbf{deur en hek schuren}.
+}
 \end{frame}
 
 \begin{frame}
@@ -440,6 +478,8 @@
 		\item<2-> Volgorde: $v_1$ voor $v_2$
 		\item<2-> Oftewel: eerst deur dan hek schuren
 	\end{itemize}
+	\note{
+Precedence constraint toevoegen, $(v_1, v_2)$.}
 \end{frame}
 
 \subsection{Resultaat}
@@ -453,6 +493,9 @@
 		\vspace{-1.3em}
 		\caption{Een uiteindelijk juist schema}
 	\end{figure}
+	\note{
+Na oplossing via \textbf{kortste pad}, Floyd Warshall.\\
+Zelfde manier als STN!}
 \end{frame}
 
 \subsection{Is dit de oplossing?}
@@ -463,12 +506,15 @@
 		\item Resource constraints naar tijd constraints
 		\item Compleetheid en optimaliteit inruilen voor snelheid
 	\end{itemize}
+	\note{
+Er bestaat geen oplossing tenzij P=NP!}
 \end{frame}
 	
 
 \section{Demo}
 \begin{frame}
 	\frametitle{Demo}
+	\note{Opschieten met die demo!}
 \end{frame}
 
 \end{document}
