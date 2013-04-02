@@ -17,9 +17,17 @@ var screen = {
 	id: 'LVDS1'
 };
 
+/*
 var beamer = {
 	width: 1024,
 	height: 768,
+	id: 'VGA1'
+};
+*/
+
+var beamer = {
+	width: 1920,
+	height: 1080,
 	id: 'HDMI1'
 };
 
@@ -31,7 +39,7 @@ var y = round(screen.height/2 - 3/16*screen.width);
 var s = round(1000*(screen.width/2/beamer.width))/1000;
 
 var cmd = 'xrandr --output ' + screen.id + ' --mode ' + screen.width + 'x' + screen.height +  ' --primary' + 
-	' --output ' + beamer.id + ' --mode ' + beamer.width + 'x' + beamer.height +  ' --scale ' + s + 'x' + x +  ' --pos ' + x + 'x' + y;
+	' --output ' + beamer.id + ' --mode ' + beamer.width + 'x' + beamer.height +  ' --scale ' + s + 'x' + s +  ' --pos ' + x + 'x' + y;
 
 sys.puts(cmd);
 exec(cmd, puts);
