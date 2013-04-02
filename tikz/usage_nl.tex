@@ -1,0 +1,53 @@
+% Author: Mick van Gelderen
+% Created from http://www.texample.net/tikz/examples/class-diagram/ and other examples and resources. 
+
+%\documentclass{standalone}
+%\input{tikz}
+
+%\begin{document}
+
+\newcommand{\activity}[3]{\node (v#1) [activity, text width=#2cm, #3] {$v_#1$};}
+
+\begin{tikzpicture}[node distance=.8cm]
+	\tikzstyle{activity}=[text centered, text=black, thick, text height=2ex, text depth=1ex, minimum width=1.8em]
+	\tikzstyle{resource}=[text centered]
+	\tikzstyle{header}=[font=\bfseries]
+	\tikzstyle{usage}=[->,>=stealth, draw=black!70, thick]
+
+	\node (v0) [activity] {$v_0$: Dummy start, 0};
+	\node (v1) [activity, below=of v0.west, anchor=west] {$v_1$: Deur schuren, 3};
+	\node (v2) [activity, below=of v1.west, anchor=west] {$v_2$: Hek schuren, 2};
+	\node (v3) [activity, below=of v2.west, anchor=west] {$v_3$: Deur schilderen, 2};
+	\node (v4) [activity, below=of v3.west, anchor=west] {$v_4$: Hek schilderen, 1};
+	\node (v5) [activity, below=of v4.west, anchor=west] {$v_5$: Muur schilderen, 5};
+	\node (v6) [activity, below=of v5.west, anchor=west] {$v_6$: Opruimen, 1};
+	\node (v7) [activity, below=of v6.west, anchor=west] {$v_7$: Dummy eind, 0};
+	
+	\node (u1) [above right=.3cm and 5.7cm of v1.west] {1};
+	\node (u2) [above right=.3cm and 5.7cm of v2.west] {1};
+	\node (u3) [above right=.3cm and 5.7cm of v3.west] {1};
+	\node (u4) [above right=.3cm and 5.7cm of v4.west] {1};
+	\node (u5) [above right=.3cm and 5.7cm of v5.west] {1};
+	\node (u6) [above right=.3cm and 5.7cm of v6.west] {1};
+	\node (u7) [above right=.3cm and 5.7cm of v7.west] {2};
+	
+	\coordinate (mid) at ($(v0.west)!.5!(v7.west) + (12,0)$);
+	\node (r1) [resource, above=1cm of mid, anchor=east] {$r_1$: Schuurmachine, 1};
+	\node (r2) [resource, above=-1cm of mid, anchor=east] {$r_2$: Kwasten, 2};
+
+	\draw let \p1 = (v0), \p2 = (r1) in 
+		node (ac) [header] at ($(\x1,\y1) + (0,1)$) {Activiteit, tijdsduur}
+		node (res) [header] at ($(\x2,\y1) + (0,1)$) {Resource, capaciteit};
+	\node (us) [header] at ($(ac)!.5!(res)$) {Verbruik};
+	
+  \draw[usage] (v1.east) -- (u1) to[out=0,in=180] (r1.west);
+  \draw[usage] (v2.east) -- (u2) to[out=0,in=180] (r1.west);
+  \draw[usage] (v3.east) -- (u3) to[out=0,in=180] (r2.west);
+  \draw[usage] (v4.east) -- (u4) to[out=0,in=180] (r2.west);
+  \draw[usage] (v5.east) -- (u5) to[out=0,in=180] (r2.west);
+  \draw[usage] (v6.east) -- (u6) to[out=0,in=180] (r1.west);
+  \draw[usage] (v6.east) -- (u7) to[out=0,in=180] (r2.west);
+	
+\end{tikzpicture}
+
+%\end{document}
