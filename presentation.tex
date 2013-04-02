@@ -70,7 +70,7 @@
 \setbeameroption{show notes}
 \setbeameroption{show notes on second screen=right}
 
-\title[RCPS]{An approach to Resource Constrained Project Scheduling}
+\title[RCPSP]{An approach to Resource Constrained Project Scheduling}
 \author{M. van Gelderen  \and
     R.M. de Lange \and
     B. Gris\`el \and
@@ -88,7 +88,7 @@
 \begin{frame}
   \frametitle{Inleiding}
   \begin{itemize}
-		\item Veel planningsproblemen in dagelijks leven
+		\item Veel schedulingsproblemen in dagelijks leven
 		\item Kleine schaal
 		\item Grote schaal
 		\item Resource Constrained Project Scheduling Problem
@@ -326,7 +326,7 @@ Worden ook precedence relaties genoemd.
 \end{frame}
 
 \section{Probleem}
-\subsection{Wat klopt er nog niet?}
+\subsection{Wat mist er nog?}
 \begin{frame}
 	\frametitle{Probleem}
 	\begin{itemize}
@@ -338,21 +338,6 @@ Worden ook precedence relaties genoemd.
 	\end{itemize}
 	\note{
 Er zijn niet genoeg \textbf{resources}.}
-\end{frame}
-
-\begin{frame}
-\frametitle{Schema}
-	\vspace{-1.2em}
-	\begin{figure}[ht]
-		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
-			\inputtikz{schedule_infeasible_colored_profile}
-		}}
-		\vspace{-1.3em}
-		\caption{Schema en resource gebruik}
-		%\label{fig:activity_graph}
-	\end{figure}
-	\note{
-De \textbf{deur} en het \textbf{hek} tegelijk schuren.}
 \end{frame}
 
 \begin{frame}
@@ -399,6 +384,20 @@ Simpel probleem heeft ingewikkelde graaf.\\
 Probleem is \textbf{moeilijk}!}
 \end{frame}
 
+\begin{frame}
+\frametitle{Schema}
+	\vspace{-1.2em}
+	\begin{figure}[ht]
+		\makebox[\textwidth][c]{\resizebox{.36\paperwidth}{!}{
+			\inputtikz{schedule_infeasible_colored_profile}
+		}}
+		\vspace{-1.3em}
+		\caption{Schema en resource gebruik}
+		%\label{fig:activity_graph}
+	\end{figure}
+	\note{
+De \textbf{deur} en het \textbf{hek} tegelijk schuren.}
+\end{frame}
 
 \subsection{Hoe kunnen we dit oplossen?}
 \begin{frame}
