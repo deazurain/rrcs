@@ -131,7 +131,7 @@
 	\item Buitenmuren schilderen
 	\item<2-> Deur schuren
 	\item<2-> Hek schuren
-	\item<3-> Materiaal schoonmaken
+	\item<3-> Materiaal schoonmaken en opruimen
     \end{itemize}
 \end{frame}
 
@@ -152,8 +152,8 @@
     	\frametitle{Taken}
    	Er zijn een aantal voorwaarden:
 	\begin{enumerate}
-	    	\item Houten oppervlak moet eerst geschuurd, daarna geschilderd
-		\item Materiaal schoonmaken als laatste
+	    	\item Houten oppervlak moet geschuurd worden voordat het kan worden geschilderd
+		\item Materiaal schoonmaken moet als laatste
 	\end{enumerate}
 \end{frame}
 
@@ -168,6 +168,7 @@
 		\vspace{-1em}
 		\caption{Volgorde van de taken}
 	\end{figure}
+	\note{Dit zijn Precedence Relaties}
 \end{frame}
 
 \subsection{Doel}
@@ -176,11 +177,11 @@
    	\textbf{Gegeven}
 	\begin{enumerate}
 		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur
-		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+		\item Een set $E$ van precedence relaties met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
 	\end{enumerate}
 	
 	\textbf{Gevraagd}\\
-	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle volgorde relaties in $E$ voldaan wordt.
+	Een schema waarin voor elke activiteit in $V$ een starttijd is toegewezen zodanig dat aan alle precedence relaties in $E$ voldaan wordt.
 \end{frame}
 
 \begin{frame}
@@ -208,6 +209,8 @@
 		\vspace{-1em}
 		\caption{Volgorde vastgelegd in graaf}
 	\end{figure}
+	\note{Nogmaals de activiteiten en de precedence relaties. \\
+		We gaan er een gewogen graaf van maken}
 \end{frame}
 
 \begin{frame}
@@ -215,9 +218,15 @@
 	
 	\begin{itemize}
 		\item Aan elke kant wordt een minimale en maximale tijdsduur gehangen.
-		\item Doel: minimale en maximale tijdsduur naar elkaar toe brengen
+		\item Minimale en maximale tijdsduur naar elkaar toe brengen
+		\item Doel: aan elke knoop een tijdstip toekennen
 	\end{itemize}
 	
+	\note{
+		Aan elke kant wordt een minimale en maximale tijdsduur gehangen zodanig dat het schema klopt als voor elke kant een waarde wordt gekozen die binnen de tijdsduur valt. \\
+		Wat er wordt gedaan is de min en max tijdsduur beperken zodat dit geldt.\\
+		Doel is dan om aan elke knoop een tijd toe te wijzen zdd de relaties in het schema kloppen.
+	}
 \end{frame}
 
 \begin{frame}
@@ -228,6 +237,12 @@
 		\vspace{-1em}
 		\caption{Gewichten toegevoegd}
 	\end{figure}
+	
+	\note{
+		Hier staat dat de tijd tussen elke activiteit minimaal 0 en maximaal INF moet zijn.\\
+		Dit is eigenlijk een precedence relatie maar dan in tijd uitgedrukt.\\
+		Hier wordt de tijdsduur van de activiteiten nog niet in meegenomen (NEXT).
+	}
 \end{frame}
 
 \begin{frame}
@@ -238,6 +253,12 @@
 		\vspace{-1em}
 		\caption{Extra knoop per taak}
 	\end{figure}
+	
+	\note{
+		Elke activiteit wordt weergegeven door twee knopen.\\
+		1 voor het startpunt van de activiteit.\\
+		1 voor het eindpunt van de activiteit.
+	}
 \end{frame}
 
 \begin{frame}
@@ -248,6 +269,11 @@
 		\vspace{-1em}
 		\caption{Gewichten voor duur van de taken}
 	\end{figure}
+	
+	\note{
+		Ook elke kant tussen het begin en eind van een taak krijgt een minimale en maximale limiet.\\
+		Dit dwingt af dat de lengte van de activiteit precies hetzelfde is als in het originele model.
+	}
 \end{frame}
 
 \begin{frame}
@@ -260,14 +286,32 @@
 		\vspace{-1em}
 		\caption{Dummy start en eind toegevoegd}
 	\end{figure}
+	
+	\note{
+		Om ervoor te zorgen dat er 1 startpunt en 1 duidelijk eindpunt is van het schema, worden er twee dummy taken toegevoegd. 
+	}
 \end{frame}
 
 \begin{frame}
-    	\frametitle{Hoe werkt het}
+    	\frametitle{De Oplossing}
 	\begin{itemize}
-		\item STN met de tight boundaries
-		\item Schema eruit halen met starttijden
+		\item Essentie: tussen elk paar knopen het kortste pad berekenen
+		\item Voor elke kant een minimale en maximale starttijd
+		\item Vroegste starttijd algoritme
 	\end{itemize}
+	
+	\note{
+		Vroegste starttijd algoritme pakt voor elke knoop de vroegst mogelijke begintijd.
+	}
+\end{frame}
+
+\begin{frame}
+    	\frametitle{De Oplossing}
+	\begin{figure}[ht]
+		\inputtikz{schedule_infeasible}
+		\vspace{-1em}
+		\caption{Een schema dat aan de precedence constraints voldoet}
+	\end{figure}
 \end{frame}
 
 \section{Probleem}
@@ -275,7 +319,7 @@
 \begin{frame}
 	\frametitle{Probleem}
 	\begin{itemize}
-		\item Volgorde van het schema klopt nu, wat gaat er dan toch fout?
+		\item Volgorde van het schema klopt nu, wat mist er nog?
 		\item<2->  De schilders hebben alleen:
 		\item<2-> 1 schuurmachine
 		\item<2-> 2 verfkwasten
@@ -297,9 +341,9 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Middelen}
+	\frametitle{Resources}
 	\begin{itemize}
-		\item Middelen zijn de gereedschappen voor het project
+		\item Resources zijn de gereedschappen voor het project
 		\item Nodig om de taken uit te voeren
 		\item Ze hebben een beschikbare capaciteit
 		\item \emph{Resource} Constrained Project Scheduling Problem
@@ -312,7 +356,7 @@
 	\textbf{Gegeven}
 	\begin{enumerate}
 		\item Een set $V$ van taken $\{v_1,\dots,v_n\}$ met een bepaalde tijdsduur en verbruik per resource
-		\item Een set $E$ van precedence constraints met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
+		\item Een set $E$ van precedence relaties met elementen $(v_i, v_j)$ zodanig dat $v_i, v_j \in V$ en $v_i$ voor $v_j$ moet worden uitgevoerd
 		\item Een set $R$ van resources $\{r_1, \ldots, r_m\}$ met een bepaalde capaciteit
 	\end{enumerate}
 	
@@ -329,7 +373,7 @@
 			\inputtikz{usage_nl}
 		}}
 		\vspace{-1em}
-		\caption{De relatie tussen taken en middelen}
+		\caption{De relatie tussen taken en resources}
 		\label{fig:activity_graph}
 	\end{figure}
 \end{frame}
@@ -339,7 +383,7 @@
 \begin{frame}
 	\frametitle{Hoe kunnen we dit oplossen?}
 	\begin{itemize}
-		\item Capaciteit van de middelen in berekening
+		\item Capaciteit van de resources in berekening
 		\item Optimale schema in exponenti\"{e}le tijd
 		\item RCPSP is een NP-hard probleem
 		\item In praktijk is een snellere beslissing nodig
