@@ -12,24 +12,32 @@ var fs = require('fs');
 function puts(error, stdout, stderr) { sys.puts(stdout) }
 
 var screen = {
+	id: 'LVDS1'
 	width: 1366,
 	height: 768,
-	id: 'LVDS1'
+};
+
+var beamer = {
+	id: 'VGA1',
+	width: 1024,
+	height: 768,
+	primary: false,
+	source: {
+		id: 'LVDS1',
+		pos: {x:0, y:0},
+		dim: {width:0, height:0},
+		scale: {x:0, y:0},
+	}
 };
 
 /*
-var beamer = {
-	width: 1024,
-	height: 768,
-	id: 'VGA1'
-};
-*/
-
 var beamer = {
 	width: 1920,
 	height: 1080,
 	id: 'HDMI1'
 };
+*/
+
 
 var round = Math.round;
 
@@ -38,8 +46,13 @@ var y = round(screen.height/2 - 3/16*screen.width);
 
 var s = round(1000*(screen.width/2/beamer.width))/1000;
 
-var cmd = 'xrandr --output ' + screen.id + ' --mode ' + screen.width + 'x' + screen.height +  ' --primary' + 
-	' --output ' + beamer.id + ' --mode ' + beamer.width + 'x' + beamer.height +  ' --scale ' + s + 'x' + s +  ' --pos ' + x + 'x' + y;
+var xrandr = {
+	mode: function(device) { return '--mode ' + device.width + 'x' + device.height; },
+	output:  function(device) { return '--output' + device.id; }
+};
+
+var cmd = 'xrandr ' + xrandr.output(screen) + ' ' + xrandr.mode(screen) + ' --primary' + 
+	xrandr.output(beamer) + ' ' + xrandr.mode(beamer) +  ' --scale ' + s + 'x' + s +  ' --pos ' + x + 'x' + y;
 
 sys.puts(cmd);
 exec(cmd, puts);
